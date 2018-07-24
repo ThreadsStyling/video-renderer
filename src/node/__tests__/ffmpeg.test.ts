@@ -55,3 +55,26 @@ test('ffmpeg overlay', async () => {
     __dirname + '/output-overlay.mp4',
   );
 });
+
+test('image overlay', async () => {
+  rimraf(__dirname + '/image-overlay.jpg');
+  await ffmpeg(
+    '-i',
+    __dirname + '/image.jpg',
+    '-i',
+    __dirname + '/threads-logo-gold.png',
+    '-filter_complex',
+    filterComplex([
+      {
+        inputs: [{name: '0', kind: FilterInputKind.Both}, {name: '1', kind: FilterInputKind.Both}],
+        outputs: [],
+        name: 'overlay',
+        args: {
+          x: 500,
+          y: 100,
+        },
+      },
+    ]),
+    __dirname + '/image-overlay.jpg',
+  );
+});
