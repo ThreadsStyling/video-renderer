@@ -10,6 +10,8 @@ test('ffmpeg', async () => {
   await ffmpeg(
     '-i',
     __dirname + '/Video Of People Walking.mp4',
+    '-movflags',
+    'faststart',
     '-filter:v',
     'setpts=0.1*PTS',
     __dirname + '/output.mp4',
@@ -27,6 +29,8 @@ test('ffmpeg overlay', async () => {
     '0',
     '-i',
     __dirname + '/loop.gif',
+    '-movflags',
+    'faststart',
     '-filter_complex',
     filterComplex([
       {

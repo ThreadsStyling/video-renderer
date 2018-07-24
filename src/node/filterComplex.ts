@@ -6,9 +6,11 @@ export default function filterComplex(filters: ComplexFilter[]) {
       return `${f.inputs
         .map(
           (i) =>
-            `[${i.name}${
-              i.kind === FilterInputKind.AudioOnly ? ':a' : i.kind === FilterInputKind.VideoOnly ? ':v' : ''
-            }]`,
+            typeof i === 'string'
+              ? `[${i}]`
+              : `[${i.name}${
+                  i.kind === FilterInputKind.AudioOnly ? ':a' : i.kind === FilterInputKind.VideoOnly ? ':v' : ''
+                }]`,
         )
         .join('')}${f.name}=${Object.keys(f.args)
         .map((name) => `${name}=${f.args[name]}`)
