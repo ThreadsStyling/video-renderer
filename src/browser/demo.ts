@@ -30,9 +30,15 @@ const canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
 Promise.all([
   loadAsset(require('../node/__tests__/Video Of People Walking.mp4'), AssetKind.Video),
-  loadAsset(require('./compressed.mp4'), AssetKind.VideoWithAlpha),
+  loadAsset(require('../node/__tests__/loop.mp4'), AssetKind.VideoWithAlpha),
 ]).then(([backgroundVideo, overlayVideo]) => {
-  write(overlay([backgroundVideo, overlayVideo], {})[0], canvas);
+  write(
+    overlay([backgroundVideo, overlayVideo], {
+      x: 500,
+      y: 100,
+    })[0],
+    canvas,
+  );
 });
 
 // import getVideo from './loadVideo';

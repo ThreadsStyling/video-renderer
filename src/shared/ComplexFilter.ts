@@ -8,7 +8,7 @@ export interface FilterInput {
   name: string;
 }
 export default interface ComplexFilter {
-  inputs: FilterInput[];
+  inputs: Array<FilterInput | string>;
   outputs: string[];
   name: string;
   args: {
