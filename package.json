@@ -25,6 +25,7 @@
     "webpack-serve": "^2.0.2"
   },
   "scripts": {
+    "prebuild": "node generate-filter-register",
     "build": "tsc",
     "prepare": "yarn build",
     "start": "webpack-serve ./webpack.config.js",
