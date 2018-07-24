@@ -65,5 +65,4 @@ lib/
 
 .DS_Store
 
-functions-src/*/entry.ts
-functions/
+src/browser/register/
