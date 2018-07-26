@@ -1,17 +1,23 @@
 import Filter from '../Filter';
 
 const overlay: Filter = (inputs, args) => {
-  const x = +(args.x || 0);
-  const y = +(args.y || 0);
   const start = +args.start;
   const end = +args.end;
-  const duration = end - start;
+  const i = inputs[0];
+  if (start === 0) {
+    [
+      {
+        ...i,
+        duration: end,
+      },
+    ];
+  }
   return [
     {
-      ...inputs[0],
-      duration,
+      ...i,
+      duration: end - start,
       getFrame(time) {
-        return inputs[0].getFrame(time + start);
+        return i.getFrame(time + start);
       },
     },
   ];

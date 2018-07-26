@@ -1,7 +1,9 @@
 const videoContainer = document.createElement('div');
 videoContainer.style.position = 'absolute';
+videoContainer.style.top = '50vh';
+videoContainer.style.left = '50vw';
 videoContainer.style.pointerEvents = 'none';
-videoContainer.style.opacity = '0.01';
+videoContainer.style.opacity = '0.000001';
 document.body.appendChild(videoContainer);
 
 export default async function getVideo(videoURL: string) {
@@ -13,9 +15,11 @@ export default async function getVideo(videoURL: string) {
     video.muted = true;
     video.autoplay = true;
     video.loop = true;
-    video.style.width = '0px';
-    video.style.height = '0px';
+    video.style.width = '1px';
+    video.style.height = '1px';
+    video.controls = true;
     video.src = videoURL;
+    video.setAttribute('playsinline', 'playsinline');
   });
   return video;
 }

@@ -55,7 +55,6 @@ export default async function loadAsset(url: string, kind: AssetKind): Promise<A
           const alphaData = rawFrame.ctx.getImageData(0, height, width, height).data;
 
           for (let i = 3; i < imageData.length; i += 4) {
-            // console.log(imageData[i], alphaData[i - 1]);
             imageData[i] = alphaData[i - 1];
           }
           buffer.putImageData(image, 0, 0, 0, 0, width, height);
