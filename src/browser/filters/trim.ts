@@ -3,15 +3,15 @@ import Filter from '../Filter';
 const overlay: Filter = (inputs, args) => {
   const x = +(args.x || 0);
   const y = +(args.y || 0);
+  const start = +args.start;
+  const end = +args.end;
+  const duration = end - start;
   return [
     {
       ...inputs[0],
-      duration: Math.max(...inputs.map((i) => i.duration)),
+      duration,
       getFrame(time) {
-        const frame = inputs[0].getFrame(time);
-        const overlay = inputs[1].getFrame(time);
-        frame.ctx.drawImage(overlay.canvas, x, y);
-        return frame;
+        return inputs[0].getFrame(time + start);
       },
     },
   ];
