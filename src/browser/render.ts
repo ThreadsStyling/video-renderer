@@ -1,9 +1,15 @@
 import Asset from './Asset';
 
-export default function render(asset: Asset, canvas: HTMLCanvasElement) {
-  canvas.width = asset.width;
-  canvas.height = asset.height;
+interface RenderState {
+  currentTime: number;
+}
+export default function render(canvas: HTMLCanvasElement, asset?: Asset) {
+  if (asset) {
+    canvas.width = asset.width;
+    canvas.height = asset.height;
+  }
   const ctx = canvas.getContext('2d')!;
+  const handlers: Array<(state: RenderState) => void> = [];
 
   let start = Date.now();
   let disposed = false;
@@ -11,8 +17,7 @@ export default function render(asset: Asset, canvas: HTMLCanvasElement) {
   let playing = true;
   requestAnimationFrame(draw);
   function draw() {
-    if (paused || disposed) {
-      playing = false;
+    if (!asset) {
       return;
     }
     const now = Date.now();
@@ -24,9 +29,29 @@ export default function render(asset: Asset, canvas: HTMLCanvasElement) {
     const frame = asset.getFrame(time);
     ctx.clearRect(0, 0, asset.width, asset.height);
     ctx.drawImage(frame.canvas, 0, 0);
-    requestAnimationFrame(draw);
+    if (handlers.length) {
+      const state = {currentTime: time};
+      handlers.forEach((h) => h(state));
+    }
+    if (paused || disposed) {
+      playing = false;
+    } else {
+      requestAnimationFrame(draw);
+    }
   }
   return {
+    setAsset(_asset: Asset) {
+      asset = _asset;
+      canvas.width = asset.width;
+      canvas.height = asset.height;
+      if (!playing) {
+        playing = true;
+        requestAnimationFrame(draw);
+      }
+    },
+    getAsset() {
+      return asset;
+    },
     isPaused() {
       return paused;
     },
@@ -46,8 +71,24 @@ export default function render(asset: Asset, canvas: HTMLCanvasElement) {
         requestAnimationFrame(draw);
       }
     },
+    seek(time: number) {
+      start = Date.now() - time;
+      if (!playing) {
+        playing = true;
+        requestAnimationFrame(draw);
+      }
+    },
     dispose() {
       disposed = true;
+    },
+    onFrame(handler: (state: RenderState) => void) {
+      handlers.push(handler);
+      let unsubscribed = false;
+      return () => {
+        if (unsubscribed) return;
+        unsubscribed = true;
+        handlers.splice(handlers.indexOf(handler), 1);
+      };
     },
   };
 }
