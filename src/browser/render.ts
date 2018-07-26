@@ -41,9 +41,11 @@ export default function render(canvas: HTMLCanvasElement, asset?: Asset) {
   }
   return {
     setAsset(_asset: Asset) {
+      if (!asset || (asset.width !== _asset.width || asset.height !== _asset.height)) {
+        canvas.width = _asset.width;
+        canvas.height = _asset.height;
+      }
       asset = _asset;
-      canvas.width = asset.width;
-      canvas.height = asset.height;
       if (!playing) {
         playing = true;
         requestAnimationFrame(draw);

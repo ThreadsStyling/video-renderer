@@ -41,22 +41,22 @@ Promise.all([
   const ratio = (100 * inputs[0].height) / inputs[0].width;
   style.textContent = `
     html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
     }
     body {
-      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       background: black;
     }
     canvas {
-      height: 100vh;
+      height: 100%;
     }
     @media (min-height: ${ratio}vw) {
       canvas {
-        width: 100vw;
+        width: 100%;
         height: auto;
       }
     }
