@@ -1,41 +1,39 @@
 import {sync as rimraf} from 'rimraf';
-import ffmpeg from '../ffmpeg';
+import ffmpeg from './ffmpeg';
 import filterComplex from '../filterComplex';
-import {FilterInputKind} from '../../shared/ComplexFilter';
 
 jest.setTimeout(1200000);
 
 test('ffmpeg', async () => {
-  rimraf(__dirname + '/output.mp4');
+  rimraf(__dirname + '/../../../assets/generated/output.mp4');
   await ffmpeg(
     '-i',
-    __dirname + '/Video Of People Walking.mp4',
+    __dirname + '/../../../assets/Video Of People Walking.mp4',
     '-movflags',
     'faststart',
     '-filter:v',
     'setpts=0.1*PTS',
-    __dirname + '/output.mp4',
+    __dirname + '/../../../assets/generated/output.mp4',
   );
 });
 
 // see https://www.youtube.com/watch?v=hElDsyuAQDA for
 // chaining video filters
 test('ffmpeg overlay', async () => {
-  rimraf(__dirname + '/output-overlay.mp4');
+  rimraf(__dirname + '/../../../assets/generated/output-overlay.mp4');
   await ffmpeg(
     '-i',
-    __dirname + '/Video Of People Walking.mp4',
+    __dirname + '/../../../assets/Video Of People Walking.mp4',
     '-ignore_loop',
     '0',
     '-i',
-    __dirname + '/loop.gif',
+    __dirname + '/../../../assets/loop.gif',
     '-movflags',
     'faststart',
     '-filter_complex',
     filterComplex([
       {
-        inputs: [{name: '0', kind: FilterInputKind.Both}, {name: '1', kind: FilterInputKind.Both}],
-        outputs: ['overlaid'],
+        inputs: ['0', '1'],
         name: 'overlay',
         args: {
           x: 500,
@@ -43,8 +41,6 @@ test('ffmpeg overlay', async () => {
         },
       },
       {
-        inputs: [{name: 'overlaid', kind: FilterInputKind.Both}],
-        outputs: [],
         name: 'trim',
         args: {
           start: 0,
@@ -52,22 +48,21 @@ test('ffmpeg overlay', async () => {
         },
       },
     ]),
-    __dirname + '/output-overlay.mp4',
+    __dirname + '/../../../assets/generated/output-overlay.mp4',
   );
 });
 
 test('image overlay', async () => {
-  rimraf(__dirname + '/image-overlay.jpg');
+  rimraf(__dirname + '/../../../assets/generated/image-overlay.jpg');
   await ffmpeg(
     '-i',
-    __dirname + '/image.jpg',
+    __dirname + '/../../../assets/image.jpg',
     '-i',
-    __dirname + '/threads-logo-gold.png',
+    __dirname + '/../../../assets/threads-logo-gold.png',
     '-filter_complex',
     filterComplex([
       {
-        inputs: [{name: '0', kind: FilterInputKind.Both}, {name: '1', kind: FilterInputKind.Both}],
-        outputs: [],
+        inputs: ['0', '1'],
         name: 'overlay',
         args: {
           x: 500,
@@ -75,6 +70,6 @@ test('image overlay', async () => {
         },
       },
     ]),
-    __dirname + '/image-overlay.jpg',
+    __dirname + '/../../../assets/generated/image-overlay.jpg',
   );
 });

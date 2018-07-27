@@ -1,9 +1,10 @@
 import ComplexFilter from '../shared/ComplexFilter';
 
-export default function extractAlpha(input: string, output?: string): ComplexFilter[] {
+export default function extractAlpha(input: string = '0', output?: string): ComplexFilter[] {
   return [
+    // ensure video is even number of pixels hide/wide
+    // because mp4 requires this
     {
-      // scale=trunc(iw/2)*2:trunc(ih/2)*2
       inputs: [input],
       name: 'scale',
       args: {
@@ -12,12 +13,14 @@ export default function extractAlpha(input: string, output?: string): ComplexFil
       },
       outputs: ['extract_alpha_scaled'],
     },
+    // create 2 copies of video
     {
       inputs: ['extract_alpha_scaled'],
       name: 'split',
       args: {},
       outputs: ['extract_alpha_scaled_1', 'extract_alpha_scaled_2'],
     },
+    // [mask] set format to rgba
     {
       inputs: ['extract_alpha_scaled_2'],
       name: 'format',
@@ -26,55 +29,26 @@ export default function extractAlpha(input: string, output?: string): ComplexFil
       },
       outputs: ['extract_alpha_rgba'],
     },
+    // [mask] generate alpha mask
     {
       inputs: ['extract_alpha_rgba'],
       name: 'alphaextract',
       args: {},
       outputs: ['extract_alpha_extracted'],
     },
+    // [original] pad to allow space at the bottom for the alpha mask
     {
       inputs: ['extract_alpha_scaled_1'],
       name: 'pad',
       args: {h: 'ih*2'},
       outputs: ['extract_alpha_padded'],
     },
+    // overlay the alpha mask on the space created at the bottom of the original video
     {
       inputs: ['extract_alpha_padded', 'extract_alpha_extracted'],
       name: 'overlay',
       args: {x: '0', y: 'overlay_h'},
       outputs: output ? [output] : [],
     },
-    // {
-    //   inputs: ['extract_alpha_rgba'],
-    //   name: 'split',
-    //   args: {},
-    //   outputs: ['extract_alpha_t1', 'extract_alpha_t2'],
-    // },
-    // {
-    //   inputs: ['extract_alpha_t1'],
-    //   name: 'lutrgb',
-    //   args: {
-    //     r: 'maxval',
-    //     g: 'maxval',
-    //     b: 'maxval',
-    //   },
-    //   outputs: ['extract_alpha_max'],
-    // },
-    // {
-    //   inputs: ['extract_alpha_t2'],
-    //   name: 'lutrgb',
-    //   args: {
-    //     r: 'minval',
-    //     g: 'minval',
-    //     b: 'minval',
-    //   },
-    //   outputs: ['extract_alpha_min'],
-    // },
-    // {
-    //   inputs: ['extract_alpha_max', 'extract_alpha_min'],
-    //   name: 'overlay',
-    //   args: {},
-    //   outputs: output ? [output] : [],
-    // },
   ];
 }
