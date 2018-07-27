@@ -1,9 +1,21 @@
 import Asset from './Asset';
 
-interface RenderState {
+export interface RenderState {
   currentTime: number;
 }
-export default function render(canvas: HTMLCanvasElement, asset?: Asset) {
+
+export interface Player {
+  setAsset(asset: Asset): void;
+  getAsset(): Asset | undefined;
+  isPaused(): boolean;
+  pause(): void;
+  play(): void;
+  seek(time: number): void;
+  dispose(): void;
+  onFrame(handler: (state: RenderState) => void): () => void;
+}
+
+export default function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
   if (asset) {
     canvas.width = asset.width;
     canvas.height = asset.height;
