@@ -1315,6 +1315,12 @@ commander@~2.13.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
 
+commit-status@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/commit-status/-/commit-status-4.3.0.tgz#7ee4877c3a6c7615c9587f68d9a866db2d8153b0"
+  dependencies:
+    octokat "^0.4.11"
+
 commondir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
@@ -1512,6 +1518,12 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     ripemd160 "^2.0.0"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+cross-ci@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/cross-ci/-/cross-ci-1.4.0.tgz#985416cad076db588c25bd4794e28f1e420fff97"
+  dependencies:
+    env-ci "^2.1.0"
 
 cross-spawn@^5.0.1:
   version "5.1.0"
@@ -1878,7 +1890,7 @@ entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
-env-ci@^2.0.0:
+env-ci@^2.0.0, env-ci@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/env-ci/-/env-ci-2.1.1.tgz#73c42c0f3ee4813457210a8440a2ee1bbea0102a"
   dependencies:
@@ -1934,6 +1946,10 @@ es6-iterator@~2.0.3:
     d "1"
     es5-ext "^0.10.35"
     es6-symbol "^3.1.1"
+
+es6-promise@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.0.2.tgz#010d5858423a5f118979665f46486a95c6ee2bb6"
 
 es6-promise@^4.0.3:
   version "4.2.4"
@@ -4535,6 +4551,13 @@ object.pick@^1.3.0:
   dependencies:
     isobject "^3.0.1"
 
+octokat@^0.4.11:
+  version "0.4.18"
+  resolved "https://registry.yarnpkg.com/octokat/-/octokat-0.4.18.tgz#afa7e52654b5464923f801917b3a31cff7a6848d"
+  dependencies:
+    es6-promise "3.0.2"
+    xmlhttprequest "~1.8.0"
+
 on-finished@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/on-finished/-/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947"
@@ -5339,7 +5362,7 @@ schema-utils@^0.4.4, schema-utils@^0.4.5:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-semantic-release@^15.6.0:
+semantic-release@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.8.1.tgz#b10a919180cce79e756048e7e713a36d6c42a7e7"
   dependencies:
@@ -6429,6 +6452,10 @@ xdg-basedir@^3.0.0:
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
+
+xmlhttprequest@~1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
 
 xregexp@4.0.0:
   version "4.0.0"
