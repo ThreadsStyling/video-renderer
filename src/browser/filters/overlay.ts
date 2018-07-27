@@ -1,19 +1,27 @@
 import Filter from '../Filter';
+import Asset from '../Asset';
 
 const overlay: Filter = (inputs, args) => {
   const x = +(args.x || 0);
   const y = +(args.y || 0);
+  const backgroundAsset = inputs[0];
+  const background = backgroundAsset.context;
+  const foreground = inputs[1].canvas;
+  const renderBackground = backgroundAsset.renderFrame;
+  const renderForeground = inputs[1].renderFrame;
   return [
-    {
-      ...inputs[0],
-      duration: Math.max(...inputs.map((i) => i.duration)),
-      getFrame(time) {
-        const frame = inputs[0].getFrame(time);
-        const overlay = inputs[1].getFrame(time);
-        frame.ctx.drawImage(overlay.canvas, x, y);
-        return frame;
+    new Asset(
+      backgroundAsset.duration,
+      backgroundAsset.width,
+      backgroundAsset.height,
+      backgroundAsset.canvas,
+      background,
+      (time) => {
+        renderBackground(time);
+        renderForeground(time);
+        background.drawImage(foreground, x, y);
       },
-    },
+    ),
   ];
 };
 
