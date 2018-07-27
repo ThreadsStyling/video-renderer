@@ -3,6 +3,6 @@ import Asset from './Asset';
 import filterComplex from './filterComplex';
 import loadAsset from './loadAsset';
 import render from './render';
-import ComplexFilter from '../shared/ComplexFilter';
+import ComplexFilter, {FilterInputKind} from '../shared/ComplexFilter';
 
-export {AssetKind, Asset, ComplexFilter, filterComplex, loadAsset, render};
+export {AssetKind, Asset, ComplexFilter, filterComplex, FilterInputKind, loadAsset, render};

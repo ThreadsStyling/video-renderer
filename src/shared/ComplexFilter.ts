@@ -8,10 +8,10 @@ export interface FilterInput {
   name: string;
 }
 export default interface ComplexFilter {
-  inputs: Array<FilterInput | string>;
-  outputs: string[];
+  inputs?: Array<FilterInput | string>;
+  outputs?: string[];
   name: string;
-  args: {
+  args?: {
     [key: string]: string | number;
   };
 }

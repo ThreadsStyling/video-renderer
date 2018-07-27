@@ -66,3 +66,7 @@ lib/
 .DS_Store
 
 src/browser/register/
+src/node/__tests__/bin
+
+/browser/
+/node/
