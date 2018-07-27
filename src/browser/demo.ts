@@ -8,7 +8,6 @@ import {AssetKind, loadAsset, filterComplex, render} from '.';
 const canvas = document.createElement('canvas');
 
 canvas.style.margin = 'auto';
-// canvas.style.width = '100vmin';
 canvas.style.display = 'block';
 const style = document.createElement('style');
 document.head.appendChild(style);

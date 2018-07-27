@@ -1,12 +1,12 @@
 {
-  "name": "@threads/isomorphic-vide-render",
+  "name": "@threads/isomorphic-video-render",
   "version": "0.0.0",
   "files": [
     "lib/",
     "browser/",
     "node/"
   ],
-  "repository": "https://github.com/ThreadsStyling/koa-authenticate.git",
+  "repository": "https://github.com/ThreadsStyling/isomorphic-video-render.git",
   "dependencies": {},
   "devDependencies": {
     "@moped/rule-file": "^0.0.9",
