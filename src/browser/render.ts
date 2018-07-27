@@ -38,9 +38,9 @@ export default function render(canvas: HTMLCanvasElement, asset?: Asset): Player
       time = 0;
       start = now;
     }
-    const frame = asset.getFrame(time);
+    asset.renderFrame(time);
     ctx.clearRect(0, 0, asset.width, asset.height);
-    ctx.drawImage(frame.canvas, 0, 0);
+    ctx.drawImage(asset.canvas, 0, 0);
     if (handlers.length) {
       const state = {currentTime: time};
       handlers.forEach((h) => h(state));

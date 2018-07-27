@@ -33,6 +33,17 @@ Promise.all([
       },
     ]);
   const player = render(canvas, f(500, 100));
+  let start = performance.now();
+  let frames = 0;
+  player.onFrame(() => {
+    frames++;
+    if (frames > 100) {
+      const end = performance.now();
+      console.log(frames / ((end - start) / 1000));
+      start = performance.now();
+      frames = 0;
+    }
+  });
 
   const ratio = (100 * inputs[0].height) / inputs[0].width;
   style.textContent = `
