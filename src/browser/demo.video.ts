@@ -3,7 +3,7 @@
 
 import './register/overlay';
 import './register/trim';
-import {AssetKind, loadAsset, filterComplex, render} from '.';
+import {filterComplex, render, Asset} from '.';
 
 const canvas = document.createElement('canvas');
 
@@ -15,9 +15,9 @@ canvas.style.display = 'block';
 document.body.appendChild(canvas);
 
 Promise.all([
-  loadAsset('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4', AssetKind.Video),
-  loadAsset(require('../../assets/generated/loop.mp4'), AssetKind.VideoWithAlpha),
-  loadAsset('https://user-images.githubusercontent.com/3481367/45488425-4ad14080-b759-11e8-9629-2fb02283f02e.png', AssetKind.Image),
+  Asset.fromVideo('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'),
+  Asset.fromVideoWithAlpha(require('../../assets/generated/loop.mp4')),
+  Asset.fromImage('https://user-images.githubusercontent.com/3481367/45488425-4ad14080-b759-11e8-9629-2fb02283f02e.png'),
 ]).then((inputs) => {
   const f = (x: number, y: number) =>
     filterComplex(inputs, [
