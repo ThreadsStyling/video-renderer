@@ -138,9 +138,9 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
-"@threads/tslint@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@threads/tslint/-/tslint-3.3.0.tgz#d3d8b6f7525b19bb2de7a5c611460754f01d0eca"
+"@threads/tslint@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@threads/tslint/-/tslint-3.4.0.tgz#6b72bb030a1e4fbc627a0543973c0b42661d6e78"
   dependencies:
     tslint-config-prettier "^1.13.0"
     tslint-react "^3.6.0"
