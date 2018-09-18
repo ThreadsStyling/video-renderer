@@ -1,4 +1,4 @@
-import Filter from '../Filter';
+import {Filter} from '.';
 import Asset from '../Asset';
 
 const overlay: Filter = (inputs, args) => {
@@ -9,6 +9,7 @@ const overlay: Filter = (inputs, args) => {
   const foreground = inputs[1].canvas;
   const renderBackground = backgroundAsset.renderFrame;
   const renderForeground = inputs[1].renderFrame;
+
   return [
     new Asset(
       backgroundAsset.duration,

@@ -1,8 +1,6 @@
 // based on https://jakearchibald.com/scratch/alphavid/
 // and https://stackoverflow.com/questions/4073303/can-i-have-a-video-with-transparent-background-using-html5-video-tag
 
-import '../src/browser/register/overlay';
-import '../src/browser/register/trim';
 import {filterComplex, render, Asset} from '../src/browser';
 
 const canvas = document.createElement('canvas');
