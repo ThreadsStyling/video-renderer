@@ -1,6 +1,6 @@
 import ComplexFilter from '../shared/ComplexFilter';
 
-export default function extractAlpha(input: string = '0', output?: string): ComplexFilter[] {
+export default function extractAlpha(input = '0', output?: string): ComplexFilter[] {
   return [
     // ensure video is even number of pixels hide/wide
     // because mp4 requires this

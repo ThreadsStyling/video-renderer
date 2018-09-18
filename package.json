@@ -26,7 +26,8 @@
     "ts-loader": "^4.4.2",
     "typescript": "^2.9.2",
     "webpack": "^4.16.1",
-    "webpack-serve": "^2.0.2"
+    "webpack-serve": "^2.0.2",
+    "tslint": "~5.11.0"
   },
   "scripts": {
     "prebuild": "rimraf lib/ && rimraf browser/ && rimraf node/",
@@ -36,7 +37,9 @@
     "start": "webpack-serve ./webpack.config.js",
     "pretest": "node src/node/__tests__/download-ffmpeg",
     "test": "jest",
-    "prettier": "prettier --ignore-path .gitignore --write './**/*.{js,jsx,ts,tsx}'"
+    "prettier": "prettier --ignore-path .gitignore --write './**/*.{js,jsx,ts,tsx}'",
+    "tslint": "tslint './src/**/*.{ts,tsx}' -t verbose",
+    "lint": "yarn prettier && yarn tslint"
   },
   "jest": {
     "transform": {
