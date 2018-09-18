@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {join} = require('path');
 
 module.exports = {
-  entry: join(__dirname, 'demo', 'image.ts'),
+  entry: join(__dirname, 'src', 'demo', 'image.ts'),
   target: 'node',
   output: {
     path: __dirname + '/lib',
