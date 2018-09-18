@@ -1,4 +1,4 @@
-export default async function getImage (src: string): Promise<HTMLImageElement> {
+export default async function loadImage (src: string): Promise<HTMLImageElement> {
   const img = document.createElement('img');
 
   img.src = src;

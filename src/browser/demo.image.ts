@@ -3,7 +3,8 @@
 
 import './register/overlay';
 import './register/trim';
-import {AssetKind, loadAsset, filterComplex, render} from '.';
+import {filterComplex, render} from '.';
+import Asset from './Asset';
 
 const canvas = document.createElement('canvas');
 
@@ -15,9 +16,9 @@ canvas.style.display = 'block';
 document.body.appendChild(canvas);
 
 Promise.all([
-  loadAsset('https://user-images.githubusercontent.com/9773803/45625491-45dbfc00-ba8d-11e8-8c9c-e961e08eaa99.png', AssetKind.Image),
-  loadAsset('https://user-images.githubusercontent.com/3481367/45488425-4ad14080-b759-11e8-9629-2fb02283f02e.png', AssetKind.Image),
-  loadAsset('https://d1algegyh2h2u2.cloudfront.net/svg/landing/threads-logo-white.svg', AssetKind.Image),
+  Asset.fromImage('https://user-images.githubusercontent.com/9773803/45625491-45dbfc00-ba8d-11e8-8c9c-e961e08eaa99.png'),
+  Asset.fromImage('https://user-images.githubusercontent.com/3481367/45488425-4ad14080-b759-11e8-9629-2fb02283f02e.png'),
+  Asset.fromImage('https://d1algegyh2h2u2.cloudfront.net/svg/landing/threads-logo-white.svg'),
 ]).then((inputs) => {
   const f = (x: number, y: number) =>
     filterComplex(inputs, [
