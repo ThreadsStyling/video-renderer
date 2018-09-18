@@ -114,3 +114,5 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
     },
   };
 }
+
+export default render;
