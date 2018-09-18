@@ -19,7 +19,13 @@ export default function filterComplex(inputs: ReadonlyArray<Asset>, complexFilte
 
       return asset;
     });
+
     const f = filters[filter.name];
+
+    if (!f) {
+      throw new Error('Could not find filter: ' + filter.name);
+    }
+
     if (inputs.length === 0) {
       if (!defaultInput) {
         throw new Error(`${filter.name} does not specify an input, but there is no default input to use.`);
