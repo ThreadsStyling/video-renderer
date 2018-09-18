@@ -1,20 +1,9 @@
-import AssetKind from './AssetKind';
 import Asset from './Asset';
-import getVideo from './getVideo';
-import getImage from './getImage';
+import getVideo from './util/loadVideo';
+import createCanvasAndContext from './util/createCanvasAndContext';
 
-const createCanvasAndContext = (): [HTMLCanvasElement, CanvasRenderingContext2D] => {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-  if (!context) {
-    throw new Error('Could not get canvas context.');
-  }
-
-  return [canvas, context];
-};
-
-const loadVideo = async (url: string): Promise<Asset> => {
+export const loadVideo = async (url: string): Promise<Asset> => {
   const [canvas, context] = createCanvasAndContext();
   const video = await getVideo(url);
 
@@ -41,7 +30,7 @@ const loadVideo = async (url: string): Promise<Asset> => {
   });
 };
 
-const loadVideoWithAlpha = async (url: string): Promise<Asset> => {
+export const loadVideoWithAlpha = async (url: string): Promise<Asset> => {
   const fullVideo = await loadVideo(url);
   const width = fullVideo.width;
   const height = fullVideo.height / 2;
@@ -64,28 +53,3 @@ const loadVideoWithAlpha = async (url: string): Promise<Asset> => {
     context.putImageData(image, 0, 0, 0, 0, width, height);
   });
 };
-
-const noop = () => {};
-const loadImage = async (src: string): Promise<Asset> => {
-  const [canvas, context] = createCanvasAndContext();
-  const img = await getImage(src);
-  const width = img.width;
-  const height = img.height;
-
-  canvas.width = width;
-  canvas.height = height;
-  context.drawImage(img, 0, 0);
-
-  return new Asset(0, width, height, canvas, context, noop);
-};
-
-export default async function loadAsset(url: string, kind: AssetKind): Promise<Asset> {
-  switch (kind) {
-    case AssetKind.Video:
-      return loadVideo(url);
-    case AssetKind.VideoWithAlpha:
-      return loadVideoWithAlpha(url);
-    case AssetKind.Image:
-      return loadImage(url);
-  }
-}

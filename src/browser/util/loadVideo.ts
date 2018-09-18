@@ -9,7 +9,7 @@ videoContainer.style.pointerEvents = 'none';
 videoContainer.style.opacity = '0.000001';
 document.body.appendChild(videoContainer);
 
-export default async function getVideo (src: string) {
+export default async function loadVideo (src: string) {
   const video = document.createElement('video');
 
   await new Promise((resolve, reject) => {
