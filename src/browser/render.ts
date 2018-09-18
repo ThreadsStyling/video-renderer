@@ -20,7 +20,13 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
     canvas.width = asset.width;
     canvas.height = asset.height;
   }
-  const ctx = canvas.getContext('2d')!;
+
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+  if (!ctx) {
+    throw new Error('Could not create <canvas>.');
+  }
+
   const handlers: Array<(state: RenderState) => void> = [];
 
   let start = Date.now();
@@ -51,13 +57,14 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
       requestAnimationFrame(draw);
     }
   }
+
   return {
-    setAsset(_asset: Asset) {
-      if (!asset || (asset.width !== _asset.width || asset.height !== _asset.height)) {
-        canvas.width = _asset.width;
-        canvas.height = _asset.height;
+    setAsset(assetIn: Asset) {
+      if (!asset || (asset.width !== assetIn.width || asset.height !== assetIn.height)) {
+        canvas.width = assetIn.width;
+        canvas.height = assetIn.height;
       }
-      asset = _asset;
+      asset = assetIn; // tslint:disable-line no-parameter-reassignment
       if (!playing) {
         playing = true;
         requestAnimationFrame(draw);
@@ -98,6 +105,7 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
     onFrame(handler: (state: RenderState) => void) {
       handlers.push(handler);
       let unsubscribed = false;
+
       return () => {
         if (unsubscribed) return;
         unsubscribed = true;

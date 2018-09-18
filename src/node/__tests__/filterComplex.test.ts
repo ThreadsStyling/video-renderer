@@ -1,7 +1,7 @@
 import filterComplex from '../filterComplex';
 import ComplexFilter, {FilterInputKind} from '../../shared/ComplexFilter';
 
-const filter_complex: ComplexFilter[] = [
+const fc: ComplexFilter[] = [
   {
     inputs: [{name: '0', kind: FilterInputKind.Both}, {name: '1', kind: FilterInputKind.Both}],
     outputs: ['overlaid'],
@@ -23,5 +23,5 @@ const filter_complex: ComplexFilter[] = [
 ];
 
 test('filterComplex', () => {
-  expect(filterComplex(filter_complex)).toBe('[0][1]overlay=x=500:y=100[overlaid],[overlaid]trim=start=0:end=5');
+  expect(filterComplex(fc)).toBe('[0][1]overlay=x=500:y=100[overlaid],[overlaid]trim=start=0:end=5');
 });

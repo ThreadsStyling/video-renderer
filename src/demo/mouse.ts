@@ -37,7 +37,7 @@ Promise.all([
     frames++;
     if (frames > 100) {
       const end = performance.now();
-      console.log(frames / ((end - start) / 1000));
+      console.log(frames / ((end - start) / 1000)); // tslint:disable-line no-console
       start = performance.now();
       frames = 0;
     }

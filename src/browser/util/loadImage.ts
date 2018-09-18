@@ -8,7 +8,7 @@ export default async function loadImage(src: string): Promise<HTMLImageElement> 
   }
 
   await new Promise((resolve, reject) => {
-    img.addEventListener('error', (err) => reject(err));
+    img.addEventListener('error', reject);
     img.addEventListener('load', resolve);
   });
 

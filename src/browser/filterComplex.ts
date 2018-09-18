@@ -16,6 +16,7 @@ export default function filterComplex(inputs: ReadonlyArray<Asset>, complexFilte
       if (!asset) {
         throw new Error(`${filter.name}: [${i}] is not provided or has already been used.`);
       }
+
       return asset;
     });
     const f = filters[filter.name];
@@ -38,10 +39,12 @@ export default function filterComplex(inputs: ReadonlyArray<Asset>, complexFilte
     } else {
       defaultInput = null;
     }
+
     return outputAssets;
   }, []);
   if (outputs.length !== 1) {
     throw new Error('Complex filter should have exactly one final output');
   }
+
   return outputs[0];
 }
