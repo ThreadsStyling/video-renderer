@@ -7,7 +7,7 @@ export interface FilterInput {
   kind: FilterInputKind;
   name: string;
 }
-export default interface ComplexFilter {
+export interface ComplexFilter {
   inputs?: Array<FilterInput | string>;
   outputs?: string[];
   name: string;
@@ -15,3 +15,5 @@ export default interface ComplexFilter {
     [key: string]: string | number;
   };
 }
+
+export default ComplexFilter;
