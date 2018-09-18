@@ -1,6 +1,6 @@
 import Asset from './Asset';
 import ComplexFilter from '../shared/ComplexFilter';
-import {getFilter} from './Filters';
+import filterDefinitions from './filters';
 
 export default function filterComplex(inputs: ReadonlyArray<Asset>, filters: ComplexFilter[]) {
   const sources = new Map<string, Asset>();
@@ -18,7 +18,7 @@ export default function filterComplex(inputs: ReadonlyArray<Asset>, filters: Com
       }
       return asset;
     });
-    const f = getFilter(filter.name);
+    const f = filterDefinitions[filter.name];
     if (inputs.length === 0) {
       if (!defaultInput) {
         throw new Error(`${filter.name} does not specify an input, but there is no default input to use.`);
