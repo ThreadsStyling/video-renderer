@@ -5,7 +5,7 @@ import loadVideo from './util/loadVideo';
 const noop = () => {};
 
 export default class Asset {
-  static async fromImage (src: string): Promise<Asset> {
+  static async fromImage(src: string): Promise<Asset> {
     const [canvas, context] = createCanvasAndContext();
     const img = await loadImage(src);
     const width = img.width;
@@ -18,7 +18,7 @@ export default class Asset {
     return new Asset(0, width, height, canvas, context, noop);
   }
 
-  static async fromVideo (src: string): Promise<Asset> {
+  static async fromVideo(src: string): Promise<Asset> {
     const [canvas, context] = createCanvasAndContext();
     const video = await loadVideo(src);
 
@@ -43,9 +43,9 @@ export default class Asset {
       }
       context.drawImage(video, 0, 0);
     });
-  };
+  }
 
-  static async fromVideoWithAlpha (src: string): Promise<Asset> {
+  static async fromVideoWithAlpha(src: string): Promise<Asset> {
     const fullVideo = await Asset.fromVideo(src);
     const width = fullVideo.width;
     const height = fullVideo.height / 2;
@@ -67,7 +67,7 @@ export default class Asset {
       }
       context.putImageData(image, 0, 0, 0, 0, width, height);
     });
-  };
+  }
 
   duration: number;
   width: number;

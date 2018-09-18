@@ -15,7 +15,9 @@ document.body.appendChild(canvas);
 Promise.all([
   Asset.fromVideo('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'),
   Asset.fromVideoWithAlpha(require('../assets/generated/loop.mp4')),
-  Asset.fromImage('https://user-images.githubusercontent.com/3481367/45488425-4ad14080-b759-11e8-9629-2fb02283f02e.png'),
+  Asset.fromImage(
+    'https://user-images.githubusercontent.com/3481367/45488425-4ad14080-b759-11e8-9629-2fb02283f02e.png',
+  ),
 ]).then((inputs) => {
   const f = (x: number, y: number) =>
     filterComplex(inputs, [
