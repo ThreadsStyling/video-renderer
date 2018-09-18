@@ -65,6 +65,7 @@ const loadVideoWithAlpha = async (url: string): Promise<Asset> => {
   });
 };
 
+const noop = () => {};
 const loadImage = async (src: string): Promise<Asset> => {
   const [canvas, context] = createCanvasAndContext();
   const img = await getImage(src);
@@ -73,6 +74,9 @@ const loadImage = async (src: string): Promise<Asset> => {
 
   canvas.width = width;
   canvas.height = height;
+  context.drawImage(img, 0, 0);
+
+  return new Asset(0, width, height, canvas, context, noop);
 };
 
 export default async function loadAsset(url: string, kind: AssetKind): Promise<Asset> {
