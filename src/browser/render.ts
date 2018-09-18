@@ -15,7 +15,7 @@ export interface Player {
   onFrame(handler: (state: RenderState) => void): () => void;
 }
 
-export default function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
+export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
   if (asset) {
     canvas.width = asset.width;
     canvas.height = asset.height;
