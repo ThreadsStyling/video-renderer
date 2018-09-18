@@ -1,8 +1,9 @@
 const createFileRule = require('@moped/rule-file');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const {join} = require('path');
 
 module.exports = {
-  entry: __dirname + '/src/browser/demo.image.ts',
+  entry: join(__dirname, 'demo', 'image.ts'),
   target: 'node',
   output: {
     path: __dirname + '/lib',

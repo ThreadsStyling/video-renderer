@@ -1,9 +1,9 @@
 // based on https://jakearchibald.com/scratch/alphavid/
 // and https://stackoverflow.com/questions/4073303/can-i-have-a-video-with-transparent-background-using-html5-video-tag
 
-import './register/overlay';
-import './register/trim';
-import {filterComplex, render, Asset} from '.';
+import '../src/browser/register/overlay';
+import '../src/browser/register/trim';
+import {filterComplex, render, Asset} from '../src/browser';
 
 const canvas = document.createElement('canvas');
 
@@ -14,8 +14,8 @@ document.head.appendChild(style);
 document.body.appendChild(canvas);
 
 Promise.all([
-  Asset.fromVideo(require('../../assets/Video Of People Walking.mp4')),
-  Asset.fromVideoWithAlpha(require('../../assets/generated/loop.mp4')),
+  Asset.fromVideo(require('../assets/Video Of People Walking.mp4')),
+  Asset.fromVideoWithAlpha(require('../assets/generated/loop.mp4')),
 ]).then((inputs) => {
   const f = (x: number, y: number) =>
     filterComplex(inputs, [
