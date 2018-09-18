@@ -10,7 +10,7 @@
   "dependencies": {},
   "devDependencies": {
     "@moped/rule-file": "^0.0.9",
-    "@threads/tslint": "^3.3.0",
+    "@threads/tslint": "^3.4.0",
     "@types/jest": "^23.1.1",
     "@types/node": "^10.5.2",
     "@types/rimraf": "^2.0.2",
@@ -29,13 +29,14 @@
     "webpack-serve": "^2.0.2"
   },
   "scripts": {
-    "prebuild": "node generate-filter-register && rimraf lib/ && rimraf browser/ && rimraf node/",
+    "prebuild": "rimraf lib/ && rimraf browser/ && rimraf node/",
     "build": "tsc",
     "postbuild": "node generate-public && rimraf lib/node/__tests__",
     "prepare": "yarn build",
     "start": "webpack-serve ./webpack.config.js",
     "pretest": "node src/node/__tests__/download-ffmpeg",
-    "test": "jest"
+    "test": "jest",
+    "prettier": "prettier --ignore-path .gitignore --write './**/*.{js,jsx,ts,tsx}'"
   },
   "jest": {
     "transform": {
