@@ -1,18 +1,21 @@
-import {filterComplex, render, Asset} from '../src/browser';
+// based on https://jakearchibald.com/scratch/alphavid/
+// and https://stackoverflow.com/questions/4073303/can-i-have-a-video-with-transparent-background-using-html5-video-tag
+
+import {filterComplex, render, Asset} from '../browser';
 
 const canvas = document.createElement('canvas');
 
-canvas.style.width = '782px';
-canvas.style.height = '1374px';
+canvas.style.width = '300px';
+canvas.style.height = '300px';
 
 canvas.style.margin = 'auto';
 canvas.style.display = 'block';
 document.body.appendChild(canvas);
 
 Promise.all([
-  Asset.fromImage('https://user-images.githubusercontent.com/9773803/45625491-45dbfc00-ba8d-11e8-8c9c-e961e08eaa99.png'),
+  Asset.fromVideo('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'),
+  Asset.fromVideoWithAlpha(require('../assets/generated/loop.mp4')),
   Asset.fromImage('https://user-images.githubusercontent.com/3481367/45488425-4ad14080-b759-11e8-9629-2fb02283f02e.png'),
-  Asset.fromImage('https://d1algegyh2h2u2.cloudfront.net/svg/landing/threads-logo-white.svg'),
 ]).then((inputs) => {
   const f = (x: number, y: number) =>
     filterComplex(inputs, [
@@ -25,7 +28,7 @@ Promise.all([
       {
         inputs: ['merge1', '2'],
         name: 'overlay',
-        args: {x: -10, y: -10},
+        args: {x: 10, y: 10},
         outputs: ['merge2'],
       },
       {
@@ -37,5 +40,5 @@ Promise.all([
         },
       },
     ]);
-  render(canvas, f(200, 200));
+  render(canvas, f(100, 100));
 });
