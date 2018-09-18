@@ -3,7 +3,7 @@
 
 import './register/overlay';
 import './register/trim';
-import {AssetKind, loadAsset, filterComplex, render} from '.';
+import {filterComplex, render, Asset} from '.';
 
 const canvas = document.createElement('canvas');
 
@@ -14,8 +14,8 @@ document.head.appendChild(style);
 document.body.appendChild(canvas);
 
 Promise.all([
-  loadAsset(require('../../assets/Video Of People Walking.mp4'), AssetKind.Video),
-  loadAsset(require('../../assets/generated/loop.mp4'), AssetKind.VideoWithAlpha),
+  Asset.fromVideo(require('../../assets/Video Of People Walking.mp4')),
+  Asset.fromVideoWithAlpha(require('../../assets/generated/loop.mp4')),
 ]).then((inputs) => {
   const f = (x: number, y: number) =>
     filterComplex(inputs, [
