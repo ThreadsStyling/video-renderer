@@ -25,8 +25,16 @@ Promise.all([
         inputs: ['0', '1'],
         name: 'overlay',
         args: {x, y},
+        outputs: ['merge1'],
       },
       {
+        inputs: ['merge1', '2'],
+        name: 'overlay',
+        args: {x: 10, y: 10},
+        outputs: ['merge2'],
+      },
+      {
+        inputs: ['merge2'],
         name: 'trim',
         args: {
           start: 0,
