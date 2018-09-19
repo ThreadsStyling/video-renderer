@@ -57,8 +57,8 @@ Promise.all([
         name: 'drawtext',
         args: {
           text: 'SOME TEXT',
-          x: 200,
-          y: 500,
+          x: 50,
+          y: 50,
           fontsize: 72,
           fontcolor: 'white',
           box: 1,
