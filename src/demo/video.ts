@@ -14,7 +14,7 @@ document.body.appendChild(canvas);
 
 Promise.all([
   Asset.fromVideo('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'),
-  Asset.fromVideoWithAlpha(require('../assets/generated/loop.mp4')),
+  Asset.fromVideoWithAlpha(require('../../assets/generated/loop.mp4')),
   Asset.fromImage(
     'https://user-images.githubusercontent.com/3481367/45488425-4ad14080-b759-11e8-9629-2fb02283f02e.png',
   ),
@@ -22,13 +22,25 @@ Promise.all([
   const f = (x: number, y: number) =>
     filterComplex(inputs, [
       {
-        inputs: ['0', '1'],
+        inputs: ['2'],
+        name: 'scale',
+        args: {w: 150, h: 150},
+        outputs: ['asset2'],
+      },
+      {
+        inputs: ['1'],
+        name: 'scale',
+        args: {w: 111, h: 111},
+        outputs: ['asset1'],
+      },
+      {
+        inputs: ['0', 'asset1'],
         name: 'overlay',
         args: {x, y},
         outputs: ['merge1'],
       },
       {
-        inputs: ['merge1', '2'],
+        inputs: ['merge1', 'asset2'],
         name: 'overlay',
         args: {x: 10, y: 10},
         outputs: ['merge2'],

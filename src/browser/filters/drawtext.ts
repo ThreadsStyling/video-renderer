@@ -20,6 +20,7 @@ const drawtext: Filter = (inputs, args) => {
   const box = +(args.box || 0);
   const boxborderw = +(args.boxborderw || 0);
   const boxcolor = String(args.boxcolor) || '';
+
   return [
     new Asset(
       i.duration,

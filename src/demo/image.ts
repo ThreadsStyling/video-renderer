@@ -21,7 +21,13 @@ Promise.all([
   const f = (x: number, y: number) =>
     filterComplex(inputs, [
       {
-        inputs: ['0', '1'],
+        inputs: ['1'],
+        name: 'scale',
+        args: {w: 50, h: 50},
+        outputs: ['asset1'],
+      },
+      {
+        inputs: ['0', 'asset1'],
         name: 'overlay',
         args: {x, y},
         outputs: ['merge1'],
@@ -44,8 +50,8 @@ Promise.all([
         name: 'drawtext',
         args: {
           text: 'SOME TEXT',
-          x: 200,
-          y: 500,
+          x: 100,
+          y: 100,
           fontsize: 72,
           fontcolor: 'white',
           box: 1,
