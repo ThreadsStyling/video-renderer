@@ -40,6 +40,19 @@ Promise.all([
           end: 5,
         },
       },
+      {
+        name: 'drawtext',
+        args: {
+          text: 'SOME TEXT',
+          x: 200,
+          y: 500,
+          fontsize: 72,
+          fontcolor: 'white',
+          box: 1,
+          boxcolor: 'black',
+          boxborderw: 10
+        }
+      }
     ]);
   render(canvas, f(200, 200));
 });
