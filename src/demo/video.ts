@@ -35,7 +35,7 @@ Promise.all([
       {
         inputs: ['2'],
         name: 'rotate',
-        args: {angle: .5},
+        args: {angle: Math.PI / 6},
         outputs: ['asset2rotated'],
       },
       {

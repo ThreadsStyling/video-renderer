@@ -70,3 +70,5 @@ src/node/__tests__/bin
 
 /browser/
 /node/
+
+output.jpg
