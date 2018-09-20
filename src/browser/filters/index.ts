@@ -3,6 +3,7 @@ import trim from './trim';
 import overlay from './overlay';
 import drawtext from './drawtext';
 import scale from './scale';
+import rotate from './rotate';
 
 export type Filter = (frames: Asset[], args: {[key: string]: string | number}) => Asset[];
 export interface FiltersByName {
@@ -13,4 +14,5 @@ export const filters: FiltersByName = {
   overlay,
   drawtext,
   scale,
+  rotate,
 };
