@@ -43,8 +43,7 @@
     "test:integration": "node test/image.tests.js",
     "prettier": "prettier --ignore-path .gitignore --write './**/*.{js,jsx,ts,tsx}'",
     "tslint": "tslint './src/**/*.{ts,tsx}' -t verbose",
-    "lint": "yarn prettier && yarn tslint",
-    "test:integration:build:chrome": "webpack --config ./test/chrome/renderInChrome.webpack.config.js"
+    "lint": "yarn prettier && yarn tslint"
   },
   "browserslist": ["last 1 Chrome version"],
   "jest": {
