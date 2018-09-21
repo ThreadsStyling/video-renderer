@@ -7,37 +7,35 @@ import createCanvasAndContext from '../util/createCanvasAndContext';
  * @param sContext Context of source <canvas>.
  * @param rotation Rotation amount in Radians.
  */
-const getRotatedCanvasAndContext = (sCanvas: HTMLCanvasElement, sContext: CanvasRenderingContext2D, rotation: number): [HTMLCanvasElement, CanvasRenderingContext2D] => {
+const getRotatedCanvasAndContext = (sCanvas: HTMLCanvasElement, width: number, height: number, angle: number, background: string): [HTMLCanvasElement, CanvasRenderingContext2D] => {
   const [canvas, context] = createCanvasAndContext();
-  const max = Math.max(sCanvas.width, sCanvas.height);
-  const size = Math.ceil(Math.sqrt(2 * max * max));
 
-  canvas.width = size;
-  canvas.height = size;
+  canvas.width = width;
+  canvas.height = height
 
-  context.save();
-  context.translate(canvas.width / 2, canvas.height / 2);
-  context.rotate(rotation);
+  context.fillStyle = background;
+  context.fillRect(0, 0, width, height);
+  context.translate(width / 2, height / 2);
+  context.rotate(1);
   context.drawImage(sCanvas, -sCanvas.width / 2, -sCanvas.height / 2);
-  context.restore();
 
   return [canvas, context];
 }
 
-const rotate: Filter = ([asset], {angle}) => {
+const rotate: Filter = ([asset], {angle, out_w, out_h, fillcolor = '#000000'}) => {
   const [canvas, context] = createCanvasAndContext();
-  const max = Math.max(asset.width, asset.height);
-  const size = Math.ceil(Math.sqrt(2 * max * max));
+  const outWidth = out_w ? out_w as any | 0 : asset.width;
+  const outHeight = out_h ? out_h as any | 0 : asset.height;
 
-  canvas.width = size;
-  canvas.height = size;
-  // rotateCanvas(asset.canvas, canvas, context, angle as any | 0);
+  canvas.width = outWidth;
+  canvas.height = outHeight;
 
   const render = (time: number) => {
     asset.renderFrame(time);
 
-    const [rotatedCanvas] = getRotatedCanvasAndContext(asset.canvas, asset.context, angle as any | 0);
+    const [rotatedCanvas] = getRotatedCanvasAndContext(asset.canvas, outWidth, outHeight, angle as any | 0, fillcolor as string);
 
+    context.clearRect(0, 0, outWidth, outHeight);
     context.drawImage(rotatedCanvas, 0, 0);
   };
 
