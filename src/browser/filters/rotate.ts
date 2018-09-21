@@ -22,7 +22,7 @@ const getRotatedCanvasAndContext = (sCanvas: HTMLCanvasElement, width: number, h
   return [canvas, context];
 }
 
-const rotate: Filter = ([asset], {angle, out_w, out_h, fillcolor = '#000000'}) => {
+const rotate: Filter = ([asset], {angle, out_w, out_h, fillcolor = '#00000010'}) => {
   const [canvas, context] = createCanvasAndContext();
   const outWidth = out_w ? out_w as any | 0 : asset.width;
   const outHeight = out_h ? out_h as any | 0 : asset.height;
