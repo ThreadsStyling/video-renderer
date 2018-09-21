@@ -11,10 +11,6 @@ jobs:
     <<: *container
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
       - run:
           name: Versions
           command: node -v && npm -v && yarn -v
@@ -24,10 +20,6 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Build
           command: yarn build
@@ -42,10 +34,6 @@ jobs:
     <<: *container
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
       - run:
           name: Versions
           command: node -v && npm -v && yarn -v
@@ -55,10 +43,6 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Build
           command: yarn build
