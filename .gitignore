@@ -75,3 +75,4 @@ output.jpg
 
 .cache/
 .puppet-master/
+test/image-tests-out/
