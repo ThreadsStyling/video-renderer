@@ -72,3 +72,6 @@ src/node/__tests__/bin
 /node/
 
 output.jpg
+
+.cache/
+.puppet-master/
