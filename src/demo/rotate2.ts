@@ -17,7 +17,11 @@ Promise.all([
     {
       inputs: ['1'],
       name: 'rotate',
-      args: {angle: 1},
+      args: {
+        angle: 1,
+        out_w: 600,
+        out_h: 600,
+      },
       outputs: ['rotated'],
     },
     {

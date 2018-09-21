@@ -65,6 +65,6 @@ Rotate with transparent background.
 ./src/node/__tests__/bin/ffmpeg -y \
   -i assets/image.jpg  \
   -i assets/servers.png  \
-  -filter_complex "[1] rotate=angle=1:out_w=600:out_h=600:fillcolor=#00000000[rotated];[0][rotated] overlay=0:0" \
+  -filter_complex "[1] rotate=angle=1:out_w=600:out_h=600:fillcolor=#0077ff7f[rotated];[0][rotated] overlay=0:0" \
   output.jpg
 ```
