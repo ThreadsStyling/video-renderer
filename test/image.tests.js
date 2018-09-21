@@ -91,10 +91,16 @@ const runTestcase = async (testcase) => {
   return result.diffResult.percent;
 };
 
+const testNames = new Set();
 const main = async () => {
-  const passed = true;
+  let passed = true;
 
   for (const testcase of testcases) {
+    if (testNames.has(testcase.name)) {
+      throw new Error(`Test case with name [${testcase.name}] already exists.`);
+    }
+    testNames.add(testcase.name);
+
     try {
       const percent = await runTestcase(testcase);
       console.log(`✅  Passed [${testcase.name}], difference ${percent}`);
