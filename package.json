@@ -58,9 +58,6 @@
       "jsx",
       "json",
       "node"
-    ],
-    "setupFiles": [
-      "<rootDir>/src/__tests__/setup.js"
     ]
   }
 }

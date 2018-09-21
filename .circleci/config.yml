@@ -3,7 +3,7 @@ version: 2
 refs:
   container: &container
     docker:
-      - image: node:8.11
+      - image: circleci/node:latest-browsers
     working_directory: ~/repo
 
 jobs:
@@ -34,6 +34,9 @@ jobs:
       - run:
           name: Test
           command: yarn test
+      - run:
+          name: Test Functional
+          command: yarn test:integration
 
   master:
     <<: *container
@@ -62,6 +65,9 @@ jobs:
       - run:
           name: Test
           command: yarn test
+      - run:
+          name: Test Functional
+          command: yarn test:integration
       - run:
           name: Release
           command: npx semantic-release
