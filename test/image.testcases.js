@@ -4,6 +4,7 @@ const assetDir = join(__dirname, '..', 'assets');
 
 module.exports = [
   {
+    name: 'overlay-simple',
     assets: [
       join(assetDir, 'image.jpg'),
       join(assetDir, 'servers.png'),
