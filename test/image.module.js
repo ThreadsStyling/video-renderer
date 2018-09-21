@@ -94,14 +94,16 @@ const processDiff = async (canvasResult, ffmpegResult) => {
   };
 };
 
+const drawImg = (src) => {
+  const img = document.createElement('img');
+  img.src = src;
+  document.body.appendChild(img);
+};
+
 exports.runTest = async (assetsUrls, filters, ffmpegResultDataUrl) => {
   const canvasResult = await exports.processCanvas(assetsUrls, filters);
   const ffmpegResult = await exports.processFfmpeg(ffmpegResultDataUrl);
   const diffResult = await processDiff(canvasResult, ffmpegResult);
-
-  const img = document.createElement('img');
-  img.src = diffResult.dataUrlCombined;
-  document.body.appendChild(img);
 
   return {
     canvasResult,
