@@ -68,3 +68,15 @@ Rotate with transparent background.
   -filter_complex "[1] rotate=angle=1:out_w=600:out_h=600:fillcolor=#0077ff7f[rotated];[0][rotated] overlay=0:0" \
   output.jpg
 ```
+
+
+## Cropping (`crop` filter)
+
+Crop stream.
+
+```shell
+./src/node/__tests__/bin/ffmpeg -y \
+  -i assets/image.jpg  \
+  -filter_complex "[0] crop=w=100:h=100:x=10:y=10" \
+  output.jpg
+```
