@@ -18,6 +18,7 @@ const rotate: Filter = ([asset], args) => {
     asset.renderFrame(time);
     context.clearRect(0, 0, width, height);
     context.fillRect(0, 0, width, height);
+    context.clearRect(x, y, asset.width, asset.height);
     context.drawImage(asset.canvas, x, y);
   };
 
