@@ -1,3 +1,4 @@
+// This code will run in Chrome.
 const {Asset, filterComplex, render} = require('../lib/browser');
 const createCanvasAndContext = require('../lib/browser/util/createCanvasAndContext').default;
 
@@ -101,8 +102,10 @@ const drawImg = (src) => {
 };
 
 exports.runTest = async (assetsUrls, filters, ffmpegResultDataUrl) => {
-  const canvasResult = await exports.processCanvas(assetsUrls, filters);
-  const ffmpegResult = await exports.processFfmpeg(ffmpegResultDataUrl);
+  const [canvasResult, ffmpegResult] = await Promise.all([
+    exports.processCanvas(assetsUrls, filters),
+    exports.processFfmpeg(ffmpegResultDataUrl),
+  ]);
   const diffResult = await processDiff(canvasResult, ffmpegResult);
 
   return {
