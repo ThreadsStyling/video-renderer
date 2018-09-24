@@ -21,7 +21,7 @@ Add padding.
 ./src/node/__tests__/bin/ffmpeg -y \
   -i assets/image.jpg  \
   -i assets/servers.png  \
-  -filter_complex "[1] pad=width=600:height=400:x=20:y=20:color=violet[padded]; [0][padded] overlay=0:0" \
+  -filter_complex "[1] pad=width=600:height=400:x=20:y=20:color=#ff0000[padded]; [0][padded] overlay=0:0" \
   output.jpg
 ```
 

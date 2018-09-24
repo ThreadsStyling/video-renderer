@@ -3,7 +3,7 @@ version: 2
 refs:
   container: &container
     docker:
-      - image: node:8.11
+      - image: circleci/node:latest-browsers
     working_directory: ~/repo
 
 jobs:
@@ -13,8 +13,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
+            - v2-dependencies-{{ checksum "yarn.lock" }}
+            - v2-dependencies-
       - run:
           name: Versions
           command: node -v && npm -v && yarn -v
@@ -27,13 +27,16 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v2-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Build
           command: yarn build
       - run:
           name: Test
           command: yarn test
+      - run:
+          name: Test Functional
+          command: yarn test:integration
 
   master:
     <<: *container
@@ -41,8 +44,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
+            - v2-dependencies-{{ checksum "yarn.lock" }}
+            - v2-dependencies-
       - run:
           name: Versions
           command: node -v && npm -v && yarn -v
@@ -55,13 +58,16 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v2-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Build
           command: yarn build
       - run:
           name: Test
           command: yarn test
+      - run:
+          name: Test Functional
+          command: yarn test:integration
       - run:
           name: Release
           command: npx semantic-release

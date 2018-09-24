@@ -6,6 +6,7 @@ import scale from './scale';
 import rotate from './rotate';
 import crop from './crop';
 import blend from './blend';
+import pad from './pad';
 
 export type Filter = (frames: Asset[], args: {[key: string]: string | number}) => Asset[];
 export interface FiltersByName {
@@ -19,4 +20,5 @@ export const filters: FiltersByName = {
   rotate,
   crop,
   blend,
+  pad,
 };
