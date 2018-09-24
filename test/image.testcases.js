@@ -251,6 +251,32 @@ module.exports = [
       }
     ],
   },
+  {
+    name: 'pad-transparent-bg',
+    assets: [
+      join(assetDir, 'image.jpg'),
+      join(assetDir, 'servers.png'),
+    ],
+    filters: [
+      {
+        inputs: ['1'],
+        name: 'pad',
+        args: {
+          w: 600,
+          h: 400,
+          x: 20,
+          y: 20,
+          color: '#00000000',
+        },
+        outputs: ['padded'],
+      },
+      {
+        inputs: ['0', 'padded'],
+        name: 'overlay',
+        args: {x: 0, y: 0},
+      }
+    ],
+  },
   /* ffmpeg crashes on this, possibly needs some flag
   {
     name: 'drawtext',
