@@ -4,6 +4,8 @@ import overlay from './overlay';
 import drawtext from './drawtext';
 import scale from './scale';
 import rotate from './rotate';
+import crop from './crop';
+import blend from './blend';
 import pad from './pad';
 
 export type Filter = (frames: Asset[], args: {[key: string]: string | number}) => Asset[];
@@ -16,5 +18,7 @@ export const filters: FiltersByName = {
   drawtext,
   scale,
   rotate,
+  crop,
+  blend,
   pad,
 };
