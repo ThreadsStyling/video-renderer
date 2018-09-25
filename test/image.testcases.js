@@ -3,6 +3,7 @@ const {join} = require('path');
 const assetDir = join(__dirname, '..', 'assets');
 
 module.exports = [
+  /*
   {
     name: 'overlay-simple',
     assets: [
@@ -354,19 +355,20 @@ module.exports = [
       }
     ],
   },
-  /* ffmpeg crashes on this, possibly needs some flag
+  */
   {
     name: 'drawtext',
     assets: [
-      join(assetDir, 'image.jpg'),
+      join(assetDir, 'servers.png'),
     ],
     filters: [
       {
         name: 'drawtext',
         args: {
+          fontfile: './assets/Verdana.ttf',
           text: 'SOME TEXT',
-          x: 10,
-          y: 10,
+          x: 100,
+          y: 100,
           fontsize: 72,
           fontcolor: 'white',
           box: 1,
@@ -376,5 +378,4 @@ module.exports = [
       }
     ],
   },
-  */
 ];

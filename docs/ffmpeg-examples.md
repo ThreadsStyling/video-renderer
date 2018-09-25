@@ -102,7 +102,14 @@ Write text.
 ```shell
 ./src/node/__tests__/bin/ffmpeg -y \
   -i assets/image.jpg  \
-  -filter_complex "[0]drawtext=text=SOME TEXT:x=(0-tw/2):y=0:fontfile=/Users/vadims.daleckis/dev/isomorphic-video-render/assets/Notable-Regular.ttf:fontsize=30:fontcolor=white" \
+  -filter_complex " \
+    [0] drawtext = \
+      :text=SOME TEXT \
+      :x=(0-tw/2) \
+      :y=0 \
+      :fontfile=./assets/Verdana.ttf \
+      :fontsize=30 \
+      :fontcolor=white" \
   output.jpg
 ```
 
@@ -120,7 +127,7 @@ Write text on a separate layer and rotate it.
       text=SOME TEXT: \
       x=(150-tw/2): \
       y=(150-th/2): \
-      fontfile=/Users/vadims.daleckis/dev/isomorphic-video-render/assets/Notable-Regular.ttf: \
+      fontfile=./assets/Notable-Regular.ttf: \
       fontsize=30: \
       fontcolor=red \
     [txt]; \
@@ -128,7 +135,7 @@ Write text on a separate layer and rotate it.
       text=SOME TEXT: \
       x=(150-tw/2): \
       y=(150-th/2): \
-      fontfile=/Users/vadims.daleckis/dev/isomorphic-video-render/assets/Notable-Regular.ttf: \
+      fontfile=./assets/Notable-Regular.ttf: \
       fontsize=30: \
       fontcolor=red \
     [txt2]; \
