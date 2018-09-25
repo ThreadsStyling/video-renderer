@@ -347,8 +347,8 @@ module.exports = [
         args: {
           fontfile: './assets/Verdana.ttf',
           text: 'SOME TEXT',
-          x: 0,
-          y: 10,
+          x: 15,
+          y: 15,
           fontsize: 70,
           fontcolor: 'black',
           box: 1,
