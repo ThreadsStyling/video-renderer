@@ -10,6 +10,7 @@ renderDemo(
       inputs: ['0'],
       name: 'drawtext',
       args: {
+        fontfile: './assets/Verdana.ttf',
         text: 'SOME TEXT',
         x: 100,
         y: 100,
