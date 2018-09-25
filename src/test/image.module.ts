@@ -1,7 +1,7 @@
 // This code will run in Chrome.
 
-import {Asset, filterComplex, render, ComplexFilter} from "../browser";
-import createCanvasAndContext from "../browser/util/createCanvasAndContext";
+import {Asset, filterComplex, render, ComplexFilter} from '../browser';
+import createCanvasAndContext from '../browser/util/createCanvasAndContext';
 
 const draf = () =>
   new Promise((r) => {

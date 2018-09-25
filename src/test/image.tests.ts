@@ -77,9 +77,9 @@ const runTestcase = async (testcase: any) => {
 
   if (!result.diffResult) {
     throw new Error(
-      `Image dimensions don't match <canvas> = (${result.canvasResult.width}, ${result.canvasResult.height}); ffmpeg = (${
-        result.ffmpegResult.width
-      }, ${result.ffmpegResult.height})`,
+      `Image dimensions don't match <canvas> = (${result.canvasResult.width}, ${
+        result.canvasResult.height
+      }); ffmpeg = (${result.ffmpegResult.width}, ${result.ffmpegResult.height})`,
     );
   }
 
