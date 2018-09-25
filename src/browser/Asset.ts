@@ -3,7 +3,8 @@ import loadImage from './util/loadImage';
 import loadVideo from './util/loadVideo';
 
 const noop = () => {};
-const transparent1x1Pixel = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAIAAAsABb4+CbQAAAAASUVORK5CYII=';
+const transparent1x1Pixel =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAIAAAsABb4+CbQAAAAASUVORK5CYII=';
 
 export default class Asset {
   static async fromImage(src: string): Promise<Asset> {

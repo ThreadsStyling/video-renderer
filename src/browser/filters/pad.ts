@@ -22,16 +22,7 @@ const rotate: Filter = ([asset], args) => {
     context.drawImage(asset.canvas, x, y);
   };
 
-  return [
-    new Asset(
-      asset.duration,
-      width,
-      height,
-      canvas,
-      context,
-      render,
-    ),
-  ];
+  return [new Asset(asset.duration, width, height, canvas, context, render)];
 };
 
 export default rotate;

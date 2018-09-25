@@ -20,16 +20,7 @@ const overlay: Filter = ([background, foreground], args) => {
     context.drawImage(foreground.canvas, x, y);
   };
 
-  return [
-    new Asset(
-      background.duration,
-      width,
-      height,
-      canvas,
-      context,
-      render,
-    ),
-  ];
+  return [new Asset(background.duration, width, height, canvas, context, render)];
 };
 
 export default overlay;

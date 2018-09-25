@@ -23,7 +23,7 @@ const getFileAsDataUrl = (filename) => {
 const ffmpegBinary = path.join(__dirname, '..', 'src', 'node', '__tests__', 'bin', 'ffmpeg');
 const ffmpeg = async (...args) => {
   const ffmpegProc = spawn(ffmpegBinary, args, {
-    stdio: 'ignore'
+    stdio: 'ignore',
   });
 
   return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ const ffmpeg = async (...args) => {
       else resolve();
     });
   });
-}
+};
 
 const renderFfmpeg = async ({name, assets, filters}) => {
   const inputs = ['-y'];
@@ -71,7 +71,11 @@ const runTestcase = async (testcase) => {
   fs.writeFileSync(outFile, data);
 
   if (!result.diffResult) {
-    throw new Error(`Image dimensions don't match <canvas> = (${reult.canvasResult.width}, ${reult.canvasResult.height}); ffmpeg = (${reult.ffmpegResult.width}, ${reult.ffmpegResult.height})`);
+    throw new Error(
+      `Image dimensions don't match <canvas> = (${reult.canvasResult.width}, ${reult.canvasResult.height}); ffmpeg = (${
+        reult.ffmpegResult.width
+      }, ${reult.ffmpegResult.height})`,
+    );
   }
 
   const dataUrlDiff = result.diffResult.dataUrl;
@@ -108,7 +112,7 @@ const main = async () => {
       passed = false;
       console.log(`❌  Failed [${testcase.name}]: ${error.message}`);
       console.error(error);
-    };
+    }
   }
 
   if (!passed) {

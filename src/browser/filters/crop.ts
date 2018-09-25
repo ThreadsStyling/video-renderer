@@ -18,16 +18,7 @@ const crop: Filter = ([asset], args) => {
     context.drawImage(asset.canvas, x, y, width, height, 0, 0, width, height);
   };
 
-  return [
-    new Asset(
-      asset.duration,
-      width,
-      height,
-      canvas,
-      context,
-      render,
-    ),
-  ];
+  return [new Asset(asset.duration, width, height, canvas, context, render)];
 };
 
 export default crop;

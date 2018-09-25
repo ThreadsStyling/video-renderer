@@ -10,8 +10,8 @@ import pad from './pad';
 
 export type Filter = (frames: Asset[], args: {[key: string]: string | number}) => Asset[];
 export interface FiltersByName {
-  [name: string]: Filter | undefined
-};
+  [name: string]: Filter | undefined;
+}
 export const filters: FiltersByName = {
   trim,
   overlay,
