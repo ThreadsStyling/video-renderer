@@ -50,16 +50,7 @@ const drawtext: Filter = ([background], args) => {
     context.fillText(text, x, y - 2);
   };
 
-  return [
-    new Asset(
-      background.duration,
-      width,
-      height,
-      canvas,
-      context,
-      render,
-    ),
-  ];
+  return [new Asset(background.duration, width, height, canvas, context, render)];
 };
 
 export default drawtext;

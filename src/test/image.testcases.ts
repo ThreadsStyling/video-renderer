@@ -1,4 +1,4 @@
-import {ComplexFilter} from "../../browser";
+import {ComplexFilter} from '../../browser';
 
 const {join} = require('path');
 
@@ -368,10 +368,7 @@ export const testcases: Testcase[] = [
   },
   {
     name: 'drawtext-rotated',
-    assets: [
-      join(assetDir, 'servers.png'),
-      join(assetDir, 'empty.png'),
-    ],
+    assets: [join(assetDir, 'servers.png'), join(assetDir, 'empty.png')],
     filters: [
       {
         inputs: ['1'],
