@@ -3,6 +3,7 @@ import loadImage from './util/loadImage';
 import loadVideo from './util/loadVideo';
 
 const noop = () => {};
+const transparent1x1Pixel = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAIAAAsABb4+CbQAAAAASUVORK5CYII=';
 
 export default class Asset {
   static async fromImage(src: string): Promise<Asset> {
@@ -16,6 +17,10 @@ export default class Asset {
     context.drawImage(img, 0, 0);
 
     return new Asset(0, width, height, canvas, context, noop);
+  }
+
+  static async transparentPixel(): Promise<Asset> {
+    return Asset.fromImage(transparent1x1Pixel);
   }
 
   static async fromVideo(src: string): Promise<Asset> {
