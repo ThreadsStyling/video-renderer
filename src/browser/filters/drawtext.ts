@@ -8,13 +8,14 @@ function parse (path: string) {
   return (path.split('/').pop() || '').split('.').shift();
 }
 
-const drawtext: Filter = (inputs, args) => {
-  const i = inputs[0];
+const drawtext: Filter = ([background], args) => {
   const x = +(args.x || 0);
   const y = +(args.y || 0);
   const text = String(args.text) || '';
-  // FONT FILE ASSUMES THAT THE FONT IS AVAILABLE IN THE BROWSER (via @font etc)
+
+  // We use font file name as font face.
   const font = parse(String(args.fontfile)) || '';
+
   const fontsize = String(args.fontsize) || '';
   const fontcolor = String(args.fontcolor) || '';
   const box = +(args.box || 0);
@@ -23,27 +24,28 @@ const drawtext: Filter = (inputs, args) => {
 
   return [
     new Asset(
-      i.duration,
-      i.width,
-      i.height,
-      i.canvas,
-      i.context,
+      background.duration,
+      background.width,
+      background.height,
+      background.canvas,
+      background.context,
       (time) => {
-        i.renderFrame(time);
-        i.context.font = `${fontsize}px ${font}`;
+        background.renderFrame(time);
+        background.context.font = `${fontsize}px ${font}`;
         if (box) {
           const numericFontSize = Number(fontsize);
-          i.context.fillStyle = boxcolor;
-          const details = i.context.measureText(text);
-          i.context.fillRect(
+          background.context.fillStyle = boxcolor;
+          const details = background.context.measureText(text);
+          background.context.fillRect(
             x - boxborderw,
             y - numericFontSize + (numericFontSize/MAGIC_Y_START) - boxborderw,
             details.width + (boxborderw * 2),
             numericFontSize - (numericFontSize/MAGIC_Y_END) + (boxborderw * 2)
           );
         }
-        i.context.fillStyle = fontcolor;
-        i.context.fillText(text, x, y);
+        background.context.fillStyle = fontcolor;
+        background.context.textBaseline = 'top';
+        background.context.fillText(text, x, y - 2);
       },
     ),
   ];
