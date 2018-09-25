@@ -3,7 +3,6 @@ const {join} = require('path');
 const assetDir = join(__dirname, '..', 'assets');
 
 module.exports = [
-  /*
   {
     name: 'overlay-simple',
     assets: [
@@ -355,7 +354,6 @@ module.exports = [
       }
     ],
   },
-  */
   {
     name: 'drawtext',
     assets: [
@@ -367,12 +365,31 @@ module.exports = [
         args: {
           fontfile: './assets/Verdana.ttf',
           text: 'SOME TEXT',
-          x: 100,
-          y: 100,
-          fontsize: 72,
-          fontcolor: 'white',
+          x: 0,
+          y: 10,
+          fontsize: 70,
+          fontcolor: 'black',
+        }
+      }
+    ],
+  },
+  {
+    name: 'drawtext-with-background',
+    assets: [
+      join(assetDir, 'servers.png'),
+    ],
+    filters: [
+      {
+        name: 'drawtext',
+        args: {
+          fontfile: './assets/Verdana.ttf',
+          text: 'SOME TEXT',
+          x: 0,
+          y: 10,
+          fontsize: 70,
+          fontcolor: 'black',
           box: 1,
-          boxcolor: 'black',
+          boxcolor: 'pink',
           boxborderw: 10
         }
       }
