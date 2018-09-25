@@ -1,6 +1,6 @@
-const testcases = require('./image.testcases');
+import {testcases} from './image.testcases';
+import {filterComplex} from '../node';
 const {execute: inChrome} = require('puppet-master');
-const {filterComplex} = require('../lib/node');
 const {spawn} = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -12,7 +12,7 @@ try {
 
 const dataUrlCache = new Map();
 
-const getFileAsDataUrl = (filename) => {
+const getFileAsDataUrl = (filename: string) => {
   if (!dataUrlCache.has(filename)) {
     dataUrlCache.set(filename, 'data:image/png;base64,' + fs.readFileSync(filename).toString('base64'));
   }
@@ -20,33 +20,38 @@ const getFileAsDataUrl = (filename) => {
   return dataUrlCache.get(filename);
 };
 
-const ffmpegBinary = path.join(__dirname, '..', 'src', 'node', '__tests__', 'bin', 'ffmpeg');
-const ffmpeg = async (...args) => {
+const ffmpegBinary = path.join(__dirname, '..', 'node', '__tests__', 'bin', 'ffmpeg');
+const ffmpeg = async (...args: any[]) => {
   const ffmpegProc = spawn(ffmpegBinary, args, {
+    // stdio: [0, 1, 2],
     stdio: 'ignore',
   });
 
   return new Promise((resolve, reject) => {
-    ffmpegProc.on('error', reject);
-    ffmpegProc.on('close', (code) => {
+    ffmpegProc.on('error', (error: Error) => {
+      console.error(error); // tslint:disable-line
+      reject(error);
+    });
+    ffmpegProc.on('close', (code: number) => {
       if (code !== 0) reject(new Error('FFMPEG extited with code ' + code));
       else resolve();
     });
   });
 };
 
-const renderFfmpeg = async ({name, assets, filters}) => {
+const renderFfmpeg = async ({name, assets, filters}: any) => {
   const inputs = ['-y'];
   for (const asset of assets) {
     inputs.push('-i');
     inputs.push(asset);
   }
   const outFile = path.join(outDir, `${name}-ffmpeg.png`);
-  await ffmpeg(...inputs, '-filter_complex', filterComplex(filters), outFile);
+  await ffmpeg(...inputs.concat(['-filter_complex', filterComplex(filters), outFile]));
+
   return getFileAsDataUrl(outFile);
 };
 
-const runTestcase = async (testcase) => {
+const runTestcase = async (testcase: any) => {
   const {name, assets, filters} = testcase;
 
   const ffmpegResultDataUrl = await renderFfmpeg(testcase);
@@ -58,11 +63,11 @@ const runTestcase = async (testcase) => {
 
   const result = await inChrome({
     // debug: true,
-    func: async (module, args) => {
-      return await module.runTest(...args);
+    func: async (module: any, args: any) => {
+      return await module.runTest(...args); // tslint:disable-line
     },
     args: [assetFiles, filters, ffmpegResultDataUrl],
-    module: path.join(__dirname, 'image.module.js'),
+    module: path.join(__dirname, 'image.module.ts'),
   });
 
   const dataUrl = result.canvasResult.dataUrl;
@@ -72,9 +77,9 @@ const runTestcase = async (testcase) => {
 
   if (!result.diffResult) {
     throw new Error(
-      `Image dimensions don't match <canvas> = (${reult.canvasResult.width}, ${reult.canvasResult.height}); ffmpeg = (${
-        reult.ffmpegResult.width
-      }, ${reult.ffmpegResult.height})`,
+      `Image dimensions don't match <canvas> = (${result.canvasResult.width}, ${result.canvasResult.height}); ffmpeg = (${
+        result.ffmpegResult.width
+      }, ${result.ffmpegResult.height})`,
     );
   }
 
@@ -107,11 +112,11 @@ const main = async () => {
 
     try {
       const percent = await runTestcase(testcase);
-      console.log(`✅  Passed [${testcase.name}], difference ${percent}`);
+      console.log(`✅  Passed [${testcase.name}], difference ${percent}`); // tslint:disable-line
     } catch (error) {
       passed = false;
-      console.log(`❌  Failed [${testcase.name}]: ${error.message}`);
-      console.error(error);
+      console.log(`❌  Failed [${testcase.name}]: ${error.message}`); // tslint:disable-line
+      console.error(error); // tslint:disable-line
     }
   }
 
@@ -120,4 +125,4 @@ const main = async () => {
   }
 };
 
-main().then(() => {}, console.error);
+main().then(() => {}, console.error); // tslint:disable-line

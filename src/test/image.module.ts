@@ -1,13 +1,14 @@
 // This code will run in Chrome.
-const {Asset, filterComplex, render} = require('../lib/browser');
-const createCanvasAndContext = require('../lib/browser/util/createCanvasAndContext').default;
+
+import {Asset, filterComplex, render, ComplexFilter} from "../browser";
+import createCanvasAndContext from "../browser/util/createCanvasAndContext";
 
 const draf = () =>
   new Promise((r) => {
     requestAnimationFrame(() => requestAnimationFrame(r));
   });
 
-exports.processCanvas = async (assetsUrls, filters) => {
+exports.processCanvas = async (assetsUrls: string[], filters: ComplexFilter[]) => {
   const assets = await Promise.all(assetsUrls.map((url) => Asset.fromImage(url)));
   const {width, height} = assets[0];
   const [canvas] = createCanvasAndContext();
@@ -28,7 +29,7 @@ exports.processCanvas = async (assetsUrls, filters) => {
   };
 };
 
-exports.processFfmpeg = async (ffmpegResultDataUrl) => {
+exports.processFfmpeg = async (ffmpegResultDataUrl: any) => {
   const asset = await Asset.fromImage(ffmpegResultDataUrl);
 
   return {
@@ -38,7 +39,7 @@ exports.processFfmpeg = async (ffmpegResultDataUrl) => {
   };
 };
 
-const processDiff = async (canvasResult, ffmpegResult) => {
+const processDiff = async (canvasResult: any, ffmpegResult: any) => {
   if (canvasResult.width !== ffmpegResult.width || canvasResult.height !== ffmpegResult.height) {
     return null;
   }
@@ -94,13 +95,15 @@ const processDiff = async (canvasResult, ffmpegResult) => {
   };
 };
 
-const drawImg = (src) => {
+/*
+const drawImg = (src: string) => {
   const img = document.createElement('img');
   img.src = src;
   document.body.appendChild(img);
 };
+*/
 
-exports.runTest = async (assetsUrls, filters, ffmpegResultDataUrl) => {
+exports.runTest = async (assetsUrls: any, filters: any, ffmpegResultDataUrl: any) => {
   const [canvasResult, ffmpegResult] = await Promise.all([
     exports.processCanvas(assetsUrls, filters),
     exports.processFfmpeg(ffmpegResultDataUrl),

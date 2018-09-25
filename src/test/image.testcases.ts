@@ -1,8 +1,8 @@
 const {join} = require('path');
 
-const assetDir = join(__dirname, '..', 'assets');
+const assetDir = join(__dirname, '..', '..', 'assets');
 
-module.exports = [
+export const testcases = [
   {
     name: 'overlay-simple',
     assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
