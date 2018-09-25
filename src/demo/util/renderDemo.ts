@@ -11,7 +11,7 @@ const renderDemo = (assets: string[], complexFilters: ComplexFilter[]) =>
       module.main(...args);
     },
     args: [
-      assets.map(name => 'data:image/png;base64,' + readFileSync(join(assetDir, name), 'base64')),
+      assets.map((name) => 'data:image/png;base64,' + readFileSync(join(assetDir, name), 'base64')),
       complexFilters,
     ],
     module: join(__dirname, 'renderDemo.chrome.ts'),

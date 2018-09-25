@@ -2,7 +2,7 @@
 import {filterComplex, render, Asset, ComplexFilter} from '../../browser';
 
 export const main = async (assets: string[], complexFilters: ComplexFilter[]) => {
-  const inputs = await Promise.all(assets.map(img => Asset.fromImage(img)));
+  const inputs = await Promise.all(assets.map((img) => Asset.fromImage(img)));
   const canvas = document.createElement('canvas');
 
   canvas.style.width = inputs[0].width + 'px';

@@ -20,16 +20,7 @@ const blend: Filter = ([asset1, asset2], {c0_mode}) => {
     context.drawImage(asset1.canvas, 0, 0);
   };
 
-  return [
-    new Asset(
-      asset1.duration,
-      width,
-      height,
-      canvas,
-      context,
-      render,
-    ),
-  ];
+  return [new Asset(asset1.duration, width, height, canvas, context, render)];
 };
 
 export default blend;

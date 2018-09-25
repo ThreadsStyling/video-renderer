@@ -56,9 +56,9 @@ Promise.all([
           fontcolor: 'white',
           box: 1,
           boxcolor: 'black',
-          boxborderw: 10
-        }
-      }
+          boxborderw: 10,
+        },
+      },
     ]);
   render(canvas, f(200, 200));
 });

@@ -5,48 +5,45 @@ const assetDir = join(__dirname, '..', 'assets');
 module.exports = [
   {
     name: 'overlay-simple',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
-    filters: [{
-      inputs: ['0', '1'],
-      name: 'overlay',
-      args: {
-        x: 0,
-        y: 0,
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
+    filters: [
+      {
+        inputs: ['0', '1'],
+        name: 'overlay',
+        args: {
+          x: 0,
+          y: 0,
+        },
       },
-    }],
+    ],
   },
   {
     name: 'overlay-with-offset',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
-    filters: [{
-      inputs: ['0', '1'],
-      name: 'overlay',
-      args: {
-        x: 50,
-        y: 50,
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
+    filters: [
+      {
+        inputs: ['0', '1'],
+        name: 'overlay',
+        args: {
+          x: 50,
+          y: 50,
+        },
       },
-    }],
+    ],
   },
   {
     name: 'overlay-out-of-bounds',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
-    filters: [{
-      inputs: ['0', '1'],
-      name: 'overlay',
-      args: {
-        x: -30,
-        y: -30,
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
+    filters: [
+      {
+        inputs: ['0', '1'],
+        name: 'overlay',
+        args: {
+          x: -30,
+          y: -30,
+        },
       },
-    }],
+    ],
   },
   {
     name: 'overlay-multiple',
@@ -97,10 +94,7 @@ module.exports = [
   },
   {
     name: 'scale-simple',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -123,10 +117,7 @@ module.exports = [
   },
   {
     name: 'scale-twice',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -158,10 +149,7 @@ module.exports = [
   },
   {
     name: 'rotate',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -175,15 +163,12 @@ module.exports = [
         inputs: ['0', 'rotated'],
         name: 'overlay',
         args: {x: 0, y: 0},
-      }
+      },
     ],
   },
   {
     name: 'rotate-with-positive-padding',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -199,15 +184,12 @@ module.exports = [
         inputs: ['0', 'rotated'],
         name: 'overlay',
         args: {x: 0, y: 0},
-      }
+      },
     ],
   },
   {
     name: 'rotate-with-negative-padding',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -223,15 +205,12 @@ module.exports = [
         inputs: ['0', 'rotated'],
         name: 'overlay',
         args: {x: 0, y: 0},
-      }
+      },
     ],
   },
   {
     name: 'rotate-transparent-bg',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -248,15 +227,12 @@ module.exports = [
         inputs: ['0', 'rotated'],
         name: 'overlay',
         args: {x: 0, y: 0},
-      }
+      },
     ],
   },
   {
     name: 'pad-transparent-bg',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -274,15 +250,12 @@ module.exports = [
         inputs: ['0', 'padded'],
         name: 'overlay',
         args: {x: 0, y: 0},
-      }
+      },
     ],
   },
   {
     name: 'pad-default-bg',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -299,15 +272,12 @@ module.exports = [
         inputs: ['0', 'padded'],
         name: 'overlay',
         args: {x: 0, y: 0},
-      }
+      },
     ],
   },
   {
     name: 'pad-red-bg',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
       {
         inputs: ['1'],
@@ -325,15 +295,12 @@ module.exports = [
         inputs: ['0', 'padded'],
         name: 'overlay',
         args: {x: 0, y: 0},
-      }
+      },
     ],
   },
   {
     name: 'pad-transparent-png',
-    assets: [
-      join(assetDir, 'image.jpg'),
-      join(assetDir, 'threads-logo-gold.png'),
-    ],
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'threads-logo-gold.png')],
     filters: [
       {
         inputs: ['1'],
@@ -351,14 +318,12 @@ module.exports = [
         inputs: ['0', 'padded'],
         name: 'overlay',
         args: {x: 0, y: 0},
-      }
+      },
     ],
   },
   {
     name: 'drawtext',
-    assets: [
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'servers.png')],
     filters: [
       {
         name: 'drawtext',
@@ -369,15 +334,13 @@ module.exports = [
           y: 10,
           fontsize: 70,
           fontcolor: 'black',
-        }
-      }
+        },
+      },
     ],
   },
   {
     name: 'drawtext-with-background',
-    assets: [
-      join(assetDir, 'servers.png'),
-    ],
+    assets: [join(assetDir, 'servers.png')],
     filters: [
       {
         name: 'drawtext',
@@ -390,9 +353,9 @@ module.exports = [
           fontcolor: 'black',
           box: 1,
           boxcolor: 'pink',
-          boxborderw: 10
-        }
-      }
+          boxborderw: 10,
+        },
+      },
     ],
   },
 ];

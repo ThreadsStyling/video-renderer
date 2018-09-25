@@ -4,7 +4,7 @@ import Asset from '../Asset';
 const MAGIC_Y_START = 3.2;
 const MAGIC_Y_END = 3.3;
 
-function parse (path: string) {
+function parse(path: string) {
   return (path.split('/').pop() || '').split('.').shift();
 }
 
@@ -38,9 +38,9 @@ const drawtext: Filter = ([background], args) => {
           const details = background.context.measureText(text);
           background.context.fillRect(
             x - boxborderw,
-            y - numericFontSize + (numericFontSize/MAGIC_Y_START) - boxborderw,
-            details.width + (boxborderw * 2),
-            numericFontSize - (numericFontSize/MAGIC_Y_END) + (boxborderw * 2)
+            y - numericFontSize + numericFontSize / MAGIC_Y_START - boxborderw,
+            details.width + boxborderw * 2,
+            numericFontSize - numericFontSize / MAGIC_Y_END + boxborderw * 2,
           );
         }
         background.context.fillStyle = fontcolor;

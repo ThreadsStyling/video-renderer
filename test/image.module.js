@@ -2,11 +2,10 @@
 const {Asset, filterComplex, render} = require('../lib/browser');
 const createCanvasAndContext = require('../lib/browser/util/createCanvasAndContext').default;
 
-const draf = () => new Promise(r => {
-  requestAnimationFrame(() =>
-    requestAnimationFrame(r)
-  );
-});
+const draf = () =>
+  new Promise((r) => {
+    requestAnimationFrame(() => requestAnimationFrame(r));
+  });
 
 exports.processCanvas = async (assetsUrls, filters) => {
   const assets = await Promise.all(assetsUrls.map((url) => Asset.fromImage(url)));
@@ -40,7 +39,7 @@ exports.processFfmpeg = async (ffmpegResultDataUrl) => {
 };
 
 const processDiff = async (canvasResult, ffmpegResult) => {
-  if ((canvasResult.width !== ffmpegResult.width) || (canvasResult.height !== ffmpegResult.height)) {
+  if (canvasResult.width !== ffmpegResult.width || canvasResult.height !== ffmpegResult.height) {
     return null;
   }
   const width = canvasResult.width;
@@ -74,7 +73,7 @@ const processDiff = async (canvasResult, ffmpegResult) => {
   }
   context.putImageData(img3, 0, 0);
 
-  const normalizedDiff = 100 * diff / (width * height * 4 * 255);
+  const normalizedDiff = (100 * diff) / (width * height * 4 * 255);
 
   const [canvas2, context2] = createCanvasAndContext();
 
@@ -89,7 +88,7 @@ const processDiff = async (canvasResult, ffmpegResult) => {
 
   return {
     diff: normalizedDiff,
-    percent: (Math.round(normalizedDiff * 100) / 100) + '%',
+    percent: Math.round(normalizedDiff * 100) / 100 + '%',
     dataUrl: canvas.toDataURL(),
     dataUrlCombined: canvas2.toDataURL(),
   };

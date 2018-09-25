@@ -3,9 +3,8 @@
 import renderDemo from './util/renderDemo';
 
 renderDemo(
+  ['image.jpg'],
   [
-    'image.jpg',
-  ], [
     {
       inputs: ['0'],
       name: 'drawtext',
@@ -18,8 +17,8 @@ renderDemo(
         fontcolor: 'white',
         box: 1,
         boxcolor: 'black',
-        boxborderw: 10
-      }
-    }
-  ]
+        boxborderw: 10,
+      },
+    },
+  ],
 ).catch(console.error); // tslint:disable-line

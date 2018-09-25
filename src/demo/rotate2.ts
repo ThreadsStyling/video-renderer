@@ -13,21 +13,24 @@ Promise.all([
   Asset.fromImage(require('../../assets/image.jpg')),
   Asset.fromImage(require('../../assets/servers.png')),
 ]).then((inputs) => {
-  render(canvas, filterComplex(inputs, [
-    {
-      inputs: ['1'],
-      name: 'rotate',
-      args: {
-        angle: 1,
-        out_w: 600,
-        out_h: 600,
+  render(
+    canvas,
+    filterComplex(inputs, [
+      {
+        inputs: ['1'],
+        name: 'rotate',
+        args: {
+          angle: 1,
+          out_w: 600,
+          out_h: 600,
+        },
+        outputs: ['rotated'],
       },
-      outputs: ['rotated'],
-    },
-    {
-      inputs: ['0', 'rotated'],
-      name: 'overlay',
-      args: {x: 0, y: 0},
-    }
-  ]));
+      {
+        inputs: ['0', 'rotated'],
+        name: 'overlay',
+        args: {x: 0, y: 0},
+      },
+    ]),
+  );
 });
