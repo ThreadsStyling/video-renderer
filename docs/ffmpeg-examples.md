@@ -93,3 +93,15 @@ Crop stream.
   -filter_complex "[0]crop=w=200:h=200:x=100:y=100[c1]; [1]crop=w=200:h=200:x=0:y=0[c2]; [c2][c1]blend=c0_mode=multiply[m]; [0][m]overlay=x=100:y=100" \
   output.jpg
 ```
+
+
+## Text (`drawtext` filter)
+
+Crop stream.
+
+```shell
+./src/node/__tests__/bin/ffmpeg -y \
+  -i assets/image.jpg  \
+  -filter_complex "[0]drawtext=text=SOME TEXT:x=(0-tw/2):y=0:fontfile=/Users/vadims.daleckis/dev/isomorphic-video-render/assets/Notable-Regular.ttf:fontsize=30:fontcolor=white" \
+  output.jpg
+```
