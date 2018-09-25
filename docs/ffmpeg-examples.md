@@ -97,11 +97,47 @@ Crop stream.
 
 ## Text (`drawtext` filter)
 
-Crop stream.
+Write text.
 
 ```shell
 ./src/node/__tests__/bin/ffmpeg -y \
   -i assets/image.jpg  \
   -filter_complex "[0]drawtext=text=SOME TEXT:x=(0-tw/2):y=0:fontfile=/Users/vadims.daleckis/dev/isomorphic-video-render/assets/Notable-Regular.ttf:fontsize=30:fontcolor=white" \
+  output.jpg
+```
+
+Write text on a separate layer and rotate it.
+
+```shell
+./src/node/__tests__/bin/ffmpeg -y \
+  -i assets/image.jpg  \
+  -i assets/empty.png \
+  -i assets/empty.png \
+  -filter_complex " \
+    [1] scale = :w=300 :h=300 [ns]; \
+    [2] scale = :w=300 :h=300 [ns2]; \
+    [ns] drawtext= \
+      text=SOME TEXT: \
+      x=(150-tw/2): \
+      y=(150-th/2): \
+      fontfile=/Users/vadims.daleckis/dev/isomorphic-video-render/assets/Notable-Regular.ttf: \
+      fontsize=30: \
+      fontcolor=red \
+    [txt]; \
+    [ns2] drawtext= \
+      text=SOME TEXT: \
+      x=(150-tw/2): \
+      y=(150-th/2): \
+      fontfile=/Users/vadims.daleckis/dev/isomorphic-video-render/assets/Notable-Regular.ttf: \
+      fontsize=30: \
+      fontcolor=red \
+    [txt2]; \
+    [txt] rotate= \
+      :angle=0.1 :fillcolor=#00000000 \
+    [rotated]; \
+    [0][rotated] overlay = :x=50 :y=50 [m1]; \
+    [m1][txt2] overlay = :x=200 :y=200 \
+  " \
+  -qscale:v 2 \
   output.jpg
 ```
