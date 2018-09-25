@@ -1,8 +1,16 @@
+import {ComplexFilter} from "../../browser";
+
 const {join} = require('path');
 
 const assetDir = join(__dirname, '..', '..', 'assets');
 
-export const testcases = [
+export interface Testcase {
+  name: string;
+  assets: string[];
+  filters: ComplexFilter[];
+}
+
+export const testcases: Testcase[] = [
   {
     name: 'overlay-simple',
     assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
@@ -354,6 +362,57 @@ export const testcases = [
           box: 1,
           boxcolor: 'pink',
           boxborderw: 10,
+        },
+      },
+    ],
+  },
+  {
+    name: 'drawtext-rotated',
+    assets: [
+      join(assetDir, 'servers.png'),
+      join(assetDir, 'empty.png'),
+    ],
+    filters: [
+      {
+        inputs: ['1'],
+        name: 'scale',
+        args: {
+          w: 300,
+          h: 300,
+        },
+        outputs: ['scaled'],
+      },
+      {
+        inputs: ['scaled'],
+        name: 'drawtext',
+        args: {
+          fontfile: './assets/Verdana.ttf',
+          text: 'SOME TEXT',
+          x: 15,
+          y: 15,
+          fontsize: 70,
+          fontcolor: 'black',
+          box: 1,
+          boxcolor: 'pink',
+          boxborderw: 10,
+        },
+        outputs: ['txt'],
+      },
+      {
+        inputs: ['txt'],
+        name: 'rotate',
+        args: {
+          angle: 1,
+          fillcolor: '#00000000',
+        },
+        outputs: ['rotated'],
+      },
+      {
+        inputs: ['0', 'rotated'],
+        name: 'overlay',
+        args: {
+          x: 10,
+          y: 10,
         },
       },
     ],

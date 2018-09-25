@@ -29,9 +29,8 @@ const drawtext: Filter = ([background], args) => {
   const boxcolor = String(args.boxcolor) || '';
 
   const render = (time: number) => {
-    background.renderFrame(time);
-
     // Render background.
+    background.renderFrame(time);
     context.clearRect(0, 0, width, height);
     context.drawImage(background.canvas, 0, 0);
 
@@ -39,7 +38,6 @@ const drawtext: Filter = ([background], args) => {
     context.font = `${fontsize}px ${font}`;
     if (box) {
       const measurement = context.measureText(text);
-
       context.fillStyle = boxcolor;
       context.fillRect(
         x - boxborderw,
