@@ -22,9 +22,7 @@ refs:
     - &Install_Dependencies
       run:
         name: Install Dependencies
-        command: |
-            yarn install --frozen-lockfile
-            npm i -g cross-ci
+        command: yarn install --frozen-lockfile
     - &Save_Cache
       save_cache:
         paths:
@@ -34,8 +32,8 @@ refs:
       run:
         name: Setup Environment
         command: |
-          echo 'export BUILD_VERSION=$(cross-ci printenv BUILD_VERSION)' >> $BASH_ENV
-          echo 'export BUILD_NUM=$(cross-ci printenv BUILD_NUM)' >> $BASH_ENV
+          echo 'export BUILD_VERSION=$(npx cross-ci printenv BUILD_VERSION)' >> $BASH_ENV
+          echo 'export BUILD_NUM=$(npx cross-ci printenv BUILD_NUM)' >> $BASH_ENV
     - &Build
       run:
         name: Build
