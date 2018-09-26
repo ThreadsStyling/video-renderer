@@ -456,7 +456,7 @@ export const testcases: Testcase[] = [
   },
   {
     name: 'drawtext-center-at-origin',
-    assets: [join(assetDir, 'threads-logo-gold.png')],
+    assets: [join(assetDir, 'servers.png')],
     filters: [
       {
         name: 'drawtext',
