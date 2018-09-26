@@ -37,6 +37,8 @@ jobs:
       - run:
           name: Test Functional
           command: yarn test:integration
+      - store_artifacts:
+          path: ~/repo/src/test/image-tests-out
 
   master:
     <<: *container
@@ -76,6 +78,8 @@ jobs:
           command: |
               npx cross-ci :run \
                   npx commit-status success Version "'\${BUILD_VERSION}'"
+      - store_artifacts:
+          path: ~/repo/src/test/image-tests-out
 
 workflows:
   version: 2
