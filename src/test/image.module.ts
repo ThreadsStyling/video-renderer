@@ -106,7 +106,11 @@ const drawImg = (src: string) => {
 declare const FontFace: any;
 const installFonts = async () => {
   const verdanaFont = new FontFace('Verdana', 'url(https://s3-eu-west-1.amazonaws.com/threads-staging-bundles/fonts/Verdana.ttf)');
-  await verdanaFont.load();
+  const notableFont = new FontFace('Notable-Regular', 'url(https://s3-eu-west-1.amazonaws.com/threads-staging-bundles/fonts/Notable-Regular.ttf)');
+  await Promise.all([
+    verdanaFont.load(),
+    notableFont.load(),
+  ]);
 };
 
 exports.runTest = async (assetsUrls: any, filters: any, ffmpegResultDataUrl: any) => {
