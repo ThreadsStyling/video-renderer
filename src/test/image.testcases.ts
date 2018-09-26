@@ -1,4 +1,4 @@
-import {ComplexFilter} from '../../browser';
+import {ComplexFilter} from '../browser';
 
 const {join} = require('path');
 
