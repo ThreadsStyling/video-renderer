@@ -5,81 +5,91 @@ refs:
     docker:
       - image: circleci/node:latest-browsers
     working_directory: ~/repo
+  steps:
+    - &Restore_Cache
+      restore_cache:
+        keys:
+          - v2-dependencies-{{ checksum "yarn.lock" }}
+          - v2-dependencies-
+    - &Versions
+      run:
+        name: Versions
+        command: node -v && npm -v && yarn -v
+    - &Authenticate_with_NPM
+      run:
+        name: NPM Auth
+        command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - &Install_Dependencies
+      run:
+        name: Install Dependencies
+        command: yarn install --frozen-lockfile
+    - &Save_Cache
+      save_cache:
+        paths:
+          - node_modules
+        key: v2-dependencies-{{ checksum "yarn.lock" }}
+    - &Setup_Environment
+      run:
+        name: Setup Environment
+        command: |
+          echo 'export BUILD_NUM=$(cross-ci printenv BUILD_NUM)' >> $BASH_ENV
+    - &Build
+      run:
+        name: Build
+        command: yarn build
+    - &Test
+      run:
+        name: Test
+        command: yarn test
+    - &Test_Functional
+      run:
+        name: Test Functional
+        command: yarn test:integration
+    - &Store_Artifacts
+      store_artifacts:
+        path: ~/repo/src/test/image-tests-out
+    - &Post_to_GitHub
+      run:
+        name: Post to GitHub
+        command: |
+          npm i -g commit-status
+          commit-status success STAGING $BUILD_VERSION "https://$BUILD_NUM-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
 
 jobs:
   all:
     <<: *container
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v2-dependencies-{{ checksum "yarn.lock" }}
-            - v2-dependencies-
-      - run:
-          name: Versions
-          command: node -v && npm -v && yarn -v
-      - run:
-          name: NPM Auth
-          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      - run:
-          name: Install dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          paths:
-            - node_modules
-          key: v2-dependencies-{{ checksum "yarn.lock" }}
-      - run:
-          name: Build
-          command: yarn build
-      - run:
-          name: Test
-          command: yarn test
-      - run:
-          name: Test Functional
-          command: yarn test:integration
-      - store_artifacts:
-          path: ~/repo/src/test/image-tests-out
+      - *Restore_Cache
+      - *Versions
+      - *Authenticate_with_NPM
+      - *Install_Dependencies
+      - *Setup_Environment
+      - *Save_Cache
+      - *Build
+      - *Test
+      - *Test_Functional
+      - *Store_Artifacts
+      - *Post_to_GitHub
 
   master:
     <<: *container
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v2-dependencies-{{ checksum "yarn.lock" }}
-            - v2-dependencies-
-      - run:
-          name: Versions
-          command: node -v && npm -v && yarn -v
-      - run:
-          name: NPM Auth
-          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      - run:
-          name: Install dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          paths:
-            - node_modules
-          key: v2-dependencies-{{ checksum "yarn.lock" }}
-      - run:
-          name: Build
-          command: yarn build
-      - run:
-          name: Test
-          command: yarn test
-      - run:
-          name: Test Functional
-          command: yarn test:integration
+      - *Restore_Cache
+      - *Versions
+      - *Authenticate_with_NPM
+      - *Install_Dependencies
+      - *Setup_Environment
+      - *Save_Cache
+      - *Build
+      - *Test
+      - *Test_Functional
+      - *Store_Artifacts
+      - *Post_to_GitHub
       - run:
           name: Release
           command: npx semantic-release
-      - run:
-          name: Post status to GitHub
-          command: |
-              npx cross-ci :run \
-                  npx commit-status success Version "'\${BUILD_VERSION}'"
-      - store_artifacts:
-          path: ~/repo/src/test/image-tests-out
 
 workflows:
   version: 2
