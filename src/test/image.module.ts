@@ -103,14 +103,24 @@ const drawImg = (src: string) => {
 };
 */
 
-declare const FontFace: any;
+// declare const FontFace: any;
 const installFonts = async () => {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @font-face {
+      font-family: 'Verdana';
+      src: url('https://s3-eu-west-1.amazonaws.com/threads-staging-bundles/fonts/Verdana.ttf');
+    }
+  `;
+  document.head.appendChild(style);
+  /*
   const verdanaFont = new FontFace('Verdana', 'url(https://s3-eu-west-1.amazonaws.com/threads-staging-bundles/fonts/Verdana.ttf)');
   const notableFont = new FontFace('Notable-Regular', 'url(https://s3-eu-west-1.amazonaws.com/threads-staging-bundles/fonts/Notable-Regular.ttf)');
   await Promise.all([
     verdanaFont.load(),
     notableFont.load(),
   ]);
+  */
 };
 
 exports.runTest = async (assetsUrls: any, filters: any, ffmpegResultDataUrl: any) => {
