@@ -22,7 +22,9 @@ refs:
     - &Install_Dependencies
       run:
         name: Install Dependencies
-        command: yarn install --frozen-lockfile
+        command: |
+            yarn install --frozen-lockfile
+            npm i -g cross-ci
     - &Save_Cache
       save_cache:
         paths:
@@ -32,6 +34,7 @@ refs:
       run:
         name: Setup Environment
         command: |
+          echo 'export BUILD_VERSION=$(cross-ci printenv BUILD_VERSION)' >> $BASH_ENV
           echo 'export BUILD_NUM=$(cross-ci printenv BUILD_NUM)' >> $BASH_ENV
     - &Build
       run:
@@ -53,7 +56,7 @@ refs:
         name: Post to GitHub
         command: |
           npm i -g commit-status
-          commit-status success STAGING $BUILD_VERSION "https://$BUILD_NUM-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
+          commit-status success Renderings $BUILD_VERSION "https://$BUILD_NUM-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
 
 jobs:
   all:
