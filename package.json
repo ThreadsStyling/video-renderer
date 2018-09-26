@@ -7,7 +7,9 @@
     "node/"
   ],
   "repository": "https://github.com/ThreadsStyling/isomorphic-video-render.git",
-  "dependencies": {},
+  "dependencies": {
+    "expr-eval": "^1.2.2"
+  },
   "devDependencies": {
     "@moped/rule-file": "^0.0.9",
     "@threads/tslint": "^3.4.0",
