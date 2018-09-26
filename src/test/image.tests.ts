@@ -1,5 +1,6 @@
 import {testcases} from './image.testcases';
 import {filterComplex} from '../node';
+import {writeFileSync} from 'fs';
 const {execute: inChrome} = require('puppet-master');
 const {spawn} = require('child_process');
 const fs = require('fs');
@@ -61,6 +62,8 @@ const runTestcase = async (testcase: any) => {
     assetFiles.push(getFileAsDataUrl(asset));
   }
 
+  writeFileSync(path.join(outDir, name + '.json'), JSON.stringify(testcase, null, 4));
+
   const result = await inChrome({
     // debug: true,
     func: async (module: any, args: any) => {
@@ -69,6 +72,7 @@ const runTestcase = async (testcase: any) => {
     args: [assetFiles, filters, ffmpegResultDataUrl],
     module: path.join(__dirname, 'image.module.ts'),
   });
+  testcase.result = result;
 
   const dataUrl = result.canvasResult.dataUrl;
   const outFile = path.join(outDir, `${name}-canvas.png`);
@@ -119,6 +123,24 @@ const main = async () => {
       console.error(error); // tslint:disable-line
     }
   }
+
+  // Create index.html for CircleCI.
+  writeFileSync(path.join(outDir, 'index.html'), `
+  <html>
+  <head>
+    <title>Functional Tests</title>
+  </head>
+  <body>
+    <ul>
+      ${
+        testcases.map((testcase) => `
+          <li><a href="${testcase.name}-all.png" style="font-family:monospace"><b>${testcase.name}</b></a>, ${(testcase as any).result.diffResult.percent} &mdash; <a href="${testcase.name}.json">spec</a></li>
+        `).join('')
+      }
+    </ul>
+  </body>
+  </html>
+  `);
 
   if (!passed) {
     process.exit(1);
