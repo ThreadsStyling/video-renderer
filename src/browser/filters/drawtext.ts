@@ -56,11 +56,8 @@ const drawtext: Filter = ([background], args) => {
           break;
         }
         continue;
-      }
-      else
-      {
-        if (start === -1)
-        {
+      } else {
+        if (start === -1) {
           start = row;
         }
         break;
@@ -80,8 +77,8 @@ const drawtext: Filter = ([background], args) => {
   const y = yExpression.evaluate(expressionArgs);
 
   // Draw text on canvas once.
-  textCanvas.width = tw + (boxborderw * 2);
-  textCanvas.height = fontsize - (fontsize / MAGIC_Y_END) + (boxborderw * 2);
+  textCanvas.width = tw + boxborderw * 2;
+  textCanvas.height = fontsize - fontsize / MAGIC_Y_END + boxborderw * 2;
   if (box) {
     textContext.fillStyle = boxcolor;
     textContext.fillRect(0, 0, textCanvas.width, textCanvas.height);
