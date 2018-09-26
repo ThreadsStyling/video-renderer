@@ -6,6 +6,7 @@ const {spawn} = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+const rootDir = path.join(__dirname, '..', '..');
 const outDir = path.join(__dirname, 'image-tests-out');
 try {
   fs.mkdirSync(outDir);
@@ -19,6 +20,10 @@ const getFileAsDataUrl = (filename: string) => {
   }
 
   return dataUrlCache.get(filename);
+};
+
+const fonts = {
+  Verdana: getFileAsDataUrl(path.join(rootDir, 'assets', 'Verdana.ttf')),
 };
 
 const ffmpegBinary = path.join(__dirname, '..', 'node', '__tests__', 'bin', 'ffmpeg');
@@ -69,7 +74,7 @@ const runTestcase = async (testcase: any) => {
     func: async (module: any, args: any) => {
       return await module.runTest(...args); // tslint:disable-line
     },
-    args: [assetFiles, filters, ffmpegResultDataUrl],
+    args: [assetFiles, filters, ffmpegResultDataUrl, fonts],
     module: path.join(__dirname, 'image.module.ts'),
   });
   testcase.result = result;
