@@ -11,6 +11,7 @@ export interface Testcase {
 }
 
 export const testcases: Testcase[] = [
+  /*
   {
     name: 'overlay-simple',
     assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
@@ -410,6 +411,75 @@ export const testcases: Testcase[] = [
         args: {
           x: 10,
           y: 10,
+        },
+      },
+    ],
+  },
+  */
+  {
+    name: 'drawtext-expr-tw',
+    assets: [join(assetDir, 'servers.png')],
+    filters: [
+      {
+        name: 'drawtext',
+        args: {
+          fontfile: './assets/Verdana.ttf',
+          text: 'SOME TEXT',
+          x: '(0 - tw / 2)',
+          y: '15',
+          fontsize: 70,
+          fontcolor: 'black',
+          box: 1,
+          boxcolor: 'pink',
+          boxborderw: 10,
+        },
+      },
+    ],
+  },
+  {
+    name: 'drawtext-expr-th',
+    assets: [join(assetDir, 'servers.png')],
+    filters: [
+      {
+        name: 'drawtext',
+        args: {
+          fontfile: './assets/Verdana.ttf',
+          text: 'LOL - the bear is not a fox',
+          x: '15',
+          y: '(50 - th / 2)',
+          fontsize: 70,
+          fontcolor: 'black',
+          box: 1,
+          boxcolor: 'pink',
+          boxborderw: 10,
+        },
+      },
+    ],
+  },
+  {
+    name: 'drawtext-center-at-origin',
+    assets: [join(assetDir, 'threads-logo-gold.png')],
+    filters: [
+      {
+        name: 'drawtext',
+        args: {
+          fontfile: './assets/Verdana.ttf',
+          text: 'O',
+          x: '(0 - tw / 2)',
+          y: '(0 - th / 2)',
+          fontsize: 100,
+          fontcolor: 'red',
+        },
+      },
+      {
+        name: 'drawtext',
+        args: {
+          fontfile: './assets/Verdana.ttf',
+          text: 'A',
+          x: '(33 - tw / 2)',
+          y: '(33 - th / 2)',
+          fontsize: 70,
+          fontcolor: 'green',
         },
       },
     ],

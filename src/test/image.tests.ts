@@ -140,8 +140,8 @@ const main = async () => {
       ${
         testcases.map((testcase) => `
           <li>
-            <a href="${testcase.name}-all.png" style="font-family:monospace">${testcase.name}</a>,
-            &Delta; = <b style="color:${(testcase as any).result.diffResult.diff > 3 ? 'red' : 'green'}">${(testcase as any).result.diffResult.percent}</b>
+            <a href="${testcase.name}-all.png" style="font-family:monospace">${testcase.name}</a>
+            ${(testcase as any).result ? `, &Delta; = <b style="color:${(testcase as any).result.diffResult.diff > 3 ? 'red' : 'green'}">${(testcase as any).result.diffResult.percent}</b>` : ''}
             &mdash; <a href="${testcase.name}.json">spec</a>
           </li>
         `).join('')

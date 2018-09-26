@@ -28,13 +28,53 @@ const drawtext: Filter = ([background], args) => {
   const box = String(args.box) === '1';
   const boxborderw = +(args.boxborderw || 0);
   const boxcolor = String(args.boxcolor) || '';
+  const fontStyle = `${fontsize}px ${font}`;
 
-  // Measure text and evaluate expressions.
+  // Measure text width.
   textContext.font = `${fontsize}px ${font}`;
   const tw = textContext.measureText(text).width;
+
+  // Measure text height.
+  const [thCanvas, thContext] = createCanvasAndContext();
+  thCanvas.width = 1e3;
+  thCanvas.height = 1e3;
+  thContext.fillRect(0, 0, thCanvas.width, thCanvas.height);
+  thContext.textBaseline = 'top';
+  thContext.fillStyle = 'white';
+  thContext.font = fontStyle;
+  thContext.fillText(text, 0, 0);
+  const pixels = thContext.getImageData(0, 0, thCanvas.width, thCanvas.height).data;
+  let start = -1;
+  let end = -1;
+  for (let row = 0; row < thCanvas.height; row++) {
+    for (let column = 0; column < thCanvas.width; column++) {
+      const index = (row * thCanvas.width + column) * 4;
+      if (pixels[index] === 0) {
+        if (column === thCanvas.width - 1 && start !== -1) {
+          end = row;
+          row = thCanvas.height;
+          break;
+        }
+        continue;
+      }
+      else
+      {
+        if (start === -1)
+        {
+          start = row;
+        }
+        break;
+      }
+    }
+  }
+  const th = end - start;
+
+  // Evaluate expressions.
   const expressionArgs = {
     tw,
     text_w: tw,
+    th,
+    text_h: th,
   };
   const x = xExpression.evaluate(expressionArgs);
   const y = yExpression.evaluate(expressionArgs);
@@ -47,7 +87,7 @@ const drawtext: Filter = ([background], args) => {
     textContext.fillRect(0, 0, textCanvas.width, textCanvas.height);
   }
   textContext.textBaseline = 'top';
-  textContext.font = `${fontsize}px ${font}`;
+  textContext.font = fontStyle;
   textContext.fillStyle = fontcolor;
   textContext.fillText(text, boxborderw, boxborderw - 2);
 

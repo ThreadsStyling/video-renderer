@@ -1,4 +1,4 @@
-// Run: ts-node src/demo/text2.ts
+// Run: ts-node src/demo/text3.ts
 
 import renderDemo from './util/renderDemo';
 
@@ -12,7 +12,7 @@ renderDemo(
         fontfile: './assets/Verdana.ttf',
         text: 'SOME TEXT',
         x: '(0 - tw / 2)',
-        y: '(0 + 30)',
+        y: '(0 - th / 2)',
         fontsize: 72,
         fontcolor: 'white',
         box: 1,
