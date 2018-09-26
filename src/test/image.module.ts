@@ -103,7 +103,14 @@ const drawImg = (src: string) => {
 };
 */
 
+declare const FontFace: any;
+const installFonts = async () => {
+  const verdanaFont = new FontFace('Verdana', 'url(https://s3-eu-west-1.amazonaws.com/threads-staging-bundles/fonts/Verdana.ttf)');
+  await verdanaFont.load();
+};
+
 exports.runTest = async (assetsUrls: any, filters: any, ffmpegResultDataUrl: any) => {
+  await installFonts();
   const [canvasResult, ffmpegResult] = await Promise.all([
     exports.processCanvas(assetsUrls, filters),
     exports.processFfmpeg(ffmpegResultDataUrl),
