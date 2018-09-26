@@ -86,7 +86,7 @@ const drawtext: Filter = ([background], args) => {
   textContext.textBaseline = 'top';
   textContext.font = fontStyle;
   textContext.fillStyle = fontcolor;
-  textContext.fillText(text, boxborderw, boxborderw - 2);
+  textContext.fillText(text, boxborderw, boxborderw);
 
   const render = (time: number) => {
     background.renderFrame(time);
