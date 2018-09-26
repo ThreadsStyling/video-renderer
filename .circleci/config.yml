@@ -52,9 +52,7 @@ refs:
     - &Post_to_GitHub
       run:
         name: Post to GitHub
-        command: |
-          npm i -g commit-status
-          commit-status success Renderings $BUILD_VERSION "https://$BUILD_NUM-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
+        command: npx commit-status success Renderings $BUILD_VERSION "https://$BUILD_NUM-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
 
 jobs:
   all:
