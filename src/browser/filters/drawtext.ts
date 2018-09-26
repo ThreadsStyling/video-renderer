@@ -37,8 +37,8 @@ const drawtext: Filter = ([background], args) => {
 
   // Measure text height.
   const [thCanvas, thContext] = createCanvasAndContext();
-  thCanvas.width = 1e3;
-  thCanvas.height = 1e3;
+  thCanvas.width = 1_000;
+  thCanvas.height = 1_000;
   thContext.fillRect(0, 0, thCanvas.width, thCanvas.height);
   thContext.textBaseline = 'top';
   thContext.fillStyle = 'white';
