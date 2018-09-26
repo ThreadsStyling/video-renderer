@@ -130,26 +130,37 @@ const main = async () => {
   }
 
   // Create index.html for CircleCI.
-  writeFileSync(path.join(outDir, 'index.html'), `
+  writeFileSync(
+    path.join(outDir, 'index.html'),
+    `
   <html>
   <head>
     <title>Functional Tests</title>
   </head>
   <body>
     <ul>
-      ${
-        testcases.map((testcase) => `
+      ${testcases
+        .map(
+          (testcase) => `
           <li>
             <a href="${testcase.name}-all.png" style="font-family:monospace">${testcase.name}</a>
-            ${(testcase as any).result ? `, &Delta; = <b style="color:${(testcase as any).result.diffResult.diff > 3 ? 'red' : 'green'}">${(testcase as any).result.diffResult.percent}</b>` : ''}
+            ${
+              (testcase as any).result
+                ? `, &Delta; = <b style="color:${(testcase as any).result.diffResult.diff > 3 ? 'red' : 'green'}">${
+                    (testcase as any).result.diffResult.percent
+                  }</b>`
+                : ''
+            }
             &mdash; <a href="${testcase.name}.json">spec</a>
           </li>
-        `).join('')
-      }
+        `,
+        )
+        .join('')}
     </ul>
   </body>
   </html>
-  `);
+  `,
+  );
 
   if (!passed) {
     process.exit(1);

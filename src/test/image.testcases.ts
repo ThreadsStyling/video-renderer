@@ -484,10 +484,7 @@ export const testcases: Testcase[] = [
   },
   {
     name: 'drawtext-with-rotation',
-    assets: [
-      join(assetDir, 'servers.png'),
-      join(assetDir, 'empty.png')
-    ],
+    assets: [join(assetDir, 'servers.png'), join(assetDir, 'empty.png')],
     filters: [
       {
         inputs: ['1'],

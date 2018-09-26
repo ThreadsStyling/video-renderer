@@ -106,12 +106,16 @@ const drawImg = (src: string) => {
 // declare const FontFace: any;
 const installFonts = async (fonts: any) => {
   const style = document.createElement('style');
-  style.innerHTML = Object.keys(fonts).map(fontname => `
+  style.innerHTML = Object.keys(fonts)
+    .map(
+      (fontname) => `
     @font-face {
       font-family: '${fontname}';
       src: url('${fonts[fontname]}');
     }
-  `).join('\n');
+  `,
+    )
+    .join('\n');
   document.head.appendChild(style);
   /*
   const verdanaFont = new FontFace('Verdana', 'url(https://s3-eu-west-1.amazonaws.com/threads-staging-bundles/fonts/Verdana.ttf)');
