@@ -11,7 +11,6 @@ export interface Testcase {
 }
 
 export const testcases: Testcase[] = [
-  /*
   {
     name: 'overlay-simple',
     assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
@@ -415,7 +414,6 @@ export const testcases: Testcase[] = [
       },
     ],
   },
-  */
   {
     name: 'drawtext-expr-tw',
     assets: [join(assetDir, 'servers.png')],
@@ -480,6 +478,54 @@ export const testcases: Testcase[] = [
           y: '(33 - th / 2)',
           fontsize: 70,
           fontcolor: 'green',
+        },
+      },
+    ],
+  },
+  {
+    name: 'drawtext-with-rotation',
+    assets: [
+      join(assetDir, 'servers.png'),
+      join(assetDir, 'empty.png')
+    ],
+    filters: [
+      {
+        inputs: ['1'],
+        name: 'scale',
+        args: {
+          w: 70,
+          h: 70,
+        },
+        outputs: ['scaled'],
+      },
+      {
+        inputs: ['scaled'],
+        name: 'drawtext',
+        args: {
+          fontfile: './assets/Verdana.ttf',
+          text: 'M',
+          x: '(35 - tw / 2)',
+          y: '(35 - th / 2)',
+          fontsize: 70,
+          fontcolor: 'green',
+        },
+        outputs: ['txt'],
+      },
+      {
+        inputs: ['txt'],
+        name: 'rotate',
+        args: {
+          angle: Math.PI / 2,
+          fillcolor: '#00000000',
+        },
+        outputs: ['rotated'],
+      },
+      {
+        inputs: ['0', 'rotated'],
+        name: 'overlay',
+        args: {
+          x: 0,
+          y: 0,
         },
       },
     ],
