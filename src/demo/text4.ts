@@ -31,7 +31,7 @@ renderDemo(
       inputs: ['txt1'],
       name: 'rotate',
       args: {
-        angle: 0.5,
+        angle: Math.PI / 2,
         fillcolor: 'transparent',
       },
       outputs: ['rotated1'],
