@@ -3,8 +3,6 @@ import Asset from '../Asset';
 import createCanvasAndContext from '../util/createCanvasAndContext';
 import {Parser} from 'expr-eval';
 
-const MAGIC_Y_START = 2 / 70;
-const MAGIC_Y_END = 4.2;
 const parser = new Parser();
 
 function parse(path: string) {
@@ -79,7 +77,7 @@ const drawtext: Filter = ([background], args) => {
 
   // Draw text on canvas once.
   textCanvas.width = tw + boxborderw * 2;
-  textCanvas.height = fontsize - fontsize / MAGIC_Y_END + boxborderw * 2;
+  textCanvas.height = th + boxborderw * 2 + 1;
   if (box) {
     textContext.fillStyle = boxcolor;
     textContext.fillRect(0, 0, textCanvas.width, textCanvas.height);
@@ -87,7 +85,7 @@ const drawtext: Filter = ([background], args) => {
   textContext.textBaseline = 'top';
   textContext.font = fontStyle;
   textContext.fillStyle = fontcolor;
-  textContext.fillText(text, boxborderw, boxborderw - MAGIC_Y_START * fontsize);
+  textContext.fillText(text, boxborderw, boxborderw);
 
   const render = (time: number) => {
     background.renderFrame(time);
