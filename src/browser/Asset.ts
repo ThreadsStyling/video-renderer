@@ -33,22 +33,34 @@ export default class Asset {
 
     let seeking = false;
 
-    return new Asset(video.duration, video.videoWidth, video.videoHeight, canvas, context, (timestamp) => {
-      const t = timestamp % video.duration;
-      if (Math.abs(video.currentTime - t) > 0.2 && !seeking && video.seekable) {
-        seeking = true;
-        setTimeout(() => {
-          seeking = false;
-        }, 100);
-        for (let i = 0; i < video.seekable.length; i++) {
-          if (video.seekable.start(i) < t && video.seekable.end(i) > t) {
-            video.currentTime = t;
-            break;
+    return new Asset(
+      video.duration,
+      video.videoWidth,
+      video.videoHeight,
+      canvas,
+      context,
+      (timestamp) => {
+        const t = timestamp % video.duration;
+        if (Math.abs(video.currentTime - t) > 0.2 && !seeking && video.seekable) {
+          seeking = true;
+          setTimeout(() => {
+            seeking = false;
+          }, 100);
+          for (let i = 0; i < video.seekable.length; i++) {
+            if (video.seekable.start(i) < t && video.seekable.end(i) > t) {
+              video.currentTime = t;
+              break;
+            }
           }
         }
-      }
-      context.drawImage(video, 0, 0);
-    });
+        context.drawImage(video, 0, 0);
+      },
+      () => {
+        if (video.parentNode) {
+          video.parentNode.removeChild(video);
+        }
+      },
+    );
   }
 
   static async fromVideoWithAlpha(src: string): Promise<Asset> {
@@ -62,25 +74,37 @@ export default class Asset {
 
     const rawFrame = fullVideo.context;
 
-    return new Asset(fullVideo.duration, width, height, canvas, context, (timestamp) => {
-      fullVideo.renderFrame(timestamp);
-      const image = rawFrame.getImageData(0, 0, width, height);
-      const imageData = image.data;
-      const alphaData = rawFrame.getImageData(0, height, width, height).data;
+    return new Asset(
+      fullVideo.duration,
+      width,
+      height,
+      canvas,
+      context,
+      (timestamp) => {
+        fullVideo.renderFrame(timestamp);
+        const image = rawFrame.getImageData(0, 0, width, height);
+        const imageData = image.data;
+        const alphaData = rawFrame.getImageData(0, height, width, height).data;
 
-      for (let i = 3; i < imageData.length; i += 4) {
-        imageData[i] = alphaData[i - 1];
-      }
-      context.putImageData(image, 0, 0, 0, 0, width, height);
-    });
+        for (let i = 3; i < imageData.length; i += 4) {
+          imageData[i] = alphaData[i - 1];
+        }
+        context.putImageData(image, 0, 0, 0, 0, width, height);
+      },
+      () => {
+        fullVideo.dispose();
+      },
+    );
   }
+
+  private _renderFrame?: (time: number) => void;
+  private _dispose?: () => void;
 
   duration: number;
   width: number;
   height: number;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
-  renderFrame: (time: number) => void;
 
   constructor(
     duration: number,
@@ -89,12 +113,29 @@ export default class Asset {
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
     renderFrame: (time: number) => void,
+    dispose?: () => void,
   ) {
     this.duration = duration;
     this.width = width;
     this.height = height;
     this.canvas = canvas;
     this.context = context;
-    this.renderFrame = renderFrame;
+    this._renderFrame = renderFrame;
+    this._dispose = dispose;
+  }
+  renderFrame(time: number) {
+    if (!this._renderFrame) {
+      throw new Error('This asset has already been disposed');
+    }
+    this._renderFrame(time);
+  }
+  dispose() {
+    if (this._dispose) {
+      this._dispose();
+    }
+    this._renderFrame = undefined;
+    this._dispose = undefined;
+    this.canvas = undefined as any;
+    this.context = undefined as any;
   }
 }
