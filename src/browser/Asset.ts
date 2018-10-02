@@ -123,12 +123,12 @@ export default class Asset {
     this._renderFrame = renderFrame;
     this._dispose = dispose;
   }
-  renderFrame(time: number) {
+  renderFrame = (time: number) => {
     if (!this._renderFrame) {
       throw new Error('This asset has already been disposed');
     }
     this._renderFrame(time);
-  }
+  };
   dispose() {
     if (this._dispose) {
       this._dispose();
