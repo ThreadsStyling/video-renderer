@@ -1,7 +1,7 @@
 import Asset from './Asset';
-import filterComplex from './filterComplex';
+import filterComplex, {filterComplexCached, FilterCache} from './filterComplex';
 
 export * from './filters';
 export * from './render';
 export * from '../shared/ComplexFilter';
-export {Asset, filterComplex};
+export {Asset, filterComplex, filterComplexCached, FilterCache};

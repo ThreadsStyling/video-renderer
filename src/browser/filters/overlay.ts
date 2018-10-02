@@ -11,13 +11,17 @@ const overlay: Filter = ([background, foreground], args) => {
   canvas.width = width;
   canvas.height = height;
 
-  const render = (time: number) => {
-    background.renderFrame(time);
-    foreground.renderFrame(time);
+  const render = (time: number, initialFrame: boolean) => {
+    const backgroundUpdated = background.renderFrame(time);
+    const foregroundUpdated = foreground.renderFrame(time);
+    if (!(backgroundUpdated || foregroundUpdated || initialFrame)) {
+      return false;
+    }
 
     context.clearRect(0, 0, width, height);
     context.drawImage(background.canvas, 0, 0);
     context.drawImage(foreground.canvas, x, y);
+    return true;
   };
 
   return [new Asset(background.duration, width, height, canvas, context, render)];

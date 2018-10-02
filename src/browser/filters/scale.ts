@@ -8,9 +8,12 @@ const scale: Filter = ([asset], {w, h}) => {
   canvas.width = w as any | 0;
   canvas.height = h as any | 0;
 
-  const render = (time: number) => {
-    asset.renderFrame(time);
+  const render = (time: number, initialFrame: boolean) => {
+    if (!(asset.renderFrame(time) || initialFrame)) {
+      return false;
+    }
     context.drawImage(asset.canvas, 0, 0, asset.width, asset.height, 0, 0, canvas.width, canvas.height);
+    return true;
   };
 
   return [new Asset(asset.duration, canvas.width, canvas.height, canvas, context, render)];

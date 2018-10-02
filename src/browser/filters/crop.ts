@@ -12,10 +12,13 @@ const crop: Filter = ([asset], args) => {
   canvas.width = width;
   canvas.height = height;
 
-  const render = (time: number) => {
-    asset.renderFrame(time);
+  const render = (time: number, initialFrame: boolean) => {
+    if (!(asset.renderFrame(time) || initialFrame)) {
+      return false;
+    }
     context.clearRect(0, 0, width, height);
     context.drawImage(asset.canvas, x, y, width, height, 0, 0, width, height);
+    return true;
   };
 
   return [new Asset(asset.duration, width, height, canvas, context, render)];
