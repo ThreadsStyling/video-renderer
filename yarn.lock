@@ -3038,6 +3038,15 @@ falafel@^2.1.0:
     isarray "0.0.1"
     object-keys "^1.0.6"
 
+fast-af@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/fast-af/-/fast-af-0.2.0.tgz#7e7e1eb11ebff1ed3659562a43a399c112410379"
+  dependencies:
+    fast-deep-equal "^1.0.0"
+    fast-extend "^1.0.2"
+    fast-shallow-equal "^0.1.1"
+    fastest-stable-stringify "^1.0.1"
+
 fast-deep-equal@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.1.0.tgz#c053477817c86b51daa853c81e059b733d023614"
@@ -3045,6 +3054,10 @@ fast-deep-equal@^1.0.0:
 fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+
+fast-extend@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/fast-extend/-/fast-extend-1.0.2.tgz#3b8a5b09cbc8ff3d6d47eaf397398c0a643e441b"
 
 fast-glob@^2.0.2, fast-glob@^2.2.2:
   version "2.2.2"
@@ -3064,6 +3077,14 @@ fast-json-stable-stringify@^2.0.0:
 fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
+
+fast-shallow-equal@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/fast-shallow-equal/-/fast-shallow-equal-0.1.1.tgz#44d01324d7fd31e00a67bb02b9396e283d526c22"
+
+fastest-stable-stringify@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/fastest-stable-stringify/-/fastest-stable-stringify-1.0.1.tgz#9122d406d4c9d98bea644a6b6853d5874b87b028"
 
 fb-watchman@^2.0.0:
   version "2.0.0"

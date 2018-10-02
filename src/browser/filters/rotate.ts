@@ -11,8 +11,10 @@ const rotate: Filter = ([asset], {angle, out_w, out_h, fillcolor = '#000000'}) =
   canvas.width = width;
   canvas.height = height;
 
-  const render = (time: number) => {
-    asset.renderFrame(time);
+  const render = (time: number, initialFrame: boolean) => {
+    if (!(asset.renderFrame(time) || initialFrame)) {
+      return false;
+    }
 
     context.clearRect(0, 0, width, height);
     context.save();
@@ -22,6 +24,7 @@ const rotate: Filter = ([asset], {angle, out_w, out_h, fillcolor = '#000000'}) =
     context.rotate(angleInRadians);
     context.drawImage(asset.canvas, -asset.canvas.width / 2, -asset.canvas.height / 2);
     context.restore();
+    return true;
   };
 
   return [new Asset(asset.duration, width, height, canvas, context, render)];

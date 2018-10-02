@@ -87,11 +87,14 @@ const drawtext: Filter = ([background], args) => {
   textContext.fillStyle = fontcolor;
   textContext.fillText(text, boxborderw, boxborderw);
 
-  const render = (time: number) => {
-    background.renderFrame(time);
+  const render = (time: number, initialFrame: boolean) => {
+    if (!(background.renderFrame(time) || initialFrame)) {
+      return false;
+    }
     context.clearRect(0, 0, width, height);
     context.drawImage(background.canvas, 0, 0);
     context.drawImage(textCanvas, x - boxborderw, y - boxborderw);
+    return true;
   };
 
   return [new Asset(background.duration, width, height, canvas, context, render)];

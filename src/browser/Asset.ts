@@ -2,7 +2,7 @@ import createCanvasAndContext from './util/createCanvasAndContext';
 import loadImage from './util/loadImage';
 import loadVideo from './util/loadVideo';
 
-const noop = () => {};
+const noop = () => false;
 const transparent1x1Pixel =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=';
 
@@ -54,6 +54,7 @@ export default class Asset {
           }
         }
         context.drawImage(video, 0, 0);
+        return true;
       },
       () => {
         if (video.parentNode) {
@@ -90,6 +91,7 @@ export default class Asset {
           imageData[i] = alphaData[i - 1];
         }
         context.putImageData(image, 0, 0, 0, 0, width, height);
+        return true;
       },
       () => {
         fullVideo.dispose();
@@ -97,7 +99,8 @@ export default class Asset {
     );
   }
 
-  private _renderFrame?: (time: number) => void;
+  private _isInitialRender = true;
+  private _renderFrame?: (time: number, isInitialRender: boolean) => boolean;
   private _dispose?: () => void;
 
   duration: number;
@@ -112,7 +115,7 @@ export default class Asset {
     height: number,
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
-    renderFrame: (time: number) => void,
+    renderFrame: (time: number, isInitialRender: boolean) => boolean,
     dispose?: () => void,
   ) {
     this.duration = duration;
@@ -123,11 +126,18 @@ export default class Asset {
     this._renderFrame = renderFrame;
     this._dispose = dispose;
   }
+  /**
+   * render a frame and return `true` if it updated
+   */
   renderFrame = (time: number) => {
     if (!this._renderFrame) {
       throw new Error('This asset has already been disposed');
     }
-    this._renderFrame(time);
+    if (this._isInitialRender) {
+      this._isInitialRender = false;
+      return this._renderFrame(time, true);
+    }
+    return this._renderFrame(time, false);
   };
   dispose() {
     if (this._dispose) {
