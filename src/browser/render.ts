@@ -64,6 +64,10 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
   }
 
   function draw() {
+    if (disposed) {
+      playing = false;
+      return;
+    }
     drawOnce();
     if (pausedAt !== null || disposed) {
       playing = false;
