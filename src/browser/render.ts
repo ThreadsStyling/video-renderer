@@ -31,12 +31,15 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
 
   let start = Date.now();
   let disposed = false;
-  let paused = false;
-  let playing = true;
-  requestAnimationFrame(draw);
-  function draw() {
+  let pausedAt: number | null = null;
+  let playing = false;
+
+  function getTime() {
+    if (pausedAt !== null) {
+      return pausedAt;
+    }
     if (!asset) {
-      return;
+      return 0;
     }
     const now = Date.now();
     let time = (now - start) / 1000;
@@ -44,6 +47,13 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
       time = 0;
       start = now;
     }
+    return time;
+  }
+  function drawOnce() {
+    if (!asset) {
+      return;
+    }
+    const time = getTime();
     asset.renderFrame(time);
     ctx.clearRect(0, 0, asset.width, asset.height);
     ctx.drawImage(asset.canvas, 0, 0);
@@ -51,12 +61,25 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
       const state = {currentTime: time};
       handlers.forEach((h) => h(state));
     }
-    if (paused || disposed) {
+  }
+
+  function draw() {
+    drawOnce();
+    if (pausedAt !== null || disposed) {
       playing = false;
     } else {
       requestAnimationFrame(draw);
     }
   }
+
+  function ensurePlaying() {
+    if (!playing) {
+      playing = true;
+      draw();
+    }
+  }
+
+  ensurePlaying();
 
   return {
     setAsset(assetIn: Asset) {
@@ -66,37 +89,35 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
       }
       asset = assetIn; // tslint:disable-line no-parameter-reassignment
       if (!playing) {
-        playing = true;
-        requestAnimationFrame(draw);
+        drawOnce();
       }
     },
     getAsset() {
       return asset;
     },
     isPaused() {
-      return paused;
+      return pausedAt !== null;
     },
     pause() {
       if (disposed) {
         throw new Error('Cannot pause after dispose');
       }
-      paused = true;
+      pausedAt = getTime();
     },
     play() {
       if (disposed) {
         throw new Error('Cannot play after dispose');
       }
-      paused = false;
-      if (!playing) {
-        playing = true;
-        requestAnimationFrame(draw);
-      }
+      pausedAt = null;
+      ensurePlaying();
     },
     seek(time: number) {
       start = Date.now() - time;
+      if (pausedAt != null) {
+        pausedAt = time;
+      }
       if (!playing) {
-        playing = true;
-        requestAnimationFrame(draw);
+        drawOnce();
       }
     },
     dispose() {
