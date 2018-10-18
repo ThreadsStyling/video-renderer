@@ -6,11 +6,7 @@ const w = 300;
 const h = 100;
 
 renderDemo(
-  [
-    'grid.jpg',
-    '00F000-0.5.png',
-    'empty.png',
-  ],
+  ['grid.jpg', '00F000-0.5.png', 'empty.png'],
   [
     {
       inputs: ['1'],

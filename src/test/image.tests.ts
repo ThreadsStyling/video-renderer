@@ -24,6 +24,11 @@ const getFileAsDataUrl = (filename: string) => {
 
 const fonts = {
   Verdana: getFileAsDataUrl(path.join(rootDir, 'assets', 'Verdana.ttf')),
+  'Notable-Regular': getFileAsDataUrl(path.join(rootDir, 'assets', 'Notable-Regular.ttf')),
+  'DomaineDisplay-Regular.otf': getFileAsDataUrl(path.join(rootDir, 'assets', 'DomaineDisplay-Regular.otf')),
+  'Berthold Akzidenz Grotesk Bold Condensed': getFileAsDataUrl(
+    path.join(rootDir, 'assets', 'Berthold Akzidenz Grotesk Bold Condensed.otf'),
+  ),
 };
 
 const ffmpegBinary = path.join(__dirname, '..', 'node', '__tests__', 'bin', 'ffmpeg');
