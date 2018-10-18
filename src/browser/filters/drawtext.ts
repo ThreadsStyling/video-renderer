@@ -77,7 +77,7 @@ const drawtext: Filter = ([background], args) => {
 
   // Draw text on canvas once.
   textCanvas.width = tw + boxborderw * 2;
-  textCanvas.height = th + boxborderw * 2 + 1;
+  textCanvas.height = th + boxborderw * 2 || 1;
   if (box) {
     textContext.fillStyle = boxcolor;
     textContext.fillRect(0, 0, textCanvas.width, textCanvas.height);
@@ -85,7 +85,7 @@ const drawtext: Filter = ([background], args) => {
   textContext.textBaseline = 'top';
   textContext.font = fontStyle;
   textContext.fillStyle = fontcolor;
-  textContext.fillText(text, boxborderw, boxborderw);
+  textContext.fillText(text, boxborderw, boxborderw - start);
 
   const render = (time: number, initialFrame: boolean) => {
     if (!(background.renderFrame(time) || initialFrame)) {

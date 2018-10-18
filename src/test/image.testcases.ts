@@ -10,6 +10,48 @@ export interface Testcase {
   filters: ComplexFilter[];
 }
 
+const generateFontTests = (fontFile: string): Testcase[] => {
+  return [
+    {
+      name: `drawtext ${fontFile}`,
+      assets: [join(assetDir, 'servers.png')],
+      filters: [
+        {
+          name: 'drawtext',
+          args: {
+            fontfile: `./assets/${fontFile}`,
+            text: 'SOME TEXT',
+            x: 0,
+            y: 10,
+            fontsize: '70',
+            fontcolor: 'black',
+          },
+        },
+      ],
+    },
+    {
+      name: `drawtext-with-background ${fontFile}`,
+      assets: [join(assetDir, 'servers.png')],
+      filters: [
+        {
+          name: 'drawtext',
+          args: {
+            fontfile: `./assets/${fontFile}`,
+            text: 'SOME TEXT',
+            x: 15,
+            y: 15,
+            fontsize: '70',
+            fontcolor: 'black',
+            box: 1,
+            boxcolor: 'pink',
+            boxborderw: 10,
+          },
+        },
+      ],
+    },
+  ];
+};
+
 export const testcases: Testcase[] = [
   {
     name: 'overlay-simple',
@@ -329,43 +371,11 @@ export const testcases: Testcase[] = [
       },
     ],
   },
-  {
-    name: 'drawtext',
-    assets: [join(assetDir, 'servers.png')],
-    filters: [
-      {
-        name: 'drawtext',
-        args: {
-          fontfile: './assets/Verdana.ttf',
-          text: 'SOME TEXT',
-          x: 0,
-          y: 10,
-          fontsize: 70,
-          fontcolor: 'black',
-        },
-      },
-    ],
-  },
-  {
-    name: 'drawtext-with-background',
-    assets: [join(assetDir, 'servers.png')],
-    filters: [
-      {
-        name: 'drawtext',
-        args: {
-          fontfile: './assets/Verdana.ttf',
-          text: 'SOME TEXT',
-          x: 15,
-          y: 15,
-          fontsize: 70,
-          fontcolor: 'black',
-          box: 1,
-          boxcolor: 'pink',
-          boxborderw: 10,
-        },
-      },
-    ],
-  },
+  ...generateFontTests('Verdana.ttf'),
+  ...generateFontTests('Notable-Regular.ttf'),
+  // failing because of font weight and letter spacing issues
+  // ...generateFontTests('Berthold Akzidenz Grotesk Bold Condensed.otf'),
+  // ...generateFontTests('DomaineDisplay-Regular.otf'),
   {
     name: 'drawtext-rotated',
     assets: [join(assetDir, 'servers.png'), join(assetDir, 'empty.png')],
