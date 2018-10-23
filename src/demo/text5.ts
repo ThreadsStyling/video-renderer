@@ -83,4 +83,4 @@ renderDemo(
       },
     },
   ],
-).catch(() => console.error('Error'));
+);

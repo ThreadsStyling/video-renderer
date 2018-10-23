@@ -46,4 +46,4 @@ renderDemo(
       outputs: ['out0'],
     },
   ],
-).catch(() => console.error('Error'));
+);
