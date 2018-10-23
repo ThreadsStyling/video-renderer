@@ -21,9 +21,9 @@ Promise.all([Asset.fromImage(require('../../assets/grid.jpg'))])
     ];
 
     const canvas = document.createElement('canvas');
-    canvas.style.width = inputs[0].width + 'px';
-    canvas.style.height = inputs[0].height + 'px';
+    canvas.style.width = `${inputs[0].width}px`;
+    canvas.style.height = `${inputs[0].height}px`;
     document.body.appendChild(canvas);
     render(canvas, filterComplex(inputs, complexFilters));
   })
-  .catch(console.error);
+  .catch((err) => console.error(err));

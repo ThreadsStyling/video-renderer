@@ -13,30 +13,32 @@ export type FilterCache = Map<
 >;
 const EMPTY_CACHE: FilterCache = new Map();
 export function filterComplexCached(
-  inputs: ReadonlyArray<Asset>,
+  inputsAssets: ReadonlyArray<Asset>,
   complexFilters: ComplexFilter[],
   cache: FilterCache = EMPTY_CACHE,
 ) {
   const sources = new Map<string, Asset>();
-  inputs.map((asset, index) => {
+  inputsAssets.map((asset, index) => {
     sources.set(`${index}`, asset);
   });
 
-  let defaultInput: Asset | null = inputs[0];
+  let defaultInput: Asset | null = inputsAssets[0];
   const newCache: FilterCache = new Map();
+
   const getOutputAssets = (inputs: Asset[], filter: ComplexFilter) => {
+    let inputsArr = inputs;
     const caches = cache.get(filter.name);
     const newCaches = newCache.get(filter.name) || [];
     newCache.set(filter.name, newCaches);
     if (caches) {
-      for (let i = 0; i < caches.length; i++) {
+      for (const cacheItem of caches) {
         if (
-          caches[i].inputs.length === inputs.length &&
-          caches[i].inputs.every((input, i) => input === inputs[i]) &&
-          faf.deepEqual(caches[i].filter, filter)
+          cacheItem.inputs.length === inputsArr.length &&
+          cacheItem.inputs.every((input, j) => input === inputsArr[j]) &&
+          faf.deepEqual(cacheItem.filter, filter)
         ) {
-          newCaches.push(caches[i]);
-          return caches[i].outputs;
+          newCaches.push(cacheItem);
+          return cacheItem.outputs;
         }
       }
     }
@@ -46,19 +48,20 @@ export function filterComplexCached(
       throw new Error('Could not find filter: ' + filter.name);
     }
 
-    if (inputs.length === 0) {
+    if (inputsArr.length === 0) {
       if (!defaultInput) {
         throw new Error(`${filter.name} does not specify an input, but there is no default input to use.`);
       }
-      inputs = [defaultInput];
+      inputsArr = [defaultInput];
     }
 
-    const outputs = f(inputs, filter.args || {});
-    newCaches.push({inputs, filter, outputs});
-    return outputs;
+    const outputsArr = f(inputsArr, filter.args || {});
+    newCaches.push({inputs: inputsArr, filter, outputs: outputsArr});
+    return outputsArr;
   };
+
   const outputs = complexFilters.reduce<Array<Asset>>((_, filter) => {
-    let inputs = (filter.inputs || []).map((input) => {
+    const inputs = (filter.inputs || []).map((input) => {
       const i = typeof input === 'string' ? input : input.name;
       const asset = sources.get(i);
       sources.delete(i);

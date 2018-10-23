@@ -12,9 +12,9 @@ document.body.appendChild(videoContainer);
 export default async function loadVideo(src: string) {
   const video = document.createElement('video');
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     video.addEventListener('error', reject);
-    video.addEventListener('loadedmetadata', resolve);
+    video.addEventListener('loadedmetadata', () => resolve());
     videoContainer.appendChild(video);
     video.muted = true;
     video.autoplay = true;

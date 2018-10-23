@@ -83,4 +83,4 @@ renderDemo(
       },
     },
   ],
-).catch(console.error); // tslint:disable-line
+).catch(() => console.error('Error'));

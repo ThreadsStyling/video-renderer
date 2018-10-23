@@ -117,7 +117,7 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset): Player {
     },
     seek(time: number) {
       start = Date.now() - time;
-      if (pausedAt != null) {
+      if (pausedAt !== null) {
         pausedAt = time;
       }
       if (!playing) {
