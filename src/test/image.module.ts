@@ -3,13 +3,13 @@
 import {Asset, filterComplex, render, ComplexFilter} from '../browser';
 import createCanvasAndContext from '../browser/util/createCanvasAndContext';
 
-const draf = () =>
-  new Promise((r) => {
+const draf = async () =>
+  new Promise<number>((r) => {
     requestAnimationFrame(() => requestAnimationFrame(r));
   });
 
 exports.processCanvas = async (assetsUrls: string[], filters: ComplexFilter[]) => {
-  const assets = await Promise.all(assetsUrls.map((url) => Asset.fromImage(url)));
+  const assets = await Promise.all(assetsUrls.map(async (url) => Asset.fromImage(url)));
   const {width, height} = assets[0];
   const [canvas] = createCanvasAndContext();
 
@@ -43,8 +43,8 @@ const processDiff = async (canvasResult: any, ffmpegResult: any) => {
   if (canvasResult.width !== ffmpegResult.width || canvasResult.height !== ffmpegResult.height) {
     return null;
   }
-  const width = canvasResult.width;
-  const height = canvasResult.height;
+  const width: number = canvasResult.width;
+  const height: number = canvasResult.height;
   const [canvas, context] = createCanvasAndContext();
   const [asset1, asset2] = await Promise.all([
     Asset.fromImage(canvasResult.dataUrl),
@@ -89,7 +89,7 @@ const processDiff = async (canvasResult: any, ffmpegResult: any) => {
 
   return {
     diff: normalizedDiff,
-    percent: Math.round(normalizedDiff * 100) / 100 + '%',
+    percent: `${Math.round(normalizedDiff * 100) / 100}%`,
     dataUrl: canvas.toDataURL(),
     dataUrlCombined: canvas2.toDataURL(),
   };

@@ -10,13 +10,15 @@ const rootDir = path.join(__dirname, '..', '..');
 const outDir = path.join(__dirname, 'image-tests-out');
 try {
   fs.mkdirSync(outDir);
-} catch (err) {}
+} catch (err) {
+  console.info('Image test folder already created.');
+}
 
 const dataUrlCache = new Map();
 
 const getFileAsDataUrl = (filename: string) => {
   if (!dataUrlCache.has(filename)) {
-    dataUrlCache.set(filename, 'data:image/png;base64,' + fs.readFileSync(filename).toString('base64'));
+    dataUrlCache.set(filename, `data:image/png;base64,${fs.readFileSync(filename).toString('base64')}`);
   }
 
   return dataUrlCache.get(filename);
@@ -44,7 +46,7 @@ const ffmpeg = async (...args: any[]) => {
       reject(error);
     });
     ffmpegProc.on('close', (code: number) => {
-      if (code !== 0) reject(new Error('FFMPEG extited with code ' + code));
+      if (code !== 0) reject(new Error(`FFMPEG extited with code ${code}`));
       else resolve();
     });
   });
@@ -72,7 +74,7 @@ const runTestcase = async (testcase: any) => {
     assetFiles.push(getFileAsDataUrl(asset));
   }
 
-  writeFileSync(path.join(outDir, name + '.json'), JSON.stringify(testcase, null, 4));
+  writeFileSync(path.join(outDir, `${name}.json`), JSON.stringify(testcase, null, 4));
 
   const result = await inChrome({
     // debug: true,
@@ -84,9 +86,9 @@ const runTestcase = async (testcase: any) => {
   });
   testcase.result = result;
 
-  const dataUrl = result.canvasResult.dataUrl;
+  const dataUrl: string = result.canvasResult.dataUrl;
   const outFile = path.join(outDir, `${name}-canvas.png`);
-  const data = new Buffer(dataUrl.substr(dataUrl.indexOf(',') + 1), 'base64');
+  const data = Buffer.from(dataUrl.substr(dataUrl.indexOf(',') + 1), 'base64');
   fs.writeFileSync(outFile, data);
 
   if (!result.diffResult) {
@@ -97,12 +99,12 @@ const runTestcase = async (testcase: any) => {
     );
   }
 
-  const dataUrlDiff = result.diffResult.dataUrl;
-  const dataUrlAll = result.diffResult.dataUrlCombined;
+  const dataUrlDiff: string = result.diffResult.dataUrl;
+  const dataUrlAll: string = result.diffResult.dataUrlCombined;
   const outFileDiff = path.join(outDir, `${name}-diff.png`);
   const outFileAll = path.join(outDir, `${name}-all.png`);
-  const dataDiff = new Buffer(dataUrlDiff.substr(dataUrlDiff.indexOf(',') + 1), 'base64');
-  const dataAll = new Buffer(dataUrlAll.substr(dataUrlAll.indexOf(',') + 1), 'base64');
+  const dataDiff = Buffer.from(dataUrlDiff.substr(dataUrlDiff.indexOf(',') + 1), 'base64');
+  const dataAll = Buffer.from(dataUrlAll.substr(dataUrlAll.indexOf(',') + 1), 'base64');
   fs.writeFileSync(outFileDiff, dataDiff);
   fs.writeFileSync(outFileAll, dataAll);
 
