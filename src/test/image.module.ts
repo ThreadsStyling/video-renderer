@@ -116,7 +116,7 @@ const installFonts = async (fonts: any) => {
   `,
     )
     .join('\n');
-  document.head.appendChild(style);
+  document.head && document.head.appendChild(style);
 };
 
 exports.runTest = async (assetsUrls: any, filters: any, ffmpegResultDataUrl: any, fonts: any) => {

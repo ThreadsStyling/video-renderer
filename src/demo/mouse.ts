@@ -8,7 +8,7 @@ const canvas = document.createElement('canvas');
 canvas.style.margin = 'auto';
 canvas.style.display = 'block';
 const style = document.createElement('style');
-document.head.appendChild(style);
+document.head && document.head.appendChild(style);
 document.body.appendChild(canvas);
 
 Promise.all([
