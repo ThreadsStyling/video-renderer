@@ -48,9 +48,13 @@
     "test": "jest",
     "test:integration": "ts-node src/test/image.tests.ts",
     "prettier": "prettier --ignore-path .gitignore --write './**/*.{js,jsx,ts,tsx}'",
-    "lint": "tslint './src/**/*.{ts,tsx}' -t verbose -p .",
-    "precommit": "pretty-quick --staged && yarn lint",
-    "prepush": "yarn prettier:diff && yarn build && yarn test && yarn test:integration"
+    "lint": "tslint './src/**/*.{ts,tsx}' -t verbose -p ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && yarn lint",
+      "pre-push": "yarn build && yarn test && yarn test:integration"
+    }
   },
   "browserslist": [
     "last 1 Chrome version"
