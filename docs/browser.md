@@ -5,7 +5,6 @@ POC browser implementation was based on:
 - https://jakearchibald.com/scratch/alphavid/
 - https://stackoverflow.com/questions/4073303/can-i-have-a-video-with-transparent-background-using-html5-video-tag
 
-
 ## Usage
 
 ```js
@@ -22,7 +21,6 @@ render(canvas, filterComplex([asset1, asset2], [
   }
 ]));
 ```
-
 
 ## Reference
 
@@ -46,7 +44,6 @@ Load an asset at a given URL, returning a `Promise` for that asset.
 await Asset.loadVideo(videoURL);
 ```
 
-
 ### `filterComplex()` Method
 
 ```js
@@ -66,7 +63,6 @@ const trimmedVideo = filterComplex([inputVideo], [
 ```
 
 Apply a graph of filters to an asset. Returns a transformed asset.
-
 
 ### `Player` Class
 
@@ -89,13 +85,12 @@ interface Player {
 }
 ```
 
-
 ### `render()` Method
 
 ```js
 import {render} from '@threads/isomorphic-video-render/browser';
 
-const player = render(canvas, asset);
+const player = render(canvas[, asset, fps]);
 ```
 
 Render an asset onto a canvas.
