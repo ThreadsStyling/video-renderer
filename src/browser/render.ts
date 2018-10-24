@@ -15,7 +15,7 @@ export interface Player {
   onFrame(handler: (state: RenderState) => void): () => void;
 }
 
-export function render(canvas: HTMLCanvasElement, asset?: Asset, fps = 60): Player {
+export function render(canvas: HTMLCanvasElement, asset?: Asset, fps?: number): Player {
   if (asset) {
     canvas.width = asset.width;
     canvas.height = asset.height;
@@ -72,9 +72,11 @@ export function render(canvas: HTMLCanvasElement, asset?: Asset, fps = 60): Play
     if (pausedAt !== null || disposed) {
       playing = false;
     } else {
-      setTimeout(() => {
+      if (fps) {
+        setTimeout(() => requestAnimationFrame(draw), 1000 / fps);
+      } else {
         requestAnimationFrame(draw);
-      }, 1000 / fps);
+      }
     }
   }
 
