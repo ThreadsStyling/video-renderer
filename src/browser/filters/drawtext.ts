@@ -55,7 +55,7 @@ const drawtext: Filter = ([background], args) => {
 
       // found a black pixel
       if (pixels[index] === 0) {
-        // we are at the end and all black row and start has been found
+        // we are at the end of an all black row and start has been found
         if (column === thCanvas.width - 1 && start !== -1) {
           // set the end, but only if we haven't got one already
           if (end === -1) end = row;
