@@ -20,7 +20,7 @@ const generateFontTests = (fontFile: string): Testcase[] => {
           name: 'drawtext',
           args: {
             fontfile: `./assets/${fontFile}`,
-            text: 'SOME TEXT',
+            text: 'is someone',
             x: 0,
             y: 10,
             fontsize: '70',
@@ -37,7 +37,7 @@ const generateFontTests = (fontFile: string): Testcase[] => {
           name: 'drawtext',
           args: {
             fontfile: `./assets/${fontFile}`,
-            text: 'SOME TEXT',
+            text: 'is someone',
             x: 15,
             y: 15,
             fontsize: '70',
