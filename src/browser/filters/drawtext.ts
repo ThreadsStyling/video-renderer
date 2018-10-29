@@ -50,8 +50,7 @@ const drawtext: Filter = ([background], args) => {
       const index = (row * thCanvas.width + column) * 4;
       if (pixels[index] === 0) {
         if (column === thCanvas.width - 1 && start !== -1) {
-          end = row;
-          row = thCanvas.height;
+          if (end === -1) end = row;
           break;
         }
         continue;
@@ -59,6 +58,7 @@ const drawtext: Filter = ([background], args) => {
         if (start === -1) {
           start = row;
         }
+        end = -1;
         break;
       }
     }
