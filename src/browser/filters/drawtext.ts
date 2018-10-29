@@ -77,7 +77,7 @@ const drawtext: Filter = ([background], args) => {
         // if we hit non-black after starting, we must look for a new end
         end = -1;
 
-        // don't check the rest of thisg row
+        // don't check the rest of this row
         break;
       }
     }
