@@ -45,20 +45,39 @@ const drawtext: Filter = ([background], args) => {
   const pixels = thContext.getImageData(0, 0, thCanvas.width, thCanvas.height).data;
   let start = -1;
   let end = -1;
+
+  // iterate the rows
   for (let row = 0; row < thCanvas.height; row++) {
+    // iterate the columns
     for (let column = 0; column < thCanvas.width; column++) {
+      // get alpha value for this pixel
       const index = (row * thCanvas.width + column) * 4;
+
+      // found a black pixel
       if (pixels[index] === 0) {
+        // we are at the end and all black row and start has been found
         if (column === thCanvas.width - 1 && start !== -1) {
+          // set the end, but only if we haven't got one already
           if (end === -1) end = row;
+
+          // exit inner loop
           break;
         }
+
+        // continue searching this row
         continue;
       } else {
+        // we found a non black pixel
+        // and we haven't found the start yet
         if (start === -1) {
+          // we found the start row
           start = row;
         }
+
+        // if we hit non-black after starting, we must look for a new end
         end = -1;
+
+        // don't check the rest of thisg row
         break;
       }
     }
