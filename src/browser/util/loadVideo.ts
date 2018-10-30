@@ -14,7 +14,7 @@ export default async function loadVideo(src: string) {
 
   await new Promise<void>((resolve, reject) => {
     video.addEventListener('error', reject);
-    video.addEventListener('loadedmetadata', () => resolve());
+    video.addEventListener('canplay', () => resolve());
     videoContainer.appendChild(video);
     video.muted = true;
     video.autoplay = true;
