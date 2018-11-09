@@ -3,19 +3,23 @@ import ComplexFilter from '../shared/ComplexFilter';
 import {filters} from './filters';
 const faf = require('fast-af/deepEqual');
 
-export type FilterCache = Map<
-  string,
-  Array<{
-    inputs: Asset[];
-    filter: ComplexFilter;
-    outputs: Asset[];
-  }>
->;
-const EMPTY_CACHE: FilterCache = new Map();
+interface AssetRecord {
+  inputs: Asset[];
+  filter: ComplexFilter;
+  outputs: Asset[];
+}
+
+export type FilterCache = {
+  recordHash: Map<string, AssetRecord[]>;
+  allRecords: Set<AssetRecord>;
+};
+
+const EMPTY_CACHE: FilterCache = {recordHash: new Map(), allRecords: new Set()};
+
 export function filterComplexCached(
   inputsAssets: ReadonlyArray<Asset>,
   complexFilters: ComplexFilter[],
-  cache: FilterCache = EMPTY_CACHE,
+  {recordHash: cache, allRecords: cacheRecords}: FilterCache = EMPTY_CACHE,
 ) {
   const sources = new Map<string, Asset>();
   inputsAssets.map((asset, index) => {
@@ -23,13 +27,14 @@ export function filterComplexCached(
   });
 
   let defaultInput: Asset | null = inputsAssets[0];
-  const newCache: FilterCache = new Map();
+  const newCache: FilterCache = EMPTY_CACHE;
 
   const getOutputAssets = (inputs: Asset[], filter: ComplexFilter) => {
     let inputsArr = inputs;
     const caches = cache.get(filter.name);
-    const newCaches = newCache.get(filter.name) || [];
-    newCache.set(filter.name, newCaches);
+    const newCaches = newCache.recordHash.get(filter.name) || [];
+    newCache.recordHash.set(filter.name, newCaches);
+
     if (caches) {
       for (const cacheItem of caches) {
         if (
@@ -38,6 +43,9 @@ export function filterComplexCached(
           faf.deepEqual(cacheItem.filter, filter)
         ) {
           newCaches.push(cacheItem);
+          newCache.allRecords.add(cacheItem);
+          cacheRecords.delete(cacheItem);
+
           return cacheItem.outputs;
         }
       }
@@ -54,6 +62,11 @@ export function filterComplexCached(
       }
       inputsArr = [defaultInput];
     }
+
+    // Clean cache records that are not present in the new cache
+    cacheRecords.forEach((r) => {
+      r.outputs.forEach((o) => o.dispose());
+    });
 
     const outputsArr = f(inputsArr, filter.args || {});
     newCaches.push({inputs: inputsArr, filter, outputs: outputsArr});
@@ -91,19 +104,6 @@ export function filterComplexCached(
   if (outputs.length !== 1) {
     throw new Error('Complex filter should have exactly one final output');
   }
-
-  Array.from(cache.keys())
-    .filter((k) => !newCache.has(k))
-    .forEach((keyToDispose) => {
-      const asset = cache.get(keyToDispose);
-
-      if (asset) {
-        asset.forEach((a) => {
-          a.inputs.forEach((i) => i.dispose());
-          a.outputs.forEach((o) => o.dispose());
-        });
-      }
-    });
 
   return {output: outputs[0], cache: newCache};
 }
