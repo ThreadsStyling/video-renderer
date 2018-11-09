@@ -9,10 +9,10 @@ interface AssetRecord {
   outputs: Asset[];
 }
 
-export type FilterCache = {
+export interface FilterCache {
   recordHash: Map<string, AssetRecord[]>;
   allRecords: Set<AssetRecord>;
-};
+}
 
 const getEmptyCache = (): FilterCache => ({recordHash: new Map(), allRecords: new Set()});
 
@@ -31,18 +31,18 @@ export function filterComplexCached(
 
   const getOutputAssets = (inputs: Asset[], filter: ComplexFilter) => {
     let inputsArr = inputs;
-    const caches = oldCache.recordHash.get(filter.name);
-    const filterCaches = newCache.recordHash.get(filter.name) || [];
-    newCache.recordHash.set(filter.name, filterCaches);
+    const oldFilterCaches = oldCache.recordHash.get(filter.name);
+    const newFilterCaches = newCache.recordHash.get(filter.name) || [];
+    newCache.recordHash.set(filter.name, newFilterCaches);
 
-    if (caches) {
-      for (const cacheItem of caches) {
+    if (oldFilterCaches) {
+      for (const cacheItem of oldFilterCaches) {
         if (
           cacheItem.inputs.length === inputsArr.length &&
           cacheItem.inputs.every((input, j) => input === inputsArr[j]) &&
           faf.deepEqual(cacheItem.filter, filter)
         ) {
-          filterCaches.push(cacheItem);
+          newFilterCaches.push(cacheItem);
           newCache.allRecords.add(cacheItem);
           oldCache.allRecords.delete(cacheItem);
 
@@ -66,7 +66,7 @@ export function filterComplexCached(
     const outputsArr = f(inputsArr, filter.args || {});
 
     const outputCacheItem = {inputs: inputsArr, filter, outputs: outputsArr};
-    filterCaches.push(outputCacheItem);
+    newFilterCaches.push(outputCacheItem);
     newCache.allRecords.add(outputCacheItem);
 
     return outputsArr;
