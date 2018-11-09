@@ -14,12 +14,12 @@ export type FilterCache = {
   allRecords: Set<AssetRecord>;
 };
 
-const EMPTY_CACHE: FilterCache = {recordHash: new Map(), allRecords: new Set()};
+const getEmptyCache = (): FilterCache => ({recordHash: new Map(), allRecords: new Set()});
 
 export function filterComplexCached(
   inputsAssets: ReadonlyArray<Asset>,
   complexFilters: ComplexFilter[],
-  {recordHash: cache, allRecords: cacheRecords}: FilterCache = EMPTY_CACHE,
+  {recordHash: cache, allRecords: cacheRecords}: FilterCache = getEmptyCache(),
 ) {
   const sources = new Map<string, Asset>();
   inputsAssets.map((asset, index) => {
@@ -27,7 +27,7 @@ export function filterComplexCached(
   });
 
   let defaultInput: Asset | null = inputsAssets[0];
-  const newCache: FilterCache = EMPTY_CACHE;
+  const newCache: FilterCache = getEmptyCache();
 
   const getOutputAssets = (inputs: Asset[], filter: ComplexFilter) => {
     let inputsArr = inputs;
