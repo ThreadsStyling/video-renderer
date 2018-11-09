@@ -19,7 +19,7 @@ const getEmptyCache = (): FilterCache => ({recordHash: new Map(), allRecords: ne
 export function filterComplexCached(
   inputsAssets: ReadonlyArray<Asset>,
   complexFilters: ComplexFilter[],
-  {recordHash: cache, allRecords: cacheRecords}: FilterCache = getEmptyCache(),
+  oldCache: FilterCache = getEmptyCache(),
 ) {
   const sources = new Map<string, Asset>();
   inputsAssets.map((asset, index) => {
@@ -31,9 +31,9 @@ export function filterComplexCached(
 
   const getOutputAssets = (inputs: Asset[], filter: ComplexFilter) => {
     let inputsArr = inputs;
-    const caches = cache.get(filter.name);
-    const newCaches = newCache.recordHash.get(filter.name) || [];
-    newCache.recordHash.set(filter.name, newCaches);
+    const caches = oldCache.recordHash.get(filter.name);
+    const filterCaches = newCache.recordHash.get(filter.name) || [];
+    newCache.recordHash.set(filter.name, filterCaches);
 
     if (caches) {
       for (const cacheItem of caches) {
@@ -42,9 +42,9 @@ export function filterComplexCached(
           cacheItem.inputs.every((input, j) => input === inputsArr[j]) &&
           faf.deepEqual(cacheItem.filter, filter)
         ) {
-          newCaches.push(cacheItem);
+          filterCaches.push(cacheItem);
           newCache.allRecords.add(cacheItem);
-          cacheRecords.delete(cacheItem);
+          oldCache.allRecords.delete(cacheItem);
 
           return cacheItem.outputs;
         }
@@ -63,13 +63,12 @@ export function filterComplexCached(
       inputsArr = [defaultInput];
     }
 
-    // Clean cache records that are not present in the new cache
-    cacheRecords.forEach((r) => {
-      r.outputs.forEach((o) => o.dispose());
-    });
-
     const outputsArr = f(inputsArr, filter.args || {});
-    newCaches.push({inputs: inputsArr, filter, outputs: outputsArr});
+
+    const outputCacheItem = {inputs: inputsArr, filter, outputs: outputsArr};
+    filterCaches.push(outputCacheItem);
+    newCache.allRecords.add(outputCacheItem);
+
     return outputsArr;
   };
 
@@ -104,6 +103,11 @@ export function filterComplexCached(
   if (outputs.length !== 1) {
     throw new Error('Complex filter should have exactly one final output');
   }
+
+  // Clean cache records that are not present in the new cache
+  oldCache.allRecords.forEach((r) => {
+    r.outputs.forEach((o) => o.dispose());
+  });
 
   return {output: outputs[0], cache: newCache};
 }
