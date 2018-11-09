@@ -92,6 +92,19 @@ export function filterComplexCached(
     throw new Error('Complex filter should have exactly one final output');
   }
 
+  Array.from(cache.keys())
+    .filter((k) => !newCache.has(k))
+    .forEach((keyToDispose) => {
+      const asset = cache.get(keyToDispose);
+
+      if (asset) {
+        asset.forEach((a) => {
+          a.inputs.forEach((i) => i.dispose());
+          a.outputs.forEach((o) => o.dispose());
+        });
+      }
+    });
+
   return {output: outputs[0], cache: newCache};
 }
 export default function filterComplex(inputs: ReadonlyArray<Asset>, complexFilters: ComplexFilter[]) {
