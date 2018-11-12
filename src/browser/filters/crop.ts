@@ -3,7 +3,7 @@ import Asset from '../Asset';
 import createCanvasAndContext from '../util/createCanvasAndContext';
 
 const crop: Filter = ([asset], args) => {
-  const [canvas, context] = createCanvasAndContext();
+  const [canvas, context, dispose] = createCanvasAndContext();
   const width = (args.w || args.out_w) as any | 0;
   const height = (args.h || args.out_h) as any | 0;
   const x = args.x as any | 0;
@@ -21,7 +21,7 @@ const crop: Filter = ([asset], args) => {
     return true;
   };
 
-  return [new Asset(asset.duration, width, height, canvas, context, render)];
+  return [new Asset(asset.duration, width, height, canvas, context, render, dispose)];
 };
 
 export default crop;

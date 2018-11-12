@@ -6,7 +6,7 @@ const overlay: Filter = ([background, foreground], args) => {
   const x = args.x as any | 0;
   const y = args.y as any | 0;
   const {width, height} = background;
-  const [canvas, context] = createCanvasAndContext();
+  const [canvas, context, dispose] = createCanvasAndContext();
 
   canvas.width = width;
   canvas.height = height;
@@ -24,7 +24,7 @@ const overlay: Filter = ([background, foreground], args) => {
     return true;
   };
 
-  return [new Asset(background.duration, width, height, canvas, context, render)];
+  return [new Asset(background.duration, width, height, canvas, context, render, dispose)];
 };
 
 export default overlay;

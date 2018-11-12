@@ -3,7 +3,7 @@ import Asset from '../Asset';
 import createCanvasAndContext from '../util/createCanvasAndContext';
 
 const blend: Filter = ([asset1, asset2], {c0_mode}) => {
-  const [canvas, context] = createCanvasAndContext();
+  const [canvas, context, dispose] = createCanvasAndContext();
   const {width, height} = asset1;
 
   canvas.width = width;
@@ -24,7 +24,7 @@ const blend: Filter = ([asset1, asset2], {c0_mode}) => {
     return true;
   };
 
-  return [new Asset(asset1.duration, width, height, canvas, context, render)];
+  return [new Asset(asset1.duration, width, height, canvas, context, render, dispose)];
 };
 
 export default blend;

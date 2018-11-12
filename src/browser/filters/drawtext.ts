@@ -10,8 +10,8 @@ function parse(path: string) {
 }
 
 const drawtext: Filter = ([background], args) => {
-  const [canvas, context] = createCanvasAndContext();
-  const [textCanvas, textContext] = createCanvasAndContext();
+  const [canvas, context, disposeCanvas] = createCanvasAndContext();
+  const [textCanvas, textContext, disposeText] = createCanvasAndContext();
   const {width, height} = background;
 
   canvas.width = width;
@@ -34,7 +34,7 @@ const drawtext: Filter = ([background], args) => {
   const tw = textContext.measureText(text).width;
 
   // Measure text height.
-  const [thCanvas, thContext] = createCanvasAndContext();
+  const [thCanvas, thContext, disposeTh] = createCanvasAndContext();
   thCanvas.width = fontsize * 2 * text.length;
   thCanvas.height = fontsize * 2;
   thContext.fillRect(0, 0, thCanvas.width, thCanvas.height);
@@ -116,7 +116,13 @@ const drawtext: Filter = ([background], args) => {
     return true;
   };
 
-  return [new Asset(background.duration, width, height, canvas, context, render)];
+  return [
+    new Asset(background.duration, width, height, canvas, context, render, () => {
+      disposeCanvas();
+      disposeText();
+      disposeTh();
+    }),
+  ];
 };
 
 export default drawtext;
