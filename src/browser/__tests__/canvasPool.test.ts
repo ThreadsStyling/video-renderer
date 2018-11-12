@@ -16,7 +16,7 @@ document.createElement = jest.fn().mockImplementation((t) => {
 
 describe('CanvasPool', () => {
   afterEach(() => {
-    CanvasPool.dispose();
+    CanvasPool.clear();
   });
 
   test('should create a canvas when no canvases are available', () => {
