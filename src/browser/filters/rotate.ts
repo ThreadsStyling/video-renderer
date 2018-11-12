@@ -3,7 +3,7 @@ import Asset from '../Asset';
 import createCanvasAndContext from '../util/createCanvasAndContext';
 
 const rotate: Filter = ([asset], {angle, out_w, out_h, fillcolor = '#000000'}) => {
-  const [canvas, context] = createCanvasAndContext();
+  const [canvas, context, dispose] = createCanvasAndContext();
   const width = out_w ? (out_w as any | 0) : asset.width;
   const height = out_h ? (out_h as any | 0) : asset.height;
   const angleInRadians = angle as any | 0;
@@ -27,7 +27,7 @@ const rotate: Filter = ([asset], {angle, out_w, out_h, fillcolor = '#000000'}) =
     return true;
   };
 
-  return [new Asset(asset.duration, width, height, canvas, context, render)];
+  return [new Asset(asset.duration, width, height, canvas, context, render, dispose)];
 };
 
 export default rotate;

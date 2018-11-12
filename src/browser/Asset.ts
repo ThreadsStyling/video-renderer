@@ -8,7 +8,7 @@ const transparent1x1Pixel =
 
 export default class Asset {
   static async fromImage(src: string): Promise<Asset> {
-    const [canvas, context] = createCanvasAndContext();
+    const [canvas, context, dispose] = createCanvasAndContext();
     const img = await loadImage(src);
     const width = img.width;
     const height = img.height;
@@ -17,7 +17,7 @@ export default class Asset {
     canvas.height = height;
     context.drawImage(img, 0, 0);
 
-    return new Asset(0, width, height, canvas, context, noop);
+    return new Asset(0, width, height, canvas, context, noop, dispose);
   }
 
   static async transparentPixel(): Promise<Asset> {
@@ -25,7 +25,7 @@ export default class Asset {
   }
 
   static async fromVideo(src: string): Promise<Asset> {
-    const [canvas, context] = createCanvasAndContext();
+    const [canvas, context, dispose] = createCanvasAndContext();
     const video = await loadVideo(src);
 
     canvas.width = video.videoWidth;
@@ -60,6 +60,7 @@ export default class Asset {
         if (video.parentNode) {
           video.parentNode.removeChild(video);
         }
+        dispose();
       },
     );
   }
@@ -68,7 +69,7 @@ export default class Asset {
     const fullVideo = await Asset.fromVideo(src);
     const width = fullVideo.width;
     const height = fullVideo.height / 2;
-    const [canvas, context] = createCanvasAndContext();
+    const [canvas, context, dispose] = createCanvasAndContext();
 
     canvas.width = width;
     canvas.height = height;
@@ -95,6 +96,7 @@ export default class Asset {
       },
       () => {
         fullVideo.dispose();
+        dispose();
       },
     );
   }
