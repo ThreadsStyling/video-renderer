@@ -1,43 +1,43 @@
-import createCanvasAndContext from './createCanvasAndContext';
-
 interface TextParams {
   text: string;
   fontsize: number;
   font: string;
 }
 
+// Always reuse the same canvas as it is not returned.
+const canvas = document.createElement('canvas');
+const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+
 const measureText = ({text, font, fontsize}: TextParams) => {
-  const [, textContext, disposeText] = createCanvasAndContext();
   const fontStyle = `${fontsize}px ${font}`;
 
   // Measure text width.
-  textContext.font = fontStyle;
-  const tw = textContext.measureText(text).width;
+  context.font = fontStyle;
+  const tw = context.measureText(text).width;
 
   // Measure text height.
-  const [thCanvas, thContext, disposeTh] = createCanvasAndContext();
-  thCanvas.width = fontsize * 2 * text.length;
-  thCanvas.height = fontsize * 2;
-  thContext.fillRect(0, 0, thCanvas.width, thCanvas.height);
-  thContext.textBaseline = 'top';
-  thContext.fillStyle = 'white';
-  thContext.font = fontStyle;
-  thContext.fillText(text, 0, 0);
-  const pixels = thContext.getImageData(0, 0, thCanvas.width, thCanvas.height).data;
+  canvas.width = fontsize * 2 * text.length;
+  canvas.height = fontsize * 2;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.textBaseline = 'top';
+  context.fillStyle = 'white';
+  context.font = fontStyle;
+  context.fillText(text, 0, 0);
+  const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
   let start = -1;
   let end = -1;
 
   // iterate the rows
-  for (let row = 0; row < thCanvas.height; row++) {
+  for (let row = 0; row < canvas.height; row++) {
     // iterate the columns
-    for (let column = 0; column < thCanvas.width; column++) {
+    for (let column = 0; column < canvas.width; column++) {
       // get alpha value for this pixel
-      const index = (row * thCanvas.width + column) * 4;
+      const index = (row * canvas.width + column) * 4;
 
       // found a black pixel
       if (pixels[index] === 0) {
         // we are at the end of an all black row and start has been found
-        if (column === thCanvas.width - 1 && start !== -1) {
+        if (column === canvas.width - 1 && start !== -1) {
           // set the end, but only if we haven't got one already
           if (end === -1) end = row;
 
@@ -64,9 +64,6 @@ const measureText = ({text, font, fontsize}: TextParams) => {
     }
   }
   const th = end - start;
-
-  disposeTh();
-  disposeText();
 
   return {
     th,
