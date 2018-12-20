@@ -1,15 +1,17 @@
 import createCanvasAndContext from './util/createCanvasAndContext';
 import loadImage from './util/loadImage';
 import loadVideo from './util/loadVideo';
+import LoadAssetOptions from './util/LoadAssetOptions';
+import isTainted from './util/isTainted';
 
 const noop = () => false;
 const transparent1x1Pixel =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=';
 
 export default class Asset {
-  static async fromImage(src: string): Promise<Asset> {
+  static async fromImage(src: string, options: LoadAssetOptions = {}): Promise<Asset> {
     const [canvas, context, dispose] = createCanvasAndContext();
-    const img = await loadImage(src);
+    const img = await loadImage(src, options);
     const width = img.width;
     const height = img.height;
 
@@ -24,9 +26,9 @@ export default class Asset {
     return Asset.fromImage(transparent1x1Pixel);
   }
 
-  static async fromVideo(src: string): Promise<Asset> {
+  static async fromVideo(src: string, options: LoadAssetOptions = {}): Promise<Asset> {
     const [canvas, context, dispose] = createCanvasAndContext();
-    const video = await loadVideo(src);
+    const video = await loadVideo(src, options);
 
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
@@ -65,8 +67,8 @@ export default class Asset {
     );
   }
 
-  static async fromVideoWithAlpha(src: string): Promise<Asset> {
-    const fullVideo = await Asset.fromVideo(src);
+  static async fromVideoWithAlpha(src: string, options: LoadAssetOptions = {}): Promise<Asset> {
+    const fullVideo = await Asset.fromVideo(src, options);
     const width = fullVideo.width;
     const height = fullVideo.height / 2;
     const [canvas, context, dispose] = createCanvasAndContext();
@@ -84,6 +86,9 @@ export default class Asset {
       context,
       (timestamp) => {
         fullVideo.renderFrame(timestamp);
+        if (isTainted(context)) {
+          throw new Error('Canvas has been tainted. You should add cors to the request for ' + src);
+        }
         const image = rawFrame.getImageData(0, 0, width, height);
         const imageData = image.data;
         const alphaData = rawFrame.getImageData(0, height, width, height).data;

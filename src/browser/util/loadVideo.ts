@@ -1,3 +1,5 @@
+import LoadAssetOptions, {setCorsMode} from './LoadAssetOptions';
+
 const videoContainer = document.createElement('div');
 
 videoContainer.style.position = 'fixed';
@@ -9,13 +11,15 @@ videoContainer.style.pointerEvents = 'none';
 videoContainer.style.opacity = '0.000001';
 document.body.appendChild(videoContainer);
 
-export default async function loadVideo(src: string) {
+export default async function loadVideo(src: string, options: LoadAssetOptions) {
   const video = document.createElement('video');
 
   await new Promise<void>((resolve, reject) => {
     video.addEventListener('error', reject);
     video.addEventListener('canplay', () => resolve());
     videoContainer.appendChild(video);
+
+    setCorsMode(video, src, options);
     video.muted = true;
     video.autoplay = true;
     video.loop = true;

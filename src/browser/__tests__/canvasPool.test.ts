@@ -1,9 +1,18 @@
 import CanvasPool from '../canvasPool';
 
 class MockCanvas {
+  private _tainted = false;
   getContext = () => ({
     clearRect: () => undefined,
+    getImageData: () => {
+      if (this._tainted) {
+        throw new Error('Tainted canvas');
+      }
+    },
   });
+  taint() {
+    this._tainted = true;
+  }
 }
 
 document.createElement = jest.fn().mockImplementation((t) => {
@@ -36,5 +45,17 @@ describe('CanvasPool', () => {
     const canvasFromPool = CanvasPool.get();
 
     expect(canvasFromPool).toBe(canvasToRelease);
+  });
+
+  test('should not release canvases when they are tainted', () => {
+    CanvasPool.get();
+    const canvasToRelease: any = CanvasPool.get();
+
+    canvasToRelease.taint();
+    CanvasPool.put(canvasToRelease);
+
+    const canvasFromPool = CanvasPool.get();
+
+    expect(canvasFromPool).not.toBe(canvasToRelease);
   });
 });
