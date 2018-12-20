@@ -1,3 +1,5 @@
+import isTainted from './util/isTainted';
+
 export interface CanvasPool {
   /**
    * Get the next available canvas from the pool
@@ -26,7 +28,7 @@ const canvasPool: CanvasPool = {
   put(canvas) {
     const context = canvas.getContext('2d');
 
-    if (context !== null) {
+    if (context !== null && !isTainted(context)) {
       context.clearRect(0, 0, canvas.width, canvas.height);
       canvases.push(canvas);
     }
