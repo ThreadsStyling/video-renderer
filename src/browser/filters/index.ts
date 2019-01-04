@@ -2,6 +2,7 @@ import Asset from '../Asset';
 import trim from './trim';
 import overlay from './overlay';
 import drawtext from './drawtext';
+import loop from './loop';
 import scale from './scale';
 import rotate from './rotate';
 import crop from './crop';
@@ -16,6 +17,7 @@ export const filters: FiltersByName = {
   trim,
   overlay,
   drawtext,
+  loop,
   scale,
   rotate,
   crop,
