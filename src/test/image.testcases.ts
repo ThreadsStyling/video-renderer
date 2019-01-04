@@ -281,6 +281,25 @@ export const testcases: Testcase[] = [
     ],
   },
   {
+    name: 'loop-noop',
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
+    filters: [
+      {
+        inputs: ['1'],
+        name: 'loop',
+        args: {
+          loop: 3,
+        },
+        outputs: ['looped'],
+      },
+      {
+        inputs: ['0', 'looped'],
+        name: 'overlay',
+        args: {x: 0, y: 0},
+      },
+    ],
+  },
+  {
     name: 'pad-transparent-bg',
     assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
