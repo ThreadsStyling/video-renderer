@@ -20,7 +20,7 @@ const generateFontTests = (fontFile: string): Testcase[] => {
           name: 'drawtext',
           args: {
             fontfile: `./assets/${fontFile}`,
-            text: 'is someone',
+            text: "it's not, me",
             x: 0,
             y: 10,
             fontsize: '70',
@@ -37,7 +37,7 @@ const generateFontTests = (fontFile: string): Testcase[] => {
           name: 'drawtext',
           args: {
             fontfile: `./assets/${fontFile}`,
-            text: 'is someone',
+            text: "it's not, me",
             x: 15,
             y: 15,
             fontsize: '70',
@@ -53,6 +53,23 @@ const generateFontTests = (fontFile: string): Testcase[] => {
 };
 
 export const testcases: Testcase[] = [
+  {
+    name: `drawtext-special-chars`,
+    assets: [join(assetDir, 'servers.png')],
+    filters: [
+      {
+        name: 'drawtext',
+        args: {
+          fontfile: `./assets/Verdana.ttf`,
+          text: "Jason's \"friend\": it's, not you/me; it's you",
+          x: 0,
+          y: 10,
+          fontsize: '18',
+          fontcolor: 'black',
+        },
+      },
+    ],
+  },
   {
     name: 'overlay-simple',
     assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
