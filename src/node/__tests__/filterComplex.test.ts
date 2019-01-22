@@ -13,15 +13,29 @@ const fc: ComplexFilter[] = [
   },
   {
     inputs: [{name: 'overlaid', kind: FilterInputKind.Both}],
-    outputs: [],
+    outputs: ['trimmed'],
     name: 'trim',
     args: {
       start: 0,
       end: 5,
     },
   },
+  {
+    inputs: [{name: 'trimmed', kind: FilterInputKind.Both}],
+    name: 'drawtext',
+    args: {
+      fontfile: `./assets/Verdana.ttf`,
+      text: "Jason's \"friend\": it's, not you/me; it's you",
+      x: 0,
+      y: 10,
+      fontsize: '70',
+      fontcolor: 'black',
+    },
+  },
 ];
 
 test('filterComplex', () => {
-  expect(filterComplex(fc)).toBe('[0][1]overlay=x=500:y=100[overlaid],[overlaid]trim=start=0:end=5');
+  expect(filterComplex(fc)).toMatchInlineSnapshot(
+    `"[0][1]overlay=x=500:y=100[overlaid],[overlaid]trim=start=0:end=5[trimmed],[trimmed]drawtext=fontfile=./assets/Verdana.ttf:text=Jason\\\\\\\\\\\\'s \\"friend\\"\\\\\\\\: it\\\\\\\\\\\\'s\\\\, not you/me\\\\; it\\\\\\\\\\\\'s you:x=0:y=10:fontsize=70:fontcolor=black"`,
+  );
 });
