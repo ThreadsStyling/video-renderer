@@ -514,19 +514,6 @@ export const testcases: Testcase[] = [
       },
       {
         inputs: ['txt'],
-        name: 'drawbox',
-        args: {
-          x: 100,
-          y: 10,
-          w: 20,
-          h: 20,
-          color: 'green',
-          t: 'fill',
-        },
-        outputs: ['txt2'],
-      },
-      {
-        inputs: ['txt2'],
         name: 'rotate',
         args: {
           angle: 1,
