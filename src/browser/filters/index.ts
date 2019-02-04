@@ -2,8 +2,9 @@ import Asset from '../Asset';
 import trim from './trim';
 import overlay from './overlay';
 import drawtext from './drawtext';
-import loop from './loop';
+import noop from './noop';
 import scale from './scale';
+import drawbox from './drawbox';
 import rotate from './rotate';
 import crop from './crop';
 import pad from './pad';
@@ -17,7 +18,9 @@ export const filters: FiltersByName = {
   trim,
   overlay,
   drawtext,
-  loop,
+  drawbox,
+  loop: noop,
+  format: noop,
   scale,
   rotate,
   crop,
