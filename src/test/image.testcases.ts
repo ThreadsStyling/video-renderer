@@ -111,7 +111,7 @@ export const testcases: Testcase[] = [
           h: 300,
           color: '#ffffff',
           t: 'fill',
-          replace: 1,
+          replace: 1, // required to draw on transparent png
         },
         outputs: ['box'],
       },
