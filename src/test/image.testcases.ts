@@ -94,14 +94,6 @@ export const testcases: Testcase[] = [
     filters: [
       {
         inputs: ['1'],
-        name: 'format',
-        args: {
-          pix_fmts: 'rgb24',
-        },
-        outputs: ['formatted'],
-      },
-      {
-        inputs: ['formatted'],
         name: 'scale',
         args: {
           w: 500,
@@ -119,6 +111,7 @@ export const testcases: Testcase[] = [
           h: 300,
           color: '#ffffff',
           t: 'fill',
+          replace: 1,
         },
         outputs: ['box'],
       },
@@ -514,6 +507,20 @@ export const testcases: Testcase[] = [
       },
       {
         inputs: ['txt'],
+        name: 'drawbox',
+        args: {
+          x: 20,
+          y: 70,
+          w: 200,
+          h: 5,
+          color: '#000000',
+          t: 'fill',
+          replace: 1,
+        },
+        outputs: ['underline'],
+      },
+      {
+        inputs: ['underline'],
         name: 'rotate',
         args: {
           angle: 1,
