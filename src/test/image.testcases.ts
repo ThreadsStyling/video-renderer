@@ -71,6 +71,77 @@ export const testcases: Testcase[] = [
     ],
   },
   {
+    name: 'drawbox-simple',
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
+    filters: [
+      {
+        inputs: ['0'],
+        name: 'drawbox',
+        args: {
+          x: 10,
+          y: 10,
+          w: 500,
+          h: 300,
+          color: 'pink',
+          t: 'fill',
+        },
+      },
+    ],
+  },
+  {
+    name: 'drawbox-rotated',
+    assets: [join(assetDir, 'image.jpg'), join(assetDir, 'empty.png')],
+    filters: [
+      {
+        inputs: ['1'],
+        name: 'format',
+        args: {
+          pix_fmts: 'rgb24',
+        },
+        outputs: ['formatted'],
+      },
+      {
+        inputs: ['formatted'],
+        name: 'scale',
+        args: {
+          w: 500,
+          h: 300,
+        },
+        outputs: ['scaled'],
+      },
+      {
+        inputs: ['scaled'],
+        name: 'drawbox',
+        args: {
+          x: 0,
+          y: 0,
+          w: 500,
+          h: 300,
+          color: '#ffffff',
+          t: 'fill',
+        },
+        outputs: ['box'],
+      },
+      {
+        inputs: ['box'],
+        name: 'rotate',
+        args: {
+          angle: 1,
+          fillcolor: '#00000000',
+        },
+        outputs: ['rotated'],
+      },
+      {
+        inputs: ['0', 'rotated'],
+        name: 'overlay',
+        args: {
+          x: 40,
+          y: 40,
+        },
+      },
+    ],
+  },
+  {
     name: 'overlay-simple',
     assets: [join(assetDir, 'image.jpg'), join(assetDir, 'servers.png')],
     filters: [
@@ -443,6 +514,19 @@ export const testcases: Testcase[] = [
       },
       {
         inputs: ['txt'],
+        name: 'drawbox',
+        args: {
+          x: 100,
+          y: 10,
+          w: 20,
+          h: 20,
+          color: 'green',
+          t: 'fill',
+        },
+        outputs: ['txt2'],
+      },
+      {
+        inputs: ['txt2'],
         name: 'rotate',
         args: {
           angle: 1,
