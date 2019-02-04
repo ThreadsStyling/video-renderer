@@ -5,7 +5,7 @@ import {Parser} from 'expr-eval';
 
 const parser = new Parser();
 
-const drawtext: Filter = ([background], args) => {
+const drawbox: Filter = ([background], args) => {
   const [canvas, context, disposeCanvas] = createCanvasAndContext();
   const {width, height} = background;
 
@@ -48,4 +48,4 @@ const drawtext: Filter = ([background], args) => {
   ];
 };
 
-export default drawtext;
+export default drawbox;
