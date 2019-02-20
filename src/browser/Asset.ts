@@ -9,6 +9,51 @@ const transparent1x1Pixel =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=';
 
 export default class Asset {
+  static withPlaceholder(assetPromise: Promise<Asset>, placeholder: Asset) {
+    const {width, height, duration} = placeholder;
+    const [canvas, context, dispose] = createCanvasAndContext();
+
+    let renderedActualAsset = false;
+    let asset: Asset | undefined;
+
+    assetPromise
+      .then((readyAsset) => {
+        asset = readyAsset;
+
+        if (!(asset.width === width && asset.height === height && asset.duration === duration)) {
+          throw new Error('Loaded asset metadata must with match expected values');
+        }
+      })
+      .catch((err) => console.error(err));
+
+    placeholder.renderFrame(0);
+    canvas.width = width;
+    canvas.height = height;
+    context.clearRect(0, 0, width, height);
+    context.drawImage(placeholder.canvas, 0, 0);
+
+    return new Asset(
+      duration,
+      width,
+      height,
+      canvas,
+      context,
+      (timestamp) => {
+        const assetToRender = asset || placeholder;
+        const didUpdate = assetToRender.renderFrame(timestamp);
+
+        if (!didUpdate && (renderedActualAsset || assetToRender === placeholder)) return false;
+        if (assetToRender === asset) renderedActualAsset = true;
+
+        context.clearRect(0, 0, width, height);
+        context.drawImage(assetToRender.canvas, 0, 0);
+
+        return didUpdate;
+      },
+      dispose,
+    );
+  }
+
   static async fromImage(src: string, options: LoadAssetOptions = {}): Promise<Asset> {
     const [canvas, context, dispose] = createCanvasAndContext();
     const img = await loadImage(src, options);

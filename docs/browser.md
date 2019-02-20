@@ -44,6 +44,12 @@ Load an asset at a given URL, returning a `Promise` for that asset.
 await Asset.loadVideo(videoURL);
 ```
 
+Use Asset.withPlaceholder to render a ready asset (like a loader) while the main asset is loading.
+
+- `Asset.withPlaceholder(asset: Promise<Asset>, placeholder: Asset): Asset`
+
+The placeholder asset can be anything, a video, image or just an empty asset that renders stuff to it's context.
+
 ### `filterComplex()` Method
 
 ```js
