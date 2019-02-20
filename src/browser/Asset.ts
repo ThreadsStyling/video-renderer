@@ -41,14 +41,18 @@ export default class Asset {
       (timestamp) => {
         const assetToRender = asset || placeholder;
         const didUpdate = assetToRender.renderFrame(timestamp);
+        let shouldUpdate = didUpdate;
 
         if (!didUpdate && (renderedActualAsset || assetToRender === placeholder)) return false;
-        if (assetToRender === asset) renderedActualAsset = true;
+        if (assetToRender === asset && !renderedActualAsset) {
+          renderedActualAsset = true;
+          shouldUpdate = true;
+        }
 
         context.clearRect(0, 0, width, height);
         context.drawImage(assetToRender.canvas, 0, 0);
 
-        return didUpdate;
+        return shouldUpdate;
       },
       dispose,
     );
