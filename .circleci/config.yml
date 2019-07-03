@@ -1,92 +1,79 @@
-version: 2
+version: 2.1
 
 refs:
   container: &container
     docker:
-      - image: circleci/node:latest-browsers
+      - image: circleci/node:10-browsers
     working_directory: ~/repo
-  steps:
-    - &Restore_Cache
-      restore_cache:
-        keys:
-          - v2-dependencies-{{ checksum "yarn.lock" }}
-          - v2-dependencies-
-    - &Versions
-      run:
-        name: Versions
-        command: node -v && npm -v && yarn -v
-    - &Authenticate_with_NPM
-      run:
-        name: NPM Auth
-        command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-    - &Install_Dependencies
-      run:
-        name: Install Dependencies
-        command: yarn install --frozen-lockfile
-    - &Save_Cache
-      save_cache:
-        paths:
-          - node_modules
-        key: v2-dependencies-{{ checksum "yarn.lock" }}
-    - &Setup_Environment
-      run:
-        name: Setup Environment
-        command: |
-          echo 'export BUILD_VERSION=$(npx cross-ci printenv BUILD_VERSION)' >> $BASH_ENV
-          echo 'export BUILD_NUM=$(npx cross-ci printenv BUILD_NUM)' >> $BASH_ENV
-    - &Build
-      run:
-        name: Build
-        command: yarn build
-    - &Test
-      run:
-        name: Test
-        command: yarn test
-    - &Test_Functional
-      run:
-        name: Test Functional
-        command: yarn test:integration
-    - &Store_Artifacts
-      store_artifacts:
-        path: ~/repo/src/test/image-tests-out
-    - &Post_to_GitHub
-      run:
-        name: Post to GitHub
-        command: npx commit-status success Renderings $BUILD_VERSION "https://$BUILD_NUM-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
-        when: always
+
+commands:
+  install:
+    steps:
+      - run:
+          name: NPM Auth - TODO Remove once tsconfig is public
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+      - run:
+          name: Versions
+          command: node -v && npm -v && yarn -v
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+  build:
+    steps:
+      - run:
+          name: Build
+          command: yarn build
+  test:
+    steps:
+      - run:
+          name: Prettier Check
+          command: yarn prettier:check
+      - run:
+          name: TSLint
+          command: yarn lint
+      - run:
+          name: Test
+          command: yarn test
+      - run:
+          name: Test Functional
+          command: yarn test:integration
+  upload_artifacts:
+    steps:
+      - store_artifacts:
+          path: ~/repo/src/test/image-tests-out
+      - run:
+          name: Post to GitHub
+          command: |
+            npx cross-ci :run \
+              npx commit-status success Renderings \${BUILD_VERSION} "https://\${BUILD_NUM}-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
+          when: always
 
 jobs:
   all:
     <<: *container
     steps:
       - checkout
-      - *Restore_Cache
-      - *Versions
-      - *Authenticate_with_NPM
-      - *Install_Dependencies
-      - *Setup_Environment
-      - *Save_Cache
-      - *Build
-      - *Test
-      - *Test_Functional
-      - *Store_Artifacts
-      - *Post_to_GitHub
+      - install
+      - build
+      - test
+      - upload_artifacts
 
   master:
     <<: *container
     steps:
       - checkout
-      - *Restore_Cache
-      - *Versions
-      - *Authenticate_with_NPM
-      - *Install_Dependencies
-      - *Setup_Environment
-      - *Save_Cache
-      - *Build
-      - *Test
-      - *Test_Functional
-      - *Store_Artifacts
-      - *Post_to_GitHub
+      - install
+      - build
+      - test
+      - upload_artifacts
       - run:
           name: Release
           command: npx semantic-release

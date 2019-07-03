@@ -12,9 +12,9 @@
     "fast-af": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-regenerator": "^7.0.0",
+    "@commitlint/cli": "^8.0.0",
     "@moped/rule-file": "^0.0.9",
-    "@threads/tslint": "^4.1.0",
+    "@threads/tsconfig": "^1.0.0",
     "@types/jest": "^23.1.1",
     "@types/node": "^10.5.2",
     "@types/rimraf": "^2.0.2",
@@ -23,19 +23,19 @@
     "ffbinaries": "^1.1.0",
     "finalhandler": "^1.1.1",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^1.0.0-rc.15",
-    "jest": "^23.1.0",
-    "prettier": "^1.13.5",
-    "pretty-quick": "^1.8.0",
+    "husky": "^3.0.0",
+    "jest": "^24.8.0",
+    "lint-staged": "^9.0.2",
+    "prettier": "^1.18.2",
     "puppet-master": "^1.2.0",
     "rimraf": "^2.6.2",
     "semantic-release": "^15.8.1",
     "serve-static": "^1.13.2",
-    "ts-jest": "^22.4.6",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^4.4.2",
     "ts-node": "^7.0.1",
-    "tslint": "~5.11.0",
-    "typescript": "^2.9.2",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.1.0",
     "webpack-serve": "^2.0.2"
@@ -43,20 +43,32 @@
   "scripts": {
     "prebuild": "rimraf lib/ && rimraf browser/ && rimraf node/",
     "build": "tsc",
-    "postbuild": "node generate-public && rimraf lib/node/__tests__",
+    "postbuild": "node generate-public && rimraf lib/**/__tests__",
     "prepare": "yarn build",
     "start": "webpack-serve ./webpack.config.js",
     "pretest": "node src/node/__tests__/download-ffmpeg",
     "test": "jest",
     "test:integration": "ts-node src/test/image.tests.ts",
-    "prettier": "prettier --ignore-path .gitignore --write './**/*.{js,jsx,ts,tsx}'",
+    "prettier:write": "prettier --ignore-path .gitignore --write './**/*.{md,json,yaml,js,jsx,ts,tsx}'",
+    "prettier:check": "prettier --ignore-path .gitignore --list-different './**/*.{md,json,yaml,js,jsx,ts,tsx}'",
     "lint": "tslint './src/**/*.{ts,tsx}' -t verbose -p ."
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn lint",
-      "pre-push": "yarn build && yarn test && yarn test:integration"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "tslint -t verbose -p .",
+      "git add"
+    ],
+    "*.{md,json,yaml,js,jsx}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "browserslist": [
     "last 1 Chrome version"

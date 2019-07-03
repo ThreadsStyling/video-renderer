@@ -1,6 +1,5 @@
 # Shared API
 
-
 ## `ComplexFilter`
 
 ```js

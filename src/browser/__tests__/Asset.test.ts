@@ -14,7 +14,7 @@ class MockCanvas {
   });
 }
 
-const getAsset = (mockFunc?: jest.Mock) => {
+const getAsset = (mockFunc?: jest.Mock<unknown>) => {
   const [canvas, context, dispose] = createCanvasAndContext();
   return new Asset(
     0,
@@ -22,7 +22,7 @@ const getAsset = (mockFunc?: jest.Mock) => {
     200,
     canvas,
     context,
-    (timestamp) => {
+    () => {
       context.fillRect(0, 0, 200, 200);
       if (mockFunc) mockFunc();
       return true;
@@ -31,8 +31,8 @@ const getAsset = (mockFunc?: jest.Mock) => {
   );
 };
 
-const getAssetPromise = async (mockFunc?: jest.Mock): Promise<Asset> => {
-  return new Promise<Asset>((resolve, reject) => {
+const getAssetPromise = async (mockFunc?: jest.Mock<unknown>): Promise<Asset> => {
+  return new Promise<Asset>((resolve) => {
     const asset = getAsset(mockFunc);
 
     setTimeout(() => resolve(asset), 200);
@@ -41,7 +41,8 @@ const getAssetPromise = async (mockFunc?: jest.Mock): Promise<Asset> => {
 
 describe('Asset', () => {
   beforeEach(() => {
-    document.createElement = jest.fn().mockImplementation((t) => {
+    // tslint:disable-next-line:deprecation
+    document.createElement = jest.fn((t) => {
       if (t === 'canvas') {
         return new MockCanvas();
       }

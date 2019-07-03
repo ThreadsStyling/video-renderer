@@ -19,7 +19,7 @@ const createPlaceholder = (duration: number, width: number, height: number) => {
     height,
     placeholderCanvas,
     placeholderContext,
-    (timestamp, isInitialRender) => {
+    (_timestamp, isInitialRender) => {
       placeholderCanvas.width = width;
       placeholderCanvas.height = height;
 
