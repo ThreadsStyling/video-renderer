@@ -1,1 +1,1 @@
-module.exports = require('@threads/tslint/prettier');
+module.exports = require('@threads/tsconfig/prettier');

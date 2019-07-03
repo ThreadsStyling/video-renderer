@@ -12,7 +12,6 @@ Place one image on top of other at position `30, 30`.
   output.jpg
 ```
 
-
 ## Padding (`pad` filter)
 
 Add padding.
@@ -35,10 +34,9 @@ Add padding with transparent background.
   output.jpg
 ```
 
-
 ## Rotation (`rotate` filter)
 
-Rotate by `1rad` (around *center-center* origin).
+Rotate by `1rad` (around _center-center_ origin).
 
 ```shell
 ./src/node/__tests__/bin/ffmpeg -y \
@@ -58,7 +56,6 @@ Rotate and change width.
   output.jpg
 ```
 
-
 Rotate with transparent background.
 
 ```shell
@@ -68,7 +65,6 @@ Rotate with transparent background.
   -filter_complex "[1] rotate=angle=1:out_w=600:out_h=600:fillcolor=#0077ff7f[rotated];[0][rotated] overlay=0:0" \
   output.jpg
 ```
-
 
 ## Cropping (`crop` filter)
 
@@ -81,7 +77,6 @@ Crop stream.
   output.jpg
 ```
 
-
 ## Blending (`blend` filter)
 
 Crop stream.
@@ -93,7 +88,6 @@ Crop stream.
   -filter_complex "[0]crop=w=200:h=200:x=100:y=100[c1]; [1]crop=w=200:h=200:x=0:y=0[c2]; [c2][c1]blend=c0_mode=multiply[m]; [0][m]overlay=x=100:y=100" \
   output.jpg
 ```
-
 
 ## Text (`drawtext` filter)
 

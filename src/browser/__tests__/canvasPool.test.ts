@@ -15,7 +15,8 @@ class MockCanvas {
   }
 }
 
-document.createElement = jest.fn().mockImplementation((t) => {
+// tslint:disable-next-line: deprecation
+document.createElement = jest.fn((t) => {
   if (t === 'canvas') {
     return new MockCanvas();
   }

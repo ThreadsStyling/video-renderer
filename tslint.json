@@ -1,5 +1,3 @@
 {
-  "extends": [
-    "@threads/tslint"
-  ]
+  "extends": ["@threads/tsconfig/tslint"]
 }

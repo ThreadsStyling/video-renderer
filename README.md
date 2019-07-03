@@ -2,17 +2,15 @@
 
 Render a preview of a looping video in a browser, and render that same video on a server using `ffmpeg`.
 
-
 ## Installation
 
 ```
 yarn add @threads/isomorphic-video-render
 ```
 
-
 ## Usage
 
-- [__Shared API__](./docs/shared.md)
-- [__Browser API__](./docs/browser.md)
-- [__Node API__](./docs/node.md)
-- [__`ffmpeg` Examples__](./docs/ffmpeg-examples.md)
+- [**Shared API**](./docs/shared.md)
+- [**Browser API**](./docs/browser.md)
+- [**Node API**](./docs/node.md)
+- [**`ffmpeg` Examples**](./docs/ffmpeg-examples.md)

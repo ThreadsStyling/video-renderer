@@ -24,7 +24,7 @@ const placeholder = new Asset(
   256,
   placeCanvas,
   placeContext,
-  (timestamp, isInitialRender) => {
+  (_timestamp, isInitialRender) => {
     const oldFillStyle = placeContext.fillStyle;
     placeContext.fillStyle = 'rgba(0, 0, 0, 0.3)';
     placeContext.clearRect(0, 0, 256, 256);
@@ -45,7 +45,7 @@ const placeholderImg = new Asset(
   100,
   placeImgCanvas,
   placeImgContext,
-  (timestamp, isInitialRender) => {
+  (_timestamp, isInitialRender) => {
     const oldFillStyle = placeImgContext.fillStyle;
     placeImgContext.fillStyle = 'rgba(0, 0, 0, 0.3)';
     placeImgContext.clearRect(0, 0, 140, 100);
@@ -56,13 +56,13 @@ const placeholderImg = new Asset(
   placeImgDispose,
 );
 
-const slowLoadingVideoWithAlpha = new Promise<Asset>(async (resolve, reject) => {
+const slowLoadingVideoWithAlpha = new Promise<Asset>(async (resolve) => {
   const asset = await Asset.fromVideoWithAlpha('http://localhost:3001/generated/loop.mp4');
 
   setTimeout(() => resolve(asset), 3000);
 });
 
-const slowLoadingImage = new Promise<Asset>(async (resolve, reject) => {
+const slowLoadingImage = new Promise<Asset>(async (resolve) => {
   const asset = await Asset.fromImage('https://via.placeholder.com/140x100', {crossOrigin: CorsMode.Disabled});
 
   setTimeout(() => resolve(asset), 2000);

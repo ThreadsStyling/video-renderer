@@ -18,13 +18,12 @@ export default function filterComplex(filters: ComplexFilter[]) {
   return filters
     .map((f) => {
       return `${(f.inputs || [])
-        .map(
-          (i) =>
-            typeof i === 'string'
-              ? `[${i}]`
-              : `[${i.name}${
-                  i.kind === FilterInputKind.AudioOnly ? ':a' : i.kind === FilterInputKind.VideoOnly ? ':v' : ''
-                }]`,
+        .map((i) =>
+          typeof i === 'string'
+            ? `[${i}]`
+            : `[${i.name}${
+                i.kind === FilterInputKind.AudioOnly ? ':a' : i.kind === FilterInputKind.VideoOnly ? ':v' : ''
+              }]`,
         )
         .join('')}${f.name}=${Object.keys(f.args || {})
         .map((name) => extractFilterArgs(f, name))

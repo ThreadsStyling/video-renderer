@@ -13,13 +13,19 @@ import {Asset, render, filterComplex} from '@threads/isomorphic-video-render/bro
 const asset1 = await Asset.fromImage(url1);
 const asset2 = await Asset.fromImage(url2);
 
-render(canvas, filterComplex([asset1, asset2], [
-  {
-    inputs: ['0', '1'],
-    name: 'overlay',
-    args: {x: 20, y: 20},
-  }
-]));
+render(
+  canvas,
+  filterComplex(
+    [asset1, asset2],
+    [
+      {
+        inputs: ['0', '1'],
+        name: 'overlay',
+        args: {x: 20, y: 20},
+      },
+    ],
+  ),
+);
 ```
 
 ## Reference
@@ -57,15 +63,18 @@ import '@threads/isomorphic-video-render/browser/register/trim';
 import {loadAsset} from '@threads/isomorphic-video-render/browser';
 
 const inputVideo = await Asset.fromVideo(videoURL);
-const trimmedVideo = filterComplex([inputVideo], [
-  {
-    name: 'trim',
-    args: {
-      start: 0,
-      end: 5,
+const trimmedVideo = filterComplex(
+  [inputVideo],
+  [
+    {
+      name: 'trim',
+      args: {
+        start: 0,
+        end: 5,
+      },
     },
-  },
-]);
+  ],
+);
 ```
 
 Apply a graph of filters to an asset. Returns a transformed asset.

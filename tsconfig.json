@@ -1,19 +1,8 @@
 {
+  "extends": "@threads/tsconfig",
   "compilerOptions": {
-    "target": "es2018",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "declaration": true,
-    "pretty": true,
-    "rootDir": "src",
-    "sourceMap": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "outDir": "lib",
+    "rootDir": "src",
     "lib": ["es2018", "dom"]
   }
 }
