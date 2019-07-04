@@ -9,9 +9,6 @@ refs:
 commands:
   install:
     steps:
-      - run:
-          name: NPM Auth - TODO Remove once tsconfig is public
-          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "yarn.lock" }}
@@ -50,11 +47,14 @@ commands:
       - store_artifacts:
           path: ~/repo/src/test/image-tests-out
       - run:
-          name: Post to GitHub
+          name: Functional Test Output
           command: |
+            if [ ! -z "$GH_TOKEN" ] || [ ! -z "$GH_STATUS_TOKEN" ]; then
+              npx cross-ci :run \
+                npx commit-status success Renderings \${BUILD_VERSION} "https://\${BUILD_NUM}-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
+            fi
             npx cross-ci :run \
-              npx commit-status success Renderings \${BUILD_VERSION} "https://\${BUILD_NUM}-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
-          when: always
+              echo "https://\${BUILD_NUM}-142040531-gh.circle-artifacts.com/0/home/circleci/repo/src/test/image-tests-out/index.html"
 
 jobs:
   all:
@@ -77,6 +77,23 @@ jobs:
       - run:
           name: Release
           command: npx semantic-release
+      - run:
+          name: Post to Slack on FAILURE
+          command: 'npx ci-scripts slack --eval --channel="devchat" --text="*\${PROJECT_NAME}* master build failed: \${BUILD_URL}" --icon_emoji=tired_face'
+          when: on_fail
+
+  nightly:
+    <<: *container
+    steps:
+      - checkout
+      - install
+      - build
+      - test
+      - upload_artifacts
+      - run:
+          name: Post to Slack on FAILURE
+          command: 'npx ci-scripts slack --eval --channel="devchat" --text="*\${PROJECT_NAME}* nightly build failed: \${BUILD_URL}" --icon_emoji=tired_face'
+          when: on_fail
 
 workflows:
   version: 2
@@ -90,6 +107,17 @@ workflows:
   master:
     jobs:
       - master:
+          context: common-env-vars
           filters:
             branches:
               only: master
+  nightly:
+    triggers:
+      - schedule:
+          cron: '0 1 * * *'
+          filters:
+            branches:
+              only: master
+    jobs:
+      - nightly:
+          context: common-env-vars
