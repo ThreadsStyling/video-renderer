@@ -37,7 +37,7 @@ const server = createServer((req, res) => {
 server.listen(3001);
 
 module.exports = {
-  entry: join(__dirname, 'src', 'demo', 'with_placeholder2.ts'),
+  entry: join(__dirname, 'src', 'demo', process.env.DEMO ? process.env.DEMO + '.ts' : 'mouse.ts'),
   target: 'node',
   output: {
     path: __dirname + '/lib',

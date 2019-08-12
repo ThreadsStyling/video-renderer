@@ -1,18 +1,31 @@
 {
-  "name": "@threads/isomorphic-video-render",
-  "version": "0.0.0",
+  "name": "video-renderer",
+  "description": "🎬 unified interface for expressing rendering streams for `ffmpeg` and `<canvas>`.",
+  "license": "MIT",
+  "keywords": [
+    "ffmpeg",
+    "canvas",
+    "browser",
+    "unified",
+    "isomorphic",
+    "video",
+    "image",
+    "editor",
+    "editing",
+    "typescript"
+  ],
   "files": [
     "lib/",
     "browser/",
     "node/"
   ],
-  "repository": "https://github.com/ThreadsStyling/isomorphic-video-render.git",
+  "repository": "https://github.com/ThreadsStyling/video-renderer.git",
   "dependencies": {
     "expr-eval": "^1.2.2",
     "fast-af": "^0.2.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.0.0",
+    "@commitlint/cli": "^8.1.0",
     "@moped/rule-file": "^0.0.9",
     "@threads/tsconfig": "^1.0.0",
     "@types/jest": "^23.1.1",
@@ -23,9 +36,9 @@
     "ffbinaries": "^1.1.0",
     "finalhandler": "^1.1.1",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.0",
+    "husky": "^3.0.3",
     "jest": "^24.8.0",
-    "lint-staged": "^9.0.2",
+    "lint-staged": "^9.2.1",
     "prettier": "^1.18.2",
     "puppet-master": "^1.2.0",
     "rimraf": "^2.6.2",
@@ -35,7 +48,7 @@
     "ts-loader": "^4.4.2",
     "ts-node": "^7.0.1",
     "tslint": "^5.18.0",
-    "typescript": "^3.5.2",
+    "typescript": "^3.5.3",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.1.0",
     "webpack-serve": "^2.0.2"
@@ -43,7 +56,7 @@
   "scripts": {
     "prebuild": "rimraf lib/ && rimraf browser/ && rimraf node/",
     "build": "tsc",
-    "postbuild": "node generate-public && rimraf lib/**/__tests__",
+    "postbuild": "node generate-public && rimraf lib/**/__tests__ && rimraf lib/test && rimraf lib/demo",
     "prepare": "yarn build",
     "start": "webpack-serve ./webpack.config.js",
     "pretest": "node src/node/__tests__/download-ffmpeg",

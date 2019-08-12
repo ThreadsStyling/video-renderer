@@ -12,8 +12,8 @@ document.head && document.head.appendChild(style);
 document.body.appendChild(canvas);
 
 Promise.all([
-  Asset.fromVideo(require('../assets/Video Of People Walking.mp4')),
-  Asset.fromVideoWithAlpha(require('../assets/generated/loop.mp4')),
+  Asset.fromVideo(require('../../assets/Video Of People Walking.mp4')),
+  Asset.fromVideoWithAlpha(require('../../assets/generated/loop.mp4')),
 ])
   .then((inputs) => {
     const f = (x: number, y: number) =>
