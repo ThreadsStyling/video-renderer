@@ -3,9 +3,9 @@
 ## `ComplexFilter`
 
 ```js
-import {ComplexFilter} from '@threads/isomorphic-video-render/browser';
+import {ComplexFilter} from 'video-renderer/browser';
 // or
-import {ComplexFilter} from '@threads/isomorphic-video-render/node';
+import {ComplexFilter} from 'video-renderer/node';
 ```
 
 An object, representing a filter that can be applied to one or more inputs.

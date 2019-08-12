@@ -6,7 +6,7 @@
 
 ```js
 import {spawn} from 'child_process';
-import {extractAlpha, filterComplex} from '@threads/isomorphic-video-render/node';
+import {extractAlpha, filterComplex} from 'video-renderer/node';
 
 const ffmpegProc = spawn('ffmpeg', [
   '-i',
@@ -28,7 +28,7 @@ Generates the complex filter graph required to convert a gif/video with transpar
 
 ```js
 import {spawn} from 'child_process';
-import {filterComplex} from '@threads/isomorphic-video-render/node';
+import {filterComplex} from 'video-renderer/node';
 
 const ffmpegProc = spawn('ffmpeg', [
   '-i',
