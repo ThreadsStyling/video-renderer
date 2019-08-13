@@ -8,7 +8,7 @@ POC browser implementation was based on:
 ## Usage
 
 ```js
-import {Asset, render, filterComplex} from '@threads/isomorphic-video-render/browser';
+import {Asset, render, filterComplex} from 'video-renderer/browser';
 
 const asset1 = await Asset.fromImage(url1);
 const asset2 = await Asset.fromImage(url2);
@@ -33,7 +33,7 @@ render(
 ### `Asset` Class
 
 ```js
-import {Asset} from '@threads/isomorphic-video-render/browser';
+import {Asset} from 'video-renderer/browser';
 ```
 
 An object representing a media asset, such as a video, or a photo.
@@ -59,8 +59,7 @@ The placeholder asset can be anything, a video, image or just an empty asset tha
 ### `filterComplex()` Method
 
 ```js
-import '@threads/isomorphic-video-render/browser/register/trim';
-import {loadAsset} from '@threads/isomorphic-video-render/browser';
+import {Asset, filterComplex} from 'video-renderer/browser';
 
 const inputVideo = await Asset.fromVideo(videoURL);
 const trimmedVideo = filterComplex(
@@ -79,10 +78,26 @@ const trimmedVideo = filterComplex(
 
 Apply a graph of filters to an asset. Returns a transformed asset.
 
+### `filterComplexCached()` Method
+
+```js
+import {Asset, filterComplexCached} from 'video-renderer/browser';
+
+const inputVideo = await Asset.fromVideo(videoURL);
+let cache = undefined;
+function applyFilters(inputs, filters) {
+  const {cache: nextCache, output} = filterComplexCached(inputs, filters, cache);
+  cache = nextCache;
+  return output;
+}
+```
+
+An optimised version of filterComplex for when you're going to repeatedly apply new slightly different filters to the same or similar assets. It's able to re-use any parts of the filter graph that have not changed.
+
 ### `Player` Class
 
 ```js
-import {Player} from '@threads/isomorphic-video-render/browser';
+import {Player} from 'video-renderer/browser';
 ```
 
 A `Player` instance is returned `render()` method (see below).
@@ -103,7 +118,7 @@ interface Player {
 ### `render()` Method
 
 ```js
-import {render} from '@threads/isomorphic-video-render/browser';
+import {render} from 'video-renderer/browser';
 
 const player = render(canvas[, asset, fps]);
 ```

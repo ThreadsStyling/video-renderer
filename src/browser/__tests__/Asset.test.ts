@@ -48,7 +48,7 @@ describe('Asset', () => {
       }
 
       return {};
-    });
+    }) as any;
   });
 
   afterEach(() => {

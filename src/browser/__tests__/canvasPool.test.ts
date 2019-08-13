@@ -22,7 +22,7 @@ document.createElement = jest.fn((t) => {
   }
 
   return {};
-});
+}) as any;
 
 describe('CanvasPool', () => {
   afterEach(() => {
