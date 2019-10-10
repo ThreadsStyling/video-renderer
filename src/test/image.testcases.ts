@@ -128,6 +128,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', 'rotated'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 40,
           y: 40,
         },
@@ -142,6 +143,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', '1'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 0,
           y: 0,
         },
@@ -156,6 +158,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', '1'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 50,
           y: 50,
         },
@@ -170,6 +173,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', '1'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: -30,
           y: -30,
         },
@@ -190,6 +194,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', '1'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 50,
           y: 50,
         },
@@ -199,6 +204,7 @@ export const testcases: Testcase[] = [
         inputs: ['out1', '2'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 150,
           y: 150,
         },
@@ -208,6 +214,7 @@ export const testcases: Testcase[] = [
         inputs: ['out2', '3'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 250,
           y: 250,
         },
@@ -217,6 +224,7 @@ export const testcases: Testcase[] = [
         inputs: ['out3', '4'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 350,
           y: 350,
         },
@@ -240,6 +248,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', 'scaled'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 100,
           y: 100,
         },
@@ -272,6 +281,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', 'scaled2'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 10,
           y: 10,
         },
@@ -293,7 +303,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'rotated'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -314,7 +328,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'rotated'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -335,7 +353,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'rotated'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -357,7 +379,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'rotated'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -376,7 +402,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'looped'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -399,7 +429,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'padded'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -421,7 +455,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'padded'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -444,7 +482,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'padded'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -467,7 +509,11 @@ export const testcases: Testcase[] = [
       {
         inputs: ['0', 'padded'],
         name: 'overlay',
-        args: {x: 0, y: 0},
+        args: {
+          x: 0,
+          y: 0,
+          format: 'rgb',
+        },
       },
     ],
   },
@@ -532,6 +578,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', 'rotated'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 10,
           y: 10,
         },
@@ -645,6 +692,7 @@ export const testcases: Testcase[] = [
         inputs: ['0', 'rotated'],
         name: 'overlay',
         args: {
+          format: 'rgb',
           x: 0,
           y: 0,
         },
