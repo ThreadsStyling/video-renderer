@@ -2,21 +2,11 @@ import {Filter} from '.';
 import Asset from '../Asset';
 import createCanvasAndContext from '../util/createCanvasAndContext';
 
-const toNonZeroInt = (z: number | string): number => {
-  // tslint:disable-next-line:no-bitwise
-  const zInt = (z as any) | 0;
-
-  return zInt === 0 ? 1 : zInt;
-};
-
 const scale: Filter = ([asset], {w, h}) => {
   const [canvas, context, dispose] = createCanvasAndContext();
 
-  const width = toNonZeroInt(w);
-  const height = toNonZeroInt(h);
-
-  canvas.width = width;
-  canvas.height = height;
+  const width = (canvas.width = w as any | 0);
+  const height = (canvas.height = h as any | 0);
 
   const render = (time: number, initialFrame: boolean) => {
     if (!(asset.renderFrame(time) || initialFrame)) {
