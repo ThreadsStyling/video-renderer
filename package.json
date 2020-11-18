@@ -42,7 +42,7 @@
     "prettier": "^1.18.2",
     "puppet-master": "^1.2.0",
     "rimraf": "^2.6.2",
-    "semantic-release": "^15.8.1",
+    "semantic-release": "^17.2.3",
     "serve-static": "^1.13.2",
     "ts-jest": "^24.0.2",
     "ts-loader": "^4.4.2",
