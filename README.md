@@ -6,7 +6,7 @@ Due to ffmpeg's wide format support and extensive list of filters, this works we
 
 > N.B. This is just the basic building block for video/image editing experiences. We don't provide any reference editor.
 
-## Installation
+## Installing
 
 ```
 yarn add video-renderer
