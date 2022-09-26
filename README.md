@@ -18,3 +18,4 @@ yarn add video-renderer
 - [**Browser API**](./docs/browser.md)
 - [**Node API**](./docs/node.md)
 - [**`ffmpeg` Examples**](./docs/ffmpeg-examples.md)
+
